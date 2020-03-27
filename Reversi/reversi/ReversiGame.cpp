@@ -1,6 +1,5 @@
 ﻿#include "ReversiGame.h"
 
-
 reversi::ReversiGame::ReversiGame() {
 }
 

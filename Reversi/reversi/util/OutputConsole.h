@@ -2,10 +2,12 @@
 #define REVERSI_UTIL_OUTPUTCONSOLE_H_
 
 #include <string>
+#include "./IOutputConsole.h"
 
 namespace reversi {
 
-class OutputConsole {
+// コンソール出力クラス
+class OutputConsole : public reversi::IOutputConsole {
 public:
 	/**
 	 * コンストラクタ

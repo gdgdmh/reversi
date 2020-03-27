@@ -11,7 +11,7 @@ int main(int argc, const char* argv[]) {
 	//reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
 	//reversiGame->Task();
 
-	reversi::OutputConsole* outputConsole = new reversi::OutputConsole();
+	reversi::IOutputConsole* outputConsole = new reversi::OutputConsole();
 	outputConsole->Print("aue");
 	outputConsole->PrintLine("ライン");
 	outputConsole->Print("123");

@@ -38,5 +38,8 @@
     <ClInclude Include="reversi\util\OutputConsole.h">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
+    <ClInclude Include="reversi\util\IOutputConsole.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
