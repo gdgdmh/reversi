@@ -3,25 +3,21 @@
 #include <iostream>
 #include <string>
 #include "./reversi/ReversiGame.h"
-#include "./reversi/util/OutputConsole.h"
-#include "./reversi/test/UnitTest.h"
+#include "./reversi/test/DevelopTest.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
 
-	//reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
-	//reversiGame->Task();
-
-	reversi::IOutputConsole* outputConsole = new reversi::OutputConsole();
-	outputConsole->Print("aue");
-	outputConsole->PrintLine("ライン");
-	outputConsole->Print("123");
-
-	reversi::UnitTest* unitTest = new reversi::UnitTest();
-	unitTest->Execute();
-
-
-
+	bool isTest = true;
+	if (isTest) {
+		// 実装テスト
+		reversi::DevelopTest* developTest = new reversi::DevelopTest();
+		developTest->Execute();
+	} else {
+		// リバーシゲーム
+		reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
+		reversiGame->Task();
+	}
 
 	/*
 	while (true)

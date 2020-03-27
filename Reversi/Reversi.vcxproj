@@ -149,11 +149,13 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="reversi\ReversiGame.cpp" />
+    <ClCompile Include="reversi\test\DevelopTest.cpp" />
     <ClCompile Include="reversi\test\UnitTest.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h" />
+    <ClInclude Include="reversi\test\DevelopTest.h" />
     <ClInclude Include="reversi\test\UnitTest.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
