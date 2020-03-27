@@ -1,23 +1,23 @@
-#ifndef REVERSI_TEST_DEVELOPTEST_H_
+ï»¿#ifndef REVERSI_TEST_DEVELOPTEST_H_
 #define REVERSI_TEST_DEVELOPTEST_H_
 
 namespace reversi {
 
-	// À‘•ƒeƒXƒg—pƒNƒ‰ƒX
+	// å®Ÿè£…ãƒ†ã‚¹ãƒˆç”¨ã‚¯ãƒ©ã‚¹
 	class DevelopTest {
 	public:
 		/**
-		 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		DevelopTest();
 
 		/**
-		 * ƒfƒXƒgƒ‰ƒNƒ^
+		 * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		virtual ~DevelopTest();
 
 		/**
-		 * Às
+		 * å®Ÿè¡Œ
 		 */
 		void Execute();
 	};

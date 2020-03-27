@@ -1,0 +1,39 @@
+﻿#include "UnitTestBase.h"
+
+/**
+ * コンストラクタ
+ * @param outputConsole コンソール出力クラス
+ */
+reversi::UnitTestBase::UnitTestBase(reversi::IOutputConsole* outputConsole) :
+    outputConsole(outputConsole) {
+}
+
+/**
+ * デストラクタ
+ */
+reversi::UnitTestBase::~UnitTestBase() {
+}
+
+/**
+ * 実行
+ * @param outputConsole コンソール出力クラス
+ */
+void reversi::UnitTestBase::Execute() {
+}
+
+/**
+ * 条件のチェックの成否をチェックして失敗したときはメッセージを表示する
+ * @param expected 条件チェックした値(0なら失敗とする)
+ * @param message  失敗した際のメッセージ
+ */
+void reversi::UnitTestBase::Equal(int expected, std::string message) {
+    if (expected != 0) {
+        // 正常
+        return;
+    }
+    if (outputConsole != NULL) {
+        // 失敗しているのでメッセージを出力する
+        // 後に__LINE__や__FILE__を追加することも考慮する
+        outputConsole->PrintLine(message);
+    }
+}

@@ -1,28 +1,28 @@
-#include "DevelopTest.h"
-// test include(ƒeƒXƒg‚·‚é‚à‚Ì‚Í‚±‚±‚É’Ç‰Á‚·‚é)
+ï»¿#include "DevelopTest.h"
+// test include(ãƒ†ã‚¹ãƒˆã™ã‚‹ã‚‚ã®ã¯ã“ã“ã«è¿½åŠ ã™ã‚‹)
 #include "../util/OutputConsole.h"
 #include "../test/UnitTest.h"
 
 /**
- * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 reversi::DevelopTest::DevelopTest() {
 }
 
 /**
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 reversi::DevelopTest::~DevelopTest() {
 }
 
 /**
- * Às
+ * å®Ÿè¡Œ
  */
 void reversi::DevelopTest::Execute() {
 
 	reversi::IOutputConsole* outputConsole = new reversi::OutputConsole();
 	outputConsole->Print("aue");
-	outputConsole->PrintLine("ƒ‰ƒCƒ“");
+	outputConsole->PrintLine("ãƒ©ã‚¤ãƒ³");
 	outputConsole->Print("123");
 
 	reversi::UnitTest* unitTest = new reversi::UnitTest();
