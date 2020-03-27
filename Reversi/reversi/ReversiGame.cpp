@@ -1,5 +1,4 @@
-﻿
-#include "ReversiGame.h"
+﻿#include "ReversiGame.h"
 
 
 reversi::ReversiGame::ReversiGame() {

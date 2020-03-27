@@ -3,12 +3,18 @@
 #include <iostream>
 #include <string>
 #include "./reversi/ReversiGame.h"
+#include "./reversi/util/OutputConsole.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
 
-	reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
-	reversiGame->Task();
+	//reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
+	//reversiGame->Task();
+
+	reversi::OutputConsole* outputConsole = new reversi::OutputConsole();
+	outputConsole->Print("aue");
+	outputConsole->PrintLine("ライン");
+	outputConsole->Print("123");
 
 	/*
 	while (true)

@@ -16,6 +16,9 @@
     <Filter Include="ソース ファイル\reversi">
       <UniqueIdentifier>{3fbdd832-1c97-4e1d-ac7b-3c1ae829d7a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\reversi\util">
+      <UniqueIdentifier>{fe40671b-591f-4483-bb3f-1bb5584334e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -24,10 +27,16 @@
     <ClCompile Include="reversi\ReversiGame.cpp">
       <Filter>ソース ファイル\reversi</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\util\OutputConsole.cpp">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h">
       <Filter>ソース ファイル\reversi</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\OutputConsole.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
