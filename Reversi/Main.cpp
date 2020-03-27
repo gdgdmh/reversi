@@ -4,8 +4,11 @@
 #include <string>
 #include "./reversi/ReversiGame.h"
 
-// エントリーポイント
+// エントリーポイント;
 int main(int argc, const char* argv[]) {
+
+	reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
+	reversiGame->Task();
 
 	/*
 	while (true)
