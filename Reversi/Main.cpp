@@ -4,6 +4,7 @@
 #include <string>
 #include "./reversi/ReversiGame.h"
 #include "./reversi/util/OutputConsole.h"
+#include "./reversi/test/UnitTest.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
@@ -15,6 +16,12 @@ int main(int argc, const char* argv[]) {
 	outputConsole->Print("aue");
 	outputConsole->PrintLine("ライン");
 	outputConsole->Print("123");
+
+	reversi::UnitTest* unitTest = new reversi::UnitTest();
+	unitTest->Execute();
+
+
+
 
 	/*
 	while (true)
