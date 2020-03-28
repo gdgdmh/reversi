@@ -1,19 +1,19 @@
-#include "UnitTest.h"
+ï»¿#include "UnitTest.h"
 
 /**
- * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+ * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 reversi::UnitTest::UnitTest() {
 }
 
 /**
- * ƒfƒXƒgƒ‰ƒNƒ^
+ * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 reversi::UnitTest::~UnitTest() {
 }
 
 /**
- * ’P‘ÌƒeƒXƒg‚ğÀs‚·‚é
+ * å˜ä½“ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹
  */
 void reversi::UnitTest::Execute() {
 }
