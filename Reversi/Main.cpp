@@ -13,10 +13,18 @@ int main(int argc, const char* argv[]) {
 		// 実装テスト
 		reversi::DevelopTest* developTest = new reversi::DevelopTest();
 		developTest->Execute();
+		if (developTest) {
+			delete developTest;
+			developTest = NULL;
+		}
 	} else {
 		// リバーシゲーム
 		reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
 		reversiGame->Task();
+		if (reversiGame) {
+			delete reversiGame;
+			reversiGame = NULL;
+		}
 	}
 
 	/*
