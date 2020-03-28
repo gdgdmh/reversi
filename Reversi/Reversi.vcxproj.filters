@@ -48,8 +48,8 @@
     <ClCompile Include="reversi\scene\TestScene.cpp">
       <Filter>ソース ファイル\reversi\scene</Filter>
     </ClCompile>
-    <ClCompile Include="reversi\scene\SceneBase.cpp">
-      <Filter>ソース ファイル\reversi\scene</Filter>
+    <ClCompile Include="reversi\util\Assert.cpp">
+      <Filter>ソース ファイル\reversi\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="reversi\scene\SceneBase.h">
       <Filter>ソース ファイル\reversi\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\Assert.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

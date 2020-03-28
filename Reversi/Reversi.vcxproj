@@ -149,11 +149,11 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="reversi\ReversiGame.cpp" />
-    <ClCompile Include="reversi\scene\SceneBase.cpp" />
     <ClCompile Include="reversi\scene\TestScene.cpp" />
     <ClCompile Include="reversi\test\DevelopTest.cpp" />
     <ClCompile Include="reversi\test\UnitTest.cpp" />
     <ClCompile Include="reversi\test\UnitTestBase.cpp" />
+    <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +163,7 @@
     <ClInclude Include="reversi\test\DevelopTest.h" />
     <ClInclude Include="reversi\test\UnitTest.h" />
     <ClInclude Include="reversi\test\UnitTestBase.h" />
+    <ClInclude Include="reversi\util\Assert.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
