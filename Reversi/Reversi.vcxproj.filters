@@ -62,5 +62,8 @@
     <ClInclude Include="reversi\test\UnitTestBase.h">
       <Filter>ソース ファイル\reversi\test</Filter>
     </ClInclude>
+    <ClInclude Include="reversi\util\MethodTransition.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

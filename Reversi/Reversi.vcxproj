@@ -161,6 +161,7 @@
     <ClInclude Include="reversi\test\UnitTestBase.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
+    <ClInclude Include="reversi\util\MethodTransition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
