@@ -20,13 +20,16 @@ reversi::DevelopTest::~DevelopTest() {
  */
 void reversi::DevelopTest::Execute() {
 
+	/*
+	// コンソールテスト
 	reversi::IOutputConsole* outputConsole = new reversi::OutputConsole();
 	outputConsole->Print("aue");
 	outputConsole->PrintLine("ライン");
 	outputConsole->Print("123");
-
+	// ユニットテスト
 	reversi::UnitTest* unitTest = new reversi::UnitTest();
 	unitTest->Execute();
+	*/
 
 
 }

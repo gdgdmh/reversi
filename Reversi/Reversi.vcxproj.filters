@@ -22,6 +22,9 @@
     <Filter Include="ソース ファイル\reversi\test">
       <UniqueIdentifier>{8e87fa8a-fdfa-4343-8ba3-b474aa551f45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\reversi\scene">
+      <UniqueIdentifier>{241a3e2f-418c-42fc-9445-7d2666c8266a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -41,6 +44,12 @@
     </ClCompile>
     <ClCompile Include="reversi\test\UnitTestBase.cpp">
       <Filter>ソース ファイル\reversi\test</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\scene\TestScene.cpp">
+      <Filter>ソース ファイル\reversi\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\scene\SceneBase.cpp">
+      <Filter>ソース ファイル\reversi\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +73,12 @@
     </ClInclude>
     <ClInclude Include="reversi\util\MethodTransition.h">
       <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\scene\TestScene.h">
+      <Filter>ソース ファイル\reversi\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\scene\SceneBase.h">
+      <Filter>ソース ファイル\reversi\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

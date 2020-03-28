@@ -11,7 +11,7 @@ public:
 	 * コンストラクタ
 	 * @param execute_method 最初に実行するメソッドポインタ
 	 */
-	MethodTransition(MethodTransition<T>(T::*execute_method)()) : method(execute_method) {
+	MethodTransition(MethodTransition<T> (T::*f)()) : func(f) {
 	};
 
 	/**
@@ -26,12 +26,12 @@ public:
 	 * @return        メソッド遷移クラス
 	 */
 	MethodTransition<T> Execute(T* object) {
-		return (object->*scene)();
+		return (object->*func)();
 	}
 
 private:
 	// 実行するクラスのメソッドポインタ
-	MethodTransition<T> (T::*method)();
+	MethodTransition<T> (T::*func)();
 };
 
 }
