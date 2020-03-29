@@ -23,6 +23,14 @@ public:
 	 */
 	static void AssertEquals(int expected, std::string message);
 
+	/**
+	 * 配列の範囲をチェックして超えていたときはmessageを出力してプログラムを停止する
+	 * @param index   チェックをするindex
+	 * @param maxSize 配列のサイズ
+	 * @param message 出力するメッセージ
+	 */
+	static void AssertArrayRange(int index, int maxSize, std::string message);
+
 };
 
 }
