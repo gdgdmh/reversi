@@ -14,10 +14,6 @@ public:
 		INVALID,    // 無効マス
 	};
 
-	static const int BOARD_SIZE = 10 * 10;     // 盤の大きさ(1次元配列) 8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている
-	static const int BOARD_SIZE_X = 8;     // 盤の大きさX(Xマスの数)
-	static const int BOARD_SIZE_Y = 8;     // 盤の大きさY(Yマスの数)
-
 	//　盤の座標
 	enum POSITION {
 		A1 = 11, B1 = 12, C1 = 13, D1 = 14, E1 = 15, F1 = 16, G1 = 17, H1 = 18,
@@ -29,6 +25,20 @@ public:
 		A7 = 71, B7 = 72, C7 = 73, D7 = 74, E7 = 75, F7 = 76, G7 = 77, H7 = 78,
 		A8 = 81, B8 = 82, C8 = 83, D8 = 84, E8 = 85, F8 = 86, G8 = 87, H8 = 88
 	};
+
+	// 着手情報
+	typedef struct {
+		POSITION position;	// 位置
+		BOARD_INFO info;	// 着手する石
+	}MOVE_INFO;
+
+	static const int BOARD_SIZE = 10 * 10;     // 盤の大きさ(1次元配列) 8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている
+	static const int BOARD_SIZE_X = 8;     	// 盤の大きさX(Xマスの数)
+	static const int BOARD_SIZE_Y = 8;     	// 盤の大きさY(Yマスの数)
+	static const int POSITION_SIZE = 64;	// 座標の最大数
+
+	static const int POSITIONS[ReversiConstant::POSITION_SIZE];	// 全ての座標(通常使用するもののみ、番兵は含まない)
+
 };
 
 }

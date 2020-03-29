@@ -1,6 +1,7 @@
 ﻿#include "DevelopTest.h"
 // test include(テストするものはここに追加する)
 #include "../util/OutputConsole.h"
+#include "../util/OutputVisualStudioConsole.h"
 #include "../test/UnitTest.h"
 #include "../logic/base/Board.h"
 
@@ -22,7 +23,13 @@ reversi::DevelopTest::~DevelopTest() {
 void reversi::DevelopTest::Execute() {
 
 	Board board;
-	board.Clear();
+	board.InitializeGame();
+
+	// 両方で出力
+	OutputConsole console;
+	OutputVisualStudioConsole vsConsole;
+	board.Render(&console);
+	board.Render(&vsConsole);
 
 	/*
 	// コンソールテスト

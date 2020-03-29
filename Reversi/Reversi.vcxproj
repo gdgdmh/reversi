@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="reversi\logic\base\Board.cpp" />
+    <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
     <ClCompile Include="reversi\ReversiGame.cpp" />
     <ClCompile Include="reversi\scene\TestScene.cpp" />
     <ClCompile Include="reversi\test\DevelopTest.cpp" />
