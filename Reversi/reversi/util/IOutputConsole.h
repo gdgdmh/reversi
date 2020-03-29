@@ -1,26 +1,26 @@
-#ifndef REVERSI_UTIL_IOUTPUTCONSOLE_H_
+ï»¿#ifndef REVERSI_UTIL_IOUTPUTCONSOLE_H_
 #define REVERSI_UTIL_IOUTPUTCONSOLE_H_
 
 #include <string>
 
 namespace reversi {
 
-	// ƒRƒ“ƒ\[ƒ‹o—Í‚ÌƒCƒ“ƒ^[ƒtƒF[ƒXƒNƒ‰ƒX
+	// ã‚³ãƒ³ã‚½ãƒ¼ãƒ«å‡ºåŠ›ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹
 	class IOutputConsole {
 	public:
 
 		/**
-		 * ƒfƒXƒgƒ‰ƒNƒ^
+		 * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		virtual ~IOutputConsole() {}
 
 		/**
-		 * •¶š—ñ‚ğo—Í‚·‚é
+		 * æ–‡å­—åˆ—ã‚’å‡ºåŠ›ã™ã‚‹
 		 */
 		virtual void Print(std::string string) = 0;
 
 		/**
-		 * ‰üs•t‚«•¶š—ñ‚ğo—Í‚·‚é
+		 * æ”¹è¡Œä»˜ãæ–‡å­—åˆ—ã‚’å‡ºåŠ›ã™ã‚‹
 		 */
 		virtual void PrintLine(std::string string) = 0;
 	};

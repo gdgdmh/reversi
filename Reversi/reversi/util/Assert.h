@@ -31,6 +31,25 @@ public:
 	 */
 	static void AssertArrayRange(int index, int maxSize, std::string message);
 
+private:
+
+	/**
+	 * メッセージを出力する
+	 * @param message 出力するメッセージ
+	 */
+	static void Output(std::string message);
+
+	/**
+	 * コンソールにメッセージを出力する
+	 * @param message 出力するメッセージ
+	 */
+	static void OutputConsole(std::string message);
+
+	/**
+	 * VisualStudioのコンソールに出力する
+	 * @param message 出力するメッセージ
+	 */
+	static void OutputVisualStudioConsole(std::string message);
 };
 
 }

@@ -156,6 +156,7 @@
     <ClCompile Include="reversi\test\UnitTestBase.cpp" />
     <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
+    <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\logic\base\Board.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
+    <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

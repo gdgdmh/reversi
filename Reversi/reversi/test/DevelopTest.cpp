@@ -2,6 +2,7 @@
 // test include(テストするものはここに追加する)
 #include "../util/OutputConsole.h"
 #include "../test/UnitTest.h"
+#include "../logic/base/Board.h"
 
 /**
  * コンストラクタ
@@ -19,6 +20,9 @@ reversi::DevelopTest::~DevelopTest() {
  * 実行
  */
 void reversi::DevelopTest::Execute() {
+
+	Board board;
+	board.Clear();
 
 	/*
 	// コンソールテスト

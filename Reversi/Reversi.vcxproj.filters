@@ -60,6 +60,9 @@
     <ClCompile Include="reversi\logic\base\Board.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\base\ReversiConstant.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\OutputVisualStudioConsole.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,13 +1,16 @@
 ﻿#include "Board.h"
 #include "../../util/IOutputConsole.h"
+#include "../../util/Assert.h"
 
 /**
  * コンストラクタ
  */
 reversi::Board::Board() {
 	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Board() index over");
 		board[i] = reversi::ReversiConstant::INVALID;
 	}
+
 	boardSizeX = reversi::ReversiConstant::BOARD_SIZE_X;
 	boardSizeY = reversi::ReversiConstant::BOARD_SIZE_Y;
 }
@@ -23,6 +26,7 @@ reversi::Board::~Board() {
  */
 void reversi::Board::Clear() {
 	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clear() index over");
 		board[i] = reversi::ReversiConstant::INVALID;
 	}
 }
