@@ -1,9 +1,15 @@
 ﻿#include "Board.h"
+#include "../../util/IOutputConsole.h"
 
 /**
  * コンストラクタ
  */
 reversi::Board::Board() {
+	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
+		board[i] = reversi::ReversiConstant::INVALID;
+	}
+	boardSizeX = reversi::ReversiConstant::BOARD_SIZE_X;
+	boardSizeY = reversi::ReversiConstant::BOARD_SIZE_Y;
 }
 
 /**
@@ -16,6 +22,9 @@ reversi::Board::~Board() {
  * 盤のクリア(全て石なしとする)
  */
 void reversi::Board::Clear() {
+	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
+		board[i] = reversi::ReversiConstant::INVALID;
+	}
 }
 
 /**
@@ -39,4 +48,11 @@ void reversi::Board::Put() {
 reversi::ReversiConstant::BOARD_INFO GetStone(int x, int y) {
 	// 仮(ビルドを通すため)
 	return reversi::ReversiConstant::BOARD_INFO::NONE;
+}
+
+/**
+ * 盤の表示(コンソール)
+ * @param console コンソール出力先
+ */
+void reversi::Board::Render(IOutputConsole* console) {
 }

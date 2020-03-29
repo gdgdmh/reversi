@@ -3,6 +3,11 @@
 
 #include "ReversiConstant.h"
 
+// 前方宣言
+namespace reversi {
+	class IOutputConsole;
+}
+
 namespace reversi {
 
 //  8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている(Xが無効マス)
@@ -51,6 +56,12 @@ public:
 	 * @return   石情報
 	 */
 	ReversiConstant::BOARD_INFO GetStone(int x, int y);
+
+	/**
+	 * 盤の表示(コンソール)
+	 * @param console コンソール出力先
+	 */
+	void Render(IOutputConsole* console);
 
 private:
 	// 盤
