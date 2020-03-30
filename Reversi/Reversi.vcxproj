@@ -154,10 +154,10 @@
     <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp" />
     <ClCompile Include="reversi\ReversiGame.cpp" />
     <ClCompile Include="reversi\scene\TestScene.cpp" />
-    <ClCompile Include="reversi\test\base\TestDevelop.cpp" />
     <ClCompile Include="reversi\test\base\UnitTest.cpp" />
     <ClCompile Include="reversi\test\base\UnitTestBase.cpp" />
     <ClCompile Include="reversi\test\code\TestBoard.cpp" />
+    <ClCompile Include="reversi\test\code\TestDevelop.cpp" />
     <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
     <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp" />
@@ -171,10 +171,10 @@
     <ClInclude Include="reversi\ReversiGame.h" />
     <ClInclude Include="reversi\scene\SceneBase.h" />
     <ClInclude Include="reversi\scene\TestScene.h" />
-    <ClInclude Include="reversi\test\base\TestDevelop.h" />
     <ClInclude Include="reversi\test\base\UnitTest.h" />
     <ClInclude Include="reversi\test\base\UnitTestBase.h" />
     <ClInclude Include="reversi\test\code\TestBoard.h" />
+    <ClInclude Include="reversi\test\code\TestDevelop.h" />
     <ClInclude Include="reversi\util\Assert.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />

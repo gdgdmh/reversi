@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include "reversi/ReversiGame.h"
-#include "reversi/test/base/TestDevelop.h"
+#include "reversi/test/code/TestDevelop.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
