@@ -4,6 +4,7 @@
 #include "../util/OutputVisualStudioConsole.h"
 #include "../test/UnitTest.h"
 #include "../logic/base/Board.h"
+#include "../logic/base/Move.h"
 
 /**
  * コンストラクタ
@@ -27,6 +28,14 @@ void reversi::DevelopTest::Execute() {
 
 	// 出力
 	board.Render();
+
+	// 空いているマスを確認
+	{
+		Move move;
+		reversi::EMPTY_POSITION emptyPosition;
+		move.FindEmptyPosition(board, emptyPosition);
+	}
+
 
 	/*
 	{

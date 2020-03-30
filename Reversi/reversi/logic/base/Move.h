@@ -1,6 +1,7 @@
 ﻿#ifndef REVERSI_LOGIC_BASE_MOVE_H_
 #define REVERSI_LOGIC_BASE_MOVE_H_
 
+#include <vector>
 #include "ReversiConstant.h"
 
 namespace reversi {
@@ -11,9 +12,8 @@ namespace reversi {
 
 // 石が置かれていない場所データ
 typedef struct {
-	reversi::ReversiConstant::POSITION* positions;
-	int count;
-} EMPTY_POSITIONS;
+	std::vector<reversi::ReversiConstant::POSITION> position;
+} EMPTY_POSITION;
 
 // 着手クラス
 class Move {
@@ -33,7 +33,7 @@ public:
 	 * @param board          盤データ
 	 * @param emptyPositions 結果をいれるための参照渡しオブジェクト
 	 */
-	void FindEmptyPosition(const reversi::Board& board, EMPTY_POSITIONS& emptyPositions);
+	void FindEmptyPosition(const reversi::Board& board, EMPTY_POSITION& emptyPosition);
 
 	/**
 	 * 打てる場所を探す
@@ -41,9 +41,11 @@ public:
 	 * @param emptyPositions 石の置かれてない場所が入ったデータ
 	 * @param turn           手番(黒,白)
 	 */
-	void FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITIONS& emptyPositions, reversi::ReversiConstant::TURN turn);
+	void FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn);
 
 private:
+
+	//void CheckValidBoardEmptyArea(const reversi::Board& board, int position, );
 
 };
 
