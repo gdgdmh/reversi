@@ -2,7 +2,7 @@
 #define REVERSI_TEST_UNITTESTBASE_H_
 
 #include <string>
-#include "../util/IOutputConsole.h"
+#include "../../util/IOutputConsole.h"
 
 namespace reversi {
 

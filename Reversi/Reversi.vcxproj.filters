@@ -34,6 +34,12 @@
     <Filter Include="ソース ファイル\reversi\logic\render">
       <UniqueIdentifier>{b023d082-bbf1-423d-a892-fd28a625ae6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\reversi\test\base">
+      <UniqueIdentifier>{a5979944-c074-41ca-a60a-be7340347242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\reversi\test\code">
+      <UniqueIdentifier>{d0363eb7-1ab1-4721-b012-7fbabdab8261}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -44,15 +50,6 @@
     </ClCompile>
     <ClCompile Include="reversi\util\OutputConsole.cpp">
       <Filter>ソース ファイル\reversi\util</Filter>
-    </ClCompile>
-    <ClCompile Include="reversi\test\UnitTest.cpp">
-      <Filter>ソース ファイル\reversi\test</Filter>
-    </ClCompile>
-    <ClCompile Include="reversi\test\DevelopTest.cpp">
-      <Filter>ソース ファイル\reversi\test</Filter>
-    </ClCompile>
-    <ClCompile Include="reversi\test\UnitTestBase.cpp">
-      <Filter>ソース ファイル\reversi\test</Filter>
     </ClCompile>
     <ClCompile Include="reversi\scene\TestScene.cpp">
       <Filter>ソース ファイル\reversi\scene</Filter>
@@ -75,6 +72,18 @@
     <ClCompile Include="reversi\logic\base\Move.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\test\base\DevelopTest.cpp">
+      <Filter>ソース ファイル\reversi\test\base</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\test\base\UnitTest.cpp">
+      <Filter>ソース ファイル\reversi\test\base</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\test\base\UnitTestBase.cpp">
+      <Filter>ソース ファイル\reversi\test\base</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\test\code\TestBoard.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h">
@@ -85,15 +94,6 @@
     </ClInclude>
     <ClInclude Include="reversi\util\IOutputConsole.h">
       <Filter>ソース ファイル\reversi\util</Filter>
-    </ClInclude>
-    <ClInclude Include="reversi\test\UnitTest.h">
-      <Filter>ソース ファイル\reversi\test</Filter>
-    </ClInclude>
-    <ClInclude Include="reversi\test\DevelopTest.h">
-      <Filter>ソース ファイル\reversi\test</Filter>
-    </ClInclude>
-    <ClInclude Include="reversi\test\UnitTestBase.h">
-      <Filter>ソース ファイル\reversi\test</Filter>
     </ClInclude>
     <ClInclude Include="reversi\util\MethodTransition.h">
       <Filter>ソース ファイル\reversi\util</Filter>
@@ -124,6 +124,18 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\base\Move.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\base\DevelopTest.h">
+      <Filter>ソース ファイル\reversi\test\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\base\UnitTest.h">
+      <Filter>ソース ファイル\reversi\test\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\base\UnitTestBase.h">
+      <Filter>ソース ファイル\reversi\test\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestBoard.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

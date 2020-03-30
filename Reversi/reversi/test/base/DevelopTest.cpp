@@ -1,10 +1,13 @@
 ﻿#include "DevelopTest.h"
 // test include(テストするものはここに追加する)
-#include "../util/OutputConsole.h"
-#include "../util/OutputVisualStudioConsole.h"
-#include "../test/UnitTest.h"
-#include "../logic/base/Board.h"
-#include "../logic/base/Move.h"
+#include "../../util/OutputConsole.h"
+#include "../../util/OutputVisualStudioConsole.h"
+#include "../../test/base/UnitTest.h"
+#include "../../logic/base/Board.h"
+#include "../../logic/base/Move.h"
+
+#include "../code/TestBoard.h"
+
 
 /**
  * コンストラクタ
@@ -22,6 +25,12 @@ reversi::DevelopTest::~DevelopTest() {
  * 実行
  */
 void reversi::DevelopTest::Execute() {
+
+	// UnitTest
+	{
+		reversi::TestBoard t;
+		t.Execute();
+	}
 
 	Board board;
 	board.InitializeGame();
