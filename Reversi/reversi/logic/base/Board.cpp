@@ -82,6 +82,31 @@ void reversi::Board::Render(IOutputConsole* const console) {
 }
 
 /**
+ * 盤の生データを取得する
+ * @return 盤の生データ
+ */
+const reversi::BOARD& reversi::Board::GetRawData() const {
+	return board;
+}
+
+/**
+ * DeepCopy
+ * @return 複製データ
+ */
+reversi::Board reversi::Board::Clone() const {
+	Board dest;
+
+	for (int i = 0; i < ReversiConstant::BOARD_SIZE; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clone() index over");
+		dest.board.boardData[i] = board.boardData[i];
+	}
+	dest.board.boardSizeX = board.boardSizeX;
+	dest.board.boardSizeY = board.boardSizeY;
+	return dest;
+}
+
+
+/**
  * 盤のクリア(全て石なしとする)
  */
 void reversi::Board::Clear() {

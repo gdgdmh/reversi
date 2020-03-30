@@ -31,6 +31,12 @@ void reversi::DevelopTest::Execute() {
 	board.Render(&console);
 	board.Render(&vsConsole);
 
+	{
+		Board board2;
+		board2 = board.Clone();
+
+	}
+
 	/*
 	// コンソールテスト
 	reversi::IOutputConsole* outputConsole = new reversi::OutputConsole();

@@ -70,8 +70,17 @@ public:
 	 */
 	void Render(IOutputConsole* const console);
 
-	// get
-	// clone
+	/**
+	 * 盤の生データを取得する
+	 * @return 盤の生データ
+	 */
+	const BOARD& GetRawData() const;
+
+	/**
+	 * DeepCopy
+	 * @return 複製データ
+	 */
+	Board Clone() const;
 
 private:
 
