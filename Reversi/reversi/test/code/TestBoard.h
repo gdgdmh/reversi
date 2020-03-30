@@ -6,12 +6,12 @@
 namespace reversi {
 
 // 盤テストクラス
-class TestBoard {
+class TestBoard : public UnitTestBase {
 public:
 	/**
 	 * コンストラクタ
 	 */
-	TestBoard();
+	TestBoard(reversi::IOutputConsole* outputConsole);
 
 	/**
 	 * デストラクタ

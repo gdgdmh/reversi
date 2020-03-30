@@ -1,15 +1,17 @@
 ﻿#ifndef REVERSI_TEST_TESTDEVELOP_H_
 #define REVERSI_TEST_TESTDEVELOP_H_
 
+#include "../base/UnitTestBase.h"
+
 namespace reversi {
 
 	// 実装テスト用クラス
-	class TestDevelop {
+	class TestDevelop : public UnitTestBase {
 	public:
 		/**
 		 * コンストラクタ
 		 */
-		TestDevelop();
+		TestDevelop(reversi::IOutputConsole* outputConsole);
 
 		/**
 		 * デストラクタ

@@ -4,6 +4,8 @@
 #include <string>
 #include "reversi/ReversiGame.h"
 #include "reversi/test/code/TestDevelop.h"
+#include "reversi/util/IOutputConsole.h"
+#include "reversi/util/OutputConsole.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
@@ -11,7 +13,8 @@ int main(int argc, const char* argv[]) {
 	bool isTest = true;
 	if (isTest) {
 		// 実装テスト
-		reversi::TestDevelop* testDevelop = new reversi::TestDevelop();
+		reversi::IOutputConsole* console = new reversi::OutputConsole();
+		reversi::TestDevelop* testDevelop = new reversi::TestDevelop(console);
 		testDevelop->Execute();
 		if (testDevelop) {
 			delete testDevelop;

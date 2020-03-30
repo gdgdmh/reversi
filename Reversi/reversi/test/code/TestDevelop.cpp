@@ -1,5 +1,6 @@
 ﻿#include "TestDevelop.h"
 // test include(テストするものはここに追加する)
+#include "../../util/IOutputConsole.h"
 #include "../../util/OutputConsole.h"
 #include "../../util/OutputVisualStudioConsole.h"
 #include "../../test/base/UnitTest.h"
@@ -12,7 +13,7 @@
 /**
  * コンストラクタ
  */
-reversi::TestDevelop::TestDevelop() {
+reversi::TestDevelop::TestDevelop(reversi::IOutputConsole* outputConsole) : UnitTestBase(outputConsole) {
 }
 
 /**
@@ -28,7 +29,8 @@ void reversi::TestDevelop::Execute() {
 
 	// UnitTest
 	{
-		reversi::TestBoard t;
+		IOutputConsole* console = new OutputConsole();
+		reversi::TestBoard t(console);
 		t.Execute();
 	}
 

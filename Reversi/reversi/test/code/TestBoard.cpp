@@ -6,7 +6,7 @@
 /**
  * コンストラクタ
  */
-reversi::TestBoard::TestBoard() {
+reversi::TestBoard::TestBoard(reversi::IOutputConsole* outputConsole) : UnitTestBase(outputConsole) {
 }
 
 /**
