@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include "reversi/ReversiGame.h"
-#include "reversi/test/base/DevelopTest.h"
+#include "reversi/test/base/TestDevelop.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
@@ -11,11 +11,11 @@ int main(int argc, const char* argv[]) {
 	bool isTest = true;
 	if (isTest) {
 		// 実装テスト
-		reversi::DevelopTest* developTest = new reversi::DevelopTest();
-		developTest->Execute();
-		if (developTest) {
-			delete developTest;
-			developTest = NULL;
+		reversi::TestDevelop* testDevelop = new reversi::TestDevelop();
+		testDevelop->Execute();
+		if (testDevelop) {
+			delete testDevelop;
+			testDevelop = NULL;
 		}
 	} else {
 		// リバーシゲーム

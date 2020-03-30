@@ -1,20 +1,20 @@
-﻿#ifndef REVERSI_TEST_DEVELOPTEST_H_
-#define REVERSI_TEST_DEVELOPTEST_H_
+﻿#ifndef REVERSI_TEST_TESTDEVELOP_H_
+#define REVERSI_TEST_TESTDEVELOP_H_
 
 namespace reversi {
 
 	// 実装テスト用クラス
-	class DevelopTest {
+	class TestDevelop {
 	public:
 		/**
 		 * コンストラクタ
 		 */
-		DevelopTest();
+		TestDevelop();
 
 		/**
 		 * デストラクタ
 		 */
-		virtual ~DevelopTest();
+		virtual ~TestDevelop();
 
 		/**
 		 * 実行
@@ -24,4 +24,4 @@ namespace reversi {
 
 }
 
-#endif  // REVERSI_TEST_DEVELOPTEST_H_
+#endif  // REVERSI_TEST_TESTDEVELOP_H_

@@ -1,4 +1,4 @@
-﻿#include "DevelopTest.h"
+﻿#include "TestDevelop.h"
 // test include(テストするものはここに追加する)
 #include "../../util/OutputConsole.h"
 #include "../../util/OutputVisualStudioConsole.h"
@@ -12,19 +12,19 @@
 /**
  * コンストラクタ
  */
-reversi::DevelopTest::DevelopTest() {
+reversi::TestDevelop::TestDevelop() {
 }
 
 /**
  * デストラクタ
  */
-reversi::DevelopTest::~DevelopTest() {
+reversi::TestDevelop::~TestDevelop() {
 }
 
 /**
  * 実行
  */
-void reversi::DevelopTest::Execute() {
+void reversi::TestDevelop::Execute() {
 
 	// UnitTest
 	{
