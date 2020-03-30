@@ -5,8 +5,10 @@
 /**
  * コンストラクタ
  */
-reversi::Board::Board() : boardSizeX(reversi::ReversiConstant::BOARD_SIZE_X), boardSizeY(reversi::ReversiConstant::BOARD_SIZE_Y) {
+reversi::Board::Board() {
 	Clear();
+	board.boardSizeX = reversi::ReversiConstant::BOARD_SIZE_X;
+	board.boardSizeY = reversi::ReversiConstant::BOARD_SIZE_Y;
 }
 
 /**
@@ -85,7 +87,7 @@ void reversi::Board::Render(IOutputConsole* const console) {
 void reversi::Board::Clear() {
 	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clear() index over");
-		board[i] = reversi::ReversiConstant::INVALID;
+		board.boardData[i] = reversi::ReversiConstant::INVALID;
 	}
 }
 
@@ -96,7 +98,7 @@ void reversi::Board::SetEmpty() {
 	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "Board::SetEmpty() index over positions");
 		reversi::Assert::AssertArrayRange(reversi::ReversiConstant::POSITIONS[i], reversi::ReversiConstant::BOARD_SIZE, "Board::SetEmpty() index over board");
-		board[reversi::ReversiConstant::POSITIONS[i]] = reversi::ReversiConstant::BOARD_INFO::NONE;
+		board.boardData[reversi::ReversiConstant::POSITIONS[i]] = reversi::ReversiConstant::BOARD_INFO::NONE;
 	}
 }
 
@@ -104,10 +106,10 @@ void reversi::Board::SetEmpty() {
  * ゲーム開始のための初期配置設定
  */
 void reversi::Board::Preset() {
-	board[reversi::ReversiConstant::POSITION::D4] = reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board[reversi::ReversiConstant::POSITION::E5] = reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board[reversi::ReversiConstant::POSITION::E4] = reversi::ReversiConstant::BOARD_INFO::BLACK;
-	board[reversi::ReversiConstant::POSITION::D5] = reversi::ReversiConstant::BOARD_INFO::BLACK;
+	board.boardData[reversi::ReversiConstant::POSITION::D4] = reversi::ReversiConstant::BOARD_INFO::WHITE;
+	board.boardData[reversi::ReversiConstant::POSITION::E5] = reversi::ReversiConstant::BOARD_INFO::WHITE;
+	board.boardData[reversi::ReversiConstant::POSITION::E4] = reversi::ReversiConstant::BOARD_INFO::BLACK;
+	board.boardData[reversi::ReversiConstant::POSITION::D5] = reversi::ReversiConstant::BOARD_INFO::BLACK;
 }
 
 /**
@@ -161,7 +163,7 @@ void reversi::Board::RenderBoardHorizontalCells(IOutputConsole* const console, i
 		// boardのindex overチェック
 		Assert::AssertArrayRange(position, reversi::ReversiConstant::BOARD_SIZE, "Board::RenderBoardHorizontalCells() index over board");
 		// 盤の情報から表示文字列を結合
-		out += "　" + GetBoardInfoString((reversi::ReversiConstant::BOARD_INFO)board[position]) + "　｜";
+		out += "　" + GetBoardInfoString((reversi::ReversiConstant::BOARD_INFO)board.boardData[position]) + "　｜";
 	}
 	console->PrintLine(out);
 }
