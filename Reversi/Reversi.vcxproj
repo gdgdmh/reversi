@@ -150,6 +150,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="reversi\logic\base\Board.cpp" />
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
+    <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp" />
     <ClCompile Include="reversi\ReversiGame.cpp" />
     <ClCompile Include="reversi\scene\TestScene.cpp" />
     <ClCompile Include="reversi\test\DevelopTest.cpp" />
@@ -162,6 +163,8 @@
   <ItemGroup>
     <ClInclude Include="reversi\logic\base\Board.h" />
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
+    <ClInclude Include="reversi\logic\render\IRenderBoard.h" />
+    <ClInclude Include="reversi\logic\render\RenderBoardConsole.h" />
     <ClInclude Include="reversi\ReversiGame.h" />
     <ClInclude Include="reversi\scene\SceneBase.h" />
     <ClInclude Include="reversi\scene\TestScene.h" />

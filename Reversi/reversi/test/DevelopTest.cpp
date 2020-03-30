@@ -25,17 +25,16 @@ void reversi::DevelopTest::Execute() {
 	Board board;
 	board.InitializeGame();
 
-	// 両方で出力
-	OutputConsole console;
-	OutputVisualStudioConsole vsConsole;
-	board.Render(&console);
-	board.Render(&vsConsole);
+	// 出力
+	board.Render();
 
+	/*
 	{
 		Board board2;
 		board2 = board.Clone();
 
 	}
+	*/
 
 	/*
 	// コンソールテスト

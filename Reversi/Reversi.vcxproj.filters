@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\reversi\logic\base">
       <UniqueIdentifier>{c38a1007-b6b0-45df-bf9f-30ab72f6cfcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\reversi\logic\render">
+      <UniqueIdentifier>{b023d082-bbf1-423d-a892-fd28a625ae6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp">
+      <Filter>ソース ファイル\reversi\logic\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="reversi\util\OutputVisualStudioConsole.h">
       <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\render\IRenderBoard.h">
+      <Filter>ソース ファイル\reversi\logic\render</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\render\RenderBoardConsole.h">
+      <Filter>ソース ファイル\reversi\logic\render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
