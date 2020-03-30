@@ -127,6 +127,11 @@ private:
 	 */
 	std::string GetFullWidth1Number(int number);
 
+	/**
+	 * 石の表示用の文字列を取得する
+	 * @param  info 盤情報
+	 * @return      盤情報表示用文字列
+	 */
 	std::string GetBoardInfoString(ReversiConstant::BOARD_INFO info);
 
 private:
