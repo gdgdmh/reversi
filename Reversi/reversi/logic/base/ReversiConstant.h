@@ -32,7 +32,13 @@ public:
 	typedef struct {
 		POSITION position;	// 位置
 		BOARD_INFO info;	// 着手する石
-	}MOVE_INFO;
+	} MOVE_INFO;
+
+	// 手番
+	enum TURN {
+		TURN_BLACK,	// 黒の手番
+		TURN_WHITE,	// 白の手番
+	};
 
 	static const int BOARD_SIZE = 10 * 10;     // 盤の大きさ(1次元配列) 8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている
 	static const int BOARD_SIZE_X = 8;     	// 盤の大きさX(Xマスの数)

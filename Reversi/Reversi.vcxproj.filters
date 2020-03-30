@@ -72,6 +72,9 @@
     <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp">
       <Filter>ソース ファイル\reversi\logic\render</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\logic\base\Move.cpp">
+      <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\render\RenderBoardConsole.h">
       <Filter>ソース ファイル\reversi\logic\render</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\base\Move.h">
+      <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

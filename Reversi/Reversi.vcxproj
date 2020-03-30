@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="reversi\logic\base\Board.cpp" />
+    <ClCompile Include="reversi\logic\base\Move.cpp" />
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
     <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp" />
     <ClCompile Include="reversi\ReversiGame.cpp" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\logic\base\Board.h" />
+    <ClInclude Include="reversi\logic\base\Move.h" />
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
     <ClInclude Include="reversi\logic\render\IRenderBoard.h" />
     <ClInclude Include="reversi\logic\render\RenderBoardConsole.h" />
