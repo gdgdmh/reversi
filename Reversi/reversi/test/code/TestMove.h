@@ -1,0 +1,29 @@
+﻿#ifndef REVERSI_TEST_CODE_TESTMOVE_H_
+#define REVERSI_TEST_CODE_TESTMOVE_H_
+
+#include "../base/UnitTestBase.h"
+
+namespace reversi {
+
+// 着手テストクラス
+class TestMove : public UnitTestBase {
+public:
+	/**
+	 * コンストラクタ
+	 */
+	TestMove(reversi::IOutputConsole* outputConsole);
+
+	/**
+	 * デストラクタ
+	 */
+	virtual ~TestMove();
+
+	/**
+	 * 実行
+	 */
+	void Execute();
+};
+
+}
+
+#endif  // REVERSI_TEST_CODE_TESTMOVE_H_

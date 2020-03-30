@@ -8,6 +8,7 @@
 #include "../../logic/base/Move.h"
 
 #include "../code/TestBoard.h"
+#include "../code/TestMove.h"
 
 
 /**
@@ -30,8 +31,16 @@ void reversi::TestDevelop::Execute() {
 	// UnitTest
 	{
 		IOutputConsole* console = new OutputConsole();
-		reversi::TestBoard t(console);
-		t.Execute();
+		// TestBoard
+		{
+			reversi::TestBoard t(console);
+			t.Execute();
+		}
+		// TestMove
+		{
+			reversi::TestMove m(console);
+			m.Execute();
+		}
 	}
 
 	Board board;

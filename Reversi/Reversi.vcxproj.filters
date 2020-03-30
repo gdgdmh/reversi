@@ -84,6 +84,9 @@
     <ClCompile Include="reversi\test\code\TestDevelop.cpp">
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\test\code\TestMove.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h">
@@ -135,6 +138,9 @@
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
     <ClInclude Include="reversi\test\code\TestDevelop.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestMove.h">
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
