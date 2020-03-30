@@ -50,28 +50,33 @@ void reversi::Board::Render(IOutputConsole* const console) {
 	if (console == NULL) {
 		return;
 	}
-
-	/*
-	    std::cout << "　　　ａ　　　ｂ　　　ｃ　　　ｄ　　　ｅ　　　ｆ　　　ｇ　　　ｈ　　" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "１｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "２｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "３｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "４｜　　　｜　　　｜　　　｜　◯　｜　Ｘ　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "５｜　　　｜　　　｜　　　｜　Ｘ　｜　◯　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "６｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "７｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	    std::cout << "８｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-
-	 */
+	RenderBoardTop(console);
+	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE_Y; ++i) {
+		RenderBoardLine(console);
+		RenderBoardHorizontalCells(console, i + 1);
+	}
+	RenderBoardLine(console);
+	// 表示イメージ
+/*
+　　　ａ　　　ｂ　　　ｃ　　　ｄ　　　ｅ　　　ｆ　　　ｇ　　　ｈ　　
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+１｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+２｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+３｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+４｜　　　｜　　　｜　　　｜　○　｜　●　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+５｜　　　｜　　　｜　　　｜　●　｜　○　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+６｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+７｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+８｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜　　　｜
+　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋
+*/
 }
 
 /**
@@ -115,10 +120,6 @@ void reversi::Board::RenderBoardTop(IOutputConsole* const console) {
 	}
 	std::string renderString = "　　　ａ　　　ｂ　　　ｃ　　　ｄ　　　ｅ　　　ｆ　　　ｇ　　　ｈ　　";
 	console->PrintLine(renderString);
-	/*
-	    std::cout << "　　　ａ　　　ｂ　　　ｃ　　　ｄ　　　ｅ　　　ｆ　　　ｇ　　　ｈ　　" << std::endl;
-	    std::cout << "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋" << std::endl;
-	 */
 }
 
 /**
@@ -139,6 +140,30 @@ void reversi::Board::RenderBoardLine(IOutputConsole* const console) {
  * @param y       何列目か(1～8)
  */
 void reversi::Board::RenderBoardHorizontalCells(IOutputConsole* const console, int y) {
+	if (console == NULL) {
+		return;
+	}
+	reversi::Assert::AssertEquals((y > 0) && (y <= reversi::ReversiConstant::BOARD_SIZE_Y), "Board::RenderBoardHorizontalCells() invalid y range");
+	// コンパイラ警告対応(index overする可能性があると出てしまうので)
+	if ((y <= 0) || (y > reversi::ReversiConstant::BOARD_SIZE_Y)) {
+		return;
+	}
+	std::string out = GetFullWidth1Number(y) + "｜";
+	int posY = y - 1;
+	// 横一列の情報を取得して表示の文字列に変換
+	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE_X; ++i) {
+		// POSITION_HORIZONTALSのindex overチェック
+		Assert::AssertArrayRange(posY, reversi::ReversiConstant::BOARD_SIZE_Y, "Board::RenderBoardHorizontalCells() index over y");
+		Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE_X, "Board::RenderBoardHorizontalCells() index over x");
+		// 横一列の位置取得
+		int position = reversi::ReversiConstant::POSITION_HORIZONTALS[posY][i];
+
+		// boardのindex overチェック
+		Assert::AssertArrayRange(position, reversi::ReversiConstant::BOARD_SIZE, "Board::RenderBoardHorizontalCells() index over board");
+		// 盤の情報から表示文字列を結合
+		out += "　" + GetBoardInfoString((reversi::ReversiConstant::BOARD_INFO)board[position]) + "　｜";
+	}
+	console->PrintLine(out);
 }
 
 /**
@@ -151,4 +176,51 @@ void reversi::Board::RenderBoardBottom(IOutputConsole* const console) {
 	}
 	std::string renderString = "　＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋ーーー＋";
 	console->PrintLine(renderString);
+}
+
+/**
+ * 全角数字1桁を取得する
+ * @param  number 0～9までの数字
+ * @return        全角数字
+ */
+std::string reversi::Board::GetFullWidth1Number(int number) {
+	switch (number) {
+	case 0:
+		return "０";
+	case 1:
+		return "１";
+	case 2:
+		return "２";
+	case 3:
+		return "３";
+	case 4:
+		return "４";
+	case 5:
+		return "５";
+	case 6:
+		return "６";
+	case 7:
+		return "７";
+	case 8:
+		return "８";
+	case 9:
+		return "９";
+	default:
+		return "";
+	}
+}
+
+std::string reversi::Board::GetBoardInfoString(reversi::ReversiConstant::BOARD_INFO info) {
+	switch (info) {
+	case reversi::ReversiConstant::BOARD_INFO::NONE:
+		return "　";
+	case reversi::ReversiConstant::BOARD_INFO::BLACK:
+		return "●";
+	case reversi::ReversiConstant::BOARD_INFO::WHITE:
+		return "○";
+	case reversi::ReversiConstant::BOARD_INFO::INVALID:
+		return "X"; // 本来表示しない
+	default:
+		return "";
+	}
 }

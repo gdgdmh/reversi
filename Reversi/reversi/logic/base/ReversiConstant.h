@@ -1,6 +1,8 @@
 ﻿#ifndef REVERSI_LOGIC_BASE_REVERSICONSTANT_H_
 #define REVERSI_LOGIC_BASE_REVERSICONSTANT_H_
 
+#include <string>
+
 namespace reversi {
 
 // リバーシ定数クラス
@@ -38,6 +40,8 @@ public:
 	static const int POSITION_SIZE = 64;	// 座標の最大数
 
 	static const int POSITIONS[ReversiConstant::POSITION_SIZE];	// 全ての座標(通常使用するもののみ、番兵は含まない)
+
+	static const int POSITION_HORIZONTALS[ReversiConstant::BOARD_SIZE_Y][ReversiConstant::BOARD_SIZE_X]; // 横方向の座標
 
 };
 
