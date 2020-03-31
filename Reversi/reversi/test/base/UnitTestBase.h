@@ -22,8 +22,9 @@ public:
 
 	/**
 	 * 実行
+	 * @return trueなら成功 falseなら失敗
 	 */
-	virtual void Execute();
+	virtual bool Execute();
 
 protected:
 
@@ -31,8 +32,9 @@ protected:
 	 * 条件のチェックの成否をチェックして失敗したときはメッセージを表示する
 	 * @param expected 条件チェックした値(0なら失敗とする)
 	 * @param message  失敗した際のメッセージ
+	 * @return          falseなら失敗
 	 */
-	void Equal(int expected, std::string message);
+	bool AssertEqual(int expected, std::string message);
 
 protected:
 

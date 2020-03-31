@@ -17,6 +17,7 @@ reversi::TestBoard::~TestBoard() {
 
 /**
  * 実行
+ * @return trueなら成功 falseなら失敗
  */
 void reversi::TestBoard::Execute() {
 	reversi::Board board;
@@ -45,7 +46,6 @@ void reversi::TestBoard::Execute() {
 			reversi::Assert::AssertEquals(info == reversi::ReversiConstant::NONE, "TestBoard::Execute() NOT NONE");
 		}
 	}
-
-
+	return true;
 }
 

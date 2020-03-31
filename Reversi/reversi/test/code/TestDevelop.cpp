@@ -25,8 +25,9 @@ reversi::TestDevelop::~TestDevelop() {
 
 /**
  * 実行
+ * @return trueなら成功 falseなら失敗
  */
-void reversi::TestDevelop::Execute() {
+bool reversi::TestDevelop::Execute() {
 
 	// UnitTest
 	{
@@ -76,5 +77,5 @@ void reversi::TestDevelop::Execute() {
 	unitTest->Execute();
 	*/
 
-
+	return true;
 }

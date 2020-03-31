@@ -18,8 +18,9 @@ reversi::TestMove::~TestMove() {
 
 /**
  * 実行
+ * @return trueなら成功 falseなら失敗
  */
-void reversi::TestMove::Execute() {
+bool reversi::TestMove::Execute() {
 	reversi::Board board;
 	board.InitializeGame();
 
@@ -34,5 +35,6 @@ void reversi::TestMove::Execute() {
 		// 初期位置の石のpositionは含まれていないことを確認
 		reversi::Assert::AssertEquals((position != reversi::ReversiConstant::D4) && (position != reversi::ReversiConstant::E5) && (position != reversi::ReversiConstant::E4) && (position != reversi::ReversiConstant::D5), "TestMove::Execute invalid findEmptyPosition");
 	}
+	return true;
 }
 

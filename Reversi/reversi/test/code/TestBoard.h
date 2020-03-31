@@ -20,8 +20,9 @@ public:
 
 	/**
 	 * 実行
+	 * @return trueなら成功 falseなら失敗
 	 */
-	void Execute();
+	bool Execute();
 };
 
 }
