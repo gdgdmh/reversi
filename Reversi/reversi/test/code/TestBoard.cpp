@@ -19,7 +19,7 @@ reversi::TestBoard::~TestBoard() {
  * 実行
  * @return trueなら成功 falseなら失敗
  */
-void reversi::TestBoard::Execute() {
+bool reversi::TestBoard::Execute() {
 	reversi::Board board;
 	board.InitializeGame();
 
@@ -37,13 +37,19 @@ void reversi::TestBoard::Execute() {
 
 		if ((position == reversi::ReversiConstant::D4) || (position == reversi::ReversiConstant::E5)) {
 			// 白の初期位置
-			reversi::Assert::AssertEquals(info == reversi::ReversiConstant::WHITE, "TestBoard::Execute() NOT WHITE");
+			if (!AssertEqual(info == reversi::ReversiConstant::WHITE, "TestBoard::Execute() NOT WHITE")) {
+				return false;
+			}
 		} else if ((position == reversi::ReversiConstant::E4) || (position == reversi::ReversiConstant::D5)) {
 			// 黒の初期位置
-			reversi::Assert::AssertEquals(info == reversi::ReversiConstant::BLACK, "TestBoard::Execute() NOT BLACK");
+			if (!AssertEqual(info == reversi::ReversiConstant::BLACK, "TestBoard::Execute() NOT BLACK")) {
+				return false;
+			}
 		} else {
 			// 空白
-			reversi::Assert::AssertEquals(info == reversi::ReversiConstant::NONE, "TestBoard::Execute() NOT NONE");
+			if (!AssertEqual(info == reversi::ReversiConstant::NONE, "TestBoard::Execute() NOT NONE")) {
+				return false;
+			}
 		}
 	}
 	return true;

@@ -33,7 +33,9 @@ bool reversi::TestMove::Execute() {
 	for (int i = 0; i < size; ++i) {
 		reversi::ReversiConstant::BOARD_INFO position = (reversi::ReversiConstant::BOARD_INFO)emptyPosition.position[i];
 		// 初期位置の石のpositionは含まれていないことを確認
-		reversi::Assert::AssertEquals((position != reversi::ReversiConstant::D4) && (position != reversi::ReversiConstant::E5) && (position != reversi::ReversiConstant::E4) && (position != reversi::ReversiConstant::D5), "TestMove::Execute invalid findEmptyPosition");
+		if (!AssertEqual((position != reversi::ReversiConstant::D4) && (position != reversi::ReversiConstant::E5) && (position != reversi::ReversiConstant::E4) && (position != reversi::ReversiConstant::D5), "TestMove::Execute invalid findEmptyPosition")) {
+			return false;
+		}
 	}
 	return true;
 }
