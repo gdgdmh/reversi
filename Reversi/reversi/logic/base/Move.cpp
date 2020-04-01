@@ -152,21 +152,21 @@ bool reversi::Move::CheckEnableMoveDirection(const reversi::Board& board, int po
 int reversi::Move::ToDirectionOffset(reversi::Move::DIRECTION direction) {
 	int position = 0; // オフセットだけ欲しいので0とする
 	switch (direction) {
-	case UP:
+	case DIRECTION::UP:
 		return reversi::ReversiConstant::GetPositionUp(position);
-	case DOWN:
+	case DIRECTION::DOWN:
 		return reversi::ReversiConstant::GetPositionDown(position);
-	case LEFT:
+	case DIRECTION::LEFT:
 		return reversi::ReversiConstant::GetPositionLeft(position);
-	case RIGHT:
+	case DIRECTION::RIGHT:
 		return reversi::ReversiConstant::GetPositionRight(position);
-	case UP_LEFT:
+	case DIRECTION::UP_LEFT:
 		return reversi::ReversiConstant::GetPositionUpLeft(position);
-	case UP_RIGHT:
+	case DIRECTION::UP_RIGHT:
 		return reversi::ReversiConstant::GetPositionUpRight(position);
-	case DOWN_LEFT:
+	case DIRECTION::DOWN_LEFT:
 		return reversi::ReversiConstant::GetPositionDownLeft(position);
-	case DOWN_RIGHT:
+	case DIRECTION::DOWN_RIGHT:
 		return reversi::ReversiConstant::GetPositionDownRight(position);
 	default:
 		reversi::Assert::AssertEquals(0, "Move::ToDirectionOffset() invalid direction");

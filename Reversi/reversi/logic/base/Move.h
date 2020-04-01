@@ -19,7 +19,7 @@ typedef struct {
 class Move {
 public:
 	// 方向
-	enum DIRECTION {
+	enum class DIRECTION {
 		UP,
 		DOWN,
 		LEFT,

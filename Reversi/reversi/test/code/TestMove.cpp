@@ -52,11 +52,11 @@ bool reversi::TestMove::Execute() {
 			case reversi::ReversiConstant::POSITION::C4:
 			case reversi::ReversiConstant::POSITION::F5:
 			case reversi::ReversiConstant::POSITION::E6:
-				AssertEqual(move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN_BLACK), "TestMove::Execute invalid CheckEnableMove black enable");
+				AssertEqual(move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_BLACK), "TestMove::Execute invalid CheckEnableMove black enable");
 				break;
 			default:
 				// 打てない
-				AssertEqual(!move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN_BLACK), "TestMove::Execute invalid CheckEnableMove black disable");
+				AssertEqual(!move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_BLACK), "TestMove::Execute invalid CheckEnableMove black disable");
 				break;
 			}
 		}
@@ -73,11 +73,11 @@ bool reversi::TestMove::Execute() {
 			case reversi::ReversiConstant::POSITION::F4:
 			case reversi::ReversiConstant::POSITION::C5:
 			case reversi::ReversiConstant::POSITION::D6:
-				AssertEqual(move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN_WHITE), "TestMove::Execute invalid CheckEnableMove white enable");
+				AssertEqual(move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_WHITE), "TestMove::Execute invalid CheckEnableMove white enable");
 				break;
 			default:
 				// 打てない
-				AssertEqual(!move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN_WHITE), "TestMove::Execute invalid CheckEnableMove white disable");
+				AssertEqual(!move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_WHITE), "TestMove::Execute invalid CheckEnableMove white disable");
 				break;
 			}
 		}

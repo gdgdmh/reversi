@@ -37,7 +37,7 @@ public:
 	} MOVE_INFO;
 
 	// 手番
-	enum TURN {
+	enum class TURN {
 		TURN_BLACK, // 黒の手番
 		TURN_WHITE, // 白の手番
 	};
