@@ -30,7 +30,7 @@ public:
 		DOWN_RIGHT
 	};
 	// 挟まれチェックの状態
-	enum SANDWICH_STATUS {
+	enum class SANDWICH_STATUS {
 		SANDWICH_OK,        // 挟み状態になっている
 		SANDWICH_CONTINUE,      // まだ挟み状態になっているかわからない
 		SANDWICH_NG_INVALID,   // 無効マスで挟みにならない

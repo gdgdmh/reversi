@@ -125,15 +125,15 @@ bool reversi::Move::CheckEnableMoveDirection(const reversi::Board& board, int po
 		// 挟まれている状態の取得
 		reversi::Move::SANDWICH_STATUS status = GetSandwichInfo(isSandwichStarted, sandwichCount, turn, info);
 		switch (status) {
-		case SANDWICH_OK:
+		case SANDWICH_STATUS::SANDWICH_OK:
 			return true;
-		case SANDWICH_CONTINUE:
+		case SANDWICH_STATUS::SANDWICH_CONTINUE:
 			break;
-		case SANDWICH_NG_INVALID:
+		case SANDWICH_STATUS::SANDWICH_NG_INVALID:
 			return false;
-		case SANDWICH_NG_EMPTY:
+		case SANDWICH_STATUS::SANDWICH_NG_EMPTY:
 			return false;
-		case SANDWICH_NG_SELF:
+		case SANDWICH_STATUS::SANDWICH_NG_SELF:
 			return false;
 		default:
 			return false;
@@ -186,11 +186,11 @@ reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichSt
 
 	if (info == reversi::ReversiConstant::BOARD_INFO::INVALID) {
 		// 無効マスがあったので挟まれていない
-		return reversi::Move::SANDWICH_NG_INVALID;
+		return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_INVALID;
 	}
 	if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
 		// 空マスがあったので挟まれていない
-		return reversi::Move::SANDWICH_NG_EMPTY;
+		return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_EMPTY;
 	}
 
 
@@ -198,16 +198,16 @@ reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichSt
 		if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 			if (isSandwichStarted) {
 				// 挟んでいる状態で自分の石があったので挟んでいる
-				return reversi::Move::SANDWICH_OK;
+				return reversi::Move::SANDWICH_STATUS::SANDWICH_OK;
 			} else {
 				// 挟んでいない状態で自分の石があったら挟まれてない
-				return reversi::Move::SANDWICH_NG_SELF;
+				return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_SELF;
 			}
 		} else if (turn == reversi::ReversiConstant::TURN::TURN_WHITE) {
 			// 相手の石なので挟まれている + 石をカウント
 			isSandwichStarted = true;
 			++sandwichCount;
-			return reversi::Move::SANDWICH_CONTINUE;
+			return reversi::Move::SANDWICH_STATUS::SANDWICH_CONTINUE;
 		}
 	}
 	if (info == reversi::ReversiConstant::BOARD_INFO::WHITE) {
@@ -215,18 +215,18 @@ reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichSt
 			// 相手の石なので挟まれている + 石をカウント
 			isSandwichStarted = true;
 			++sandwichCount;
-			return reversi::Move::SANDWICH_CONTINUE;
+			return reversi::Move::SANDWICH_STATUS::SANDWICH_CONTINUE;
 		} else if (turn == reversi::ReversiConstant::TURN::TURN_WHITE) {
 			if (isSandwichStarted) {
 				// 挟んでいる状態で自分の石があったので挟んでいる
-				return reversi::Move::SANDWICH_OK;
+				return reversi::Move::SANDWICH_STATUS::SANDWICH_OK;
 			} else {
 				// 挟んでいない状態で自分の石があったら挟まれてない
-				return reversi::Move::SANDWICH_NG_SELF;
+				return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_SELF;
 			}
 		}
 	}
 	// ここには来ないはず
 	reversi::Assert::AssertEquals(0, "Move::GetSandwichInfo() invalid status");
-	return reversi::Move::SANDWICH_NG_UNKNOWN;
+	return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_UNKNOWN;
 }
