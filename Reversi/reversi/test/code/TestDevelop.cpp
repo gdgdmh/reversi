@@ -9,6 +9,7 @@
 
 #include "../code/TestBoard.h"
 #include "../code/TestMove.h"
+#include "../code/TestReverseInfo.h"
 
 
 /**
@@ -48,6 +49,11 @@ bool reversi::TestDevelop::Execute() {
 			reversi::TestMove m(console);
 			m.Execute();
 		}
+		// TestReverseInfo
+		{
+			reversi::TestReverseInfo info(console);
+			info.Execute();
+		}
 	}
 
 	Board board;
@@ -75,11 +81,6 @@ bool reversi::TestDevelop::Execute() {
 			console->PrintLine("put disable");
 		}
 	}
-
-	std::vector<int> aaa;
-	aaa.resize(16);
-
-	size_t s = aaa.size();
 
 	console->PrintLine("--- TestDevelop end -------------------");
 	return true;

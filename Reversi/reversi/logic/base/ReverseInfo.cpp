@@ -42,7 +42,7 @@ void reversi::ReverseInfo::AddReversePosition(reversi::ReverseInfo::DIRECTION di
 	reversi::Assert::AssertArrayRange((int)direction, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::AddReversePosition index over direction");
 	const int directionInt = (int)direction;
 	const int positionCount = info.reversePositionCount[directionInt];
-	if (info.reversePositionCount[directionInt] < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT) {
+	if (info.reversePositionCount[directionInt] >= reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT) {
 		return;
 	}
 	reversi::Assert::AssertArrayRange(directionInt, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::AddReversePosition index over direction 2");
