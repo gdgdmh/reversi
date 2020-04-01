@@ -37,17 +37,17 @@ bool reversi::TestBoard::Execute() {
 
 		if ((position == reversi::ReversiConstant::POSITION::D4) || (position == reversi::ReversiConstant::POSITION::E5)) {
 			// 白の初期位置
-			if (!AssertEqual(info == reversi::ReversiConstant::WHITE, "TestBoard::Execute() NOT WHITE")) {
+			if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::WHITE, "TestBoard::Execute() NOT WHITE")) {
 				return false;
 			}
 		} else if ((position == reversi::ReversiConstant::POSITION::E4) || (position == reversi::ReversiConstant::POSITION::D5)) {
 			// 黒の初期位置
-			if (!AssertEqual(info == reversi::ReversiConstant::BLACK, "TestBoard::Execute() NOT BLACK")) {
+			if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::BLACK, "TestBoard::Execute() NOT BLACK")) {
 				return false;
 			}
 		} else {
 			// 空白
-			if (!AssertEqual(info == reversi::ReversiConstant::NONE, "TestBoard::Execute() NOT NONE")) {
+			if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::NONE, "TestBoard::Execute() NOT NONE")) {
 				return false;
 			}
 		}

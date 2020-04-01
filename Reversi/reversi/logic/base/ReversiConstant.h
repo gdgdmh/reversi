@@ -11,7 +11,7 @@ public:
 
 	// 定数定義
 	// 盤の情報
-	enum BOARD_INFO {
+	enum class BOARD_INFO {
 		NONE,       // 石が置かれていない
 		BLACK,      // 黒が置かれている
 		WHITE,      // 白が置かれている

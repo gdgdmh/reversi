@@ -34,7 +34,7 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, EMPTY_POSITIO
 		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Move::FindEmptyPosition() board index over");
 
 		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
-		if (info == reversi::ReversiConstant::NONE) {
+		if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
 			emptyPosition.position.push_back(position);
 		}
 	}

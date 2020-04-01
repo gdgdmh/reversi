@@ -97,7 +97,7 @@ reversi::Board reversi::Board::Clone() const {
 void reversi::Board::Clear() {
 	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clear() index over");
-		board.boardData[i] = reversi::ReversiConstant::INVALID;
+		board.boardData[i] = (int)reversi::ReversiConstant::BOARD_INFO::INVALID;
 	}
 }
 
@@ -108,7 +108,7 @@ void reversi::Board::SetEmpty() {
 	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "Board::SetEmpty() index over positions");
 		reversi::Assert::AssertArrayRange((int)reversi::ReversiConstant::POSITIONS[i], reversi::ReversiConstant::BOARD_SIZE, "Board::SetEmpty() index over board");
-		board.boardData[(int)reversi::ReversiConstant::POSITIONS[i]] = reversi::ReversiConstant::BOARD_INFO::NONE;
+		board.boardData[(int)reversi::ReversiConstant::POSITIONS[i]] = (int)reversi::ReversiConstant::BOARD_INFO::NONE;
 	}
 }
 
@@ -116,8 +116,8 @@ void reversi::Board::SetEmpty() {
  * ゲーム開始のための初期配置設定
  */
 void reversi::Board::Preset() {
-	board.boardData[(int)reversi::ReversiConstant::POSITION::D4] = reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board.boardData[(int)reversi::ReversiConstant::POSITION::E5] = reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board.boardData[(int)reversi::ReversiConstant::POSITION::E4] = reversi::ReversiConstant::BOARD_INFO::BLACK;
-	board.boardData[(int)reversi::ReversiConstant::POSITION::D5] = reversi::ReversiConstant::BOARD_INFO::BLACK;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::D4] = (int)reversi::ReversiConstant::BOARD_INFO::WHITE;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::E5] = (int)reversi::ReversiConstant::BOARD_INFO::WHITE;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::E4] = (int)reversi::ReversiConstant::BOARD_INFO::BLACK;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::D5] = (int)reversi::ReversiConstant::BOARD_INFO::BLACK;
 }
