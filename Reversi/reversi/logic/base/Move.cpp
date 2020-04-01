@@ -56,7 +56,7 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const EMP
  * @param  turn     手番(黒,白)
  * @return          trueならその位置に打つことができる
  */
-bool CheckEnableMove(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn) {
+bool reversi::Move::CheckEnableMove(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn) {
     return false;
 }
 
@@ -68,9 +68,6 @@ bool CheckEnableMove(const reversi::Board& board, int position, reversi::Reversi
  * @param  turn     手番(黒,白)
  * @return          trueならその方向に打つことができる
  */
-bool CheckEnableMoveDirection(const reversi::Board& board, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
-
-	
-
+bool reversi::Move::CheckEnableMoveDirection(const reversi::Board& board, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
     return false;
 }
