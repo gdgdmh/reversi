@@ -50,11 +50,14 @@ bool reversi::TestDevelop::Execute() {
 	// 出力
 	board.Render();
 
-	// 空いているマスを確認
 	{
 		Move move;
 		reversi::EMPTY_POSITION emptyPosition;
+		// 空いているマスを確認
 		move.FindEmptyPosition(board, emptyPosition);
+
+		// その方向に打てるか
+		move.CheckEnableMoveDirection(board, reversi::ReversiConstant::A1, reversi::Move::DIRECTION::UP, reversi::ReversiConstant::TURN_BLACK);
 	}
 
 

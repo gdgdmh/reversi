@@ -48,3 +48,29 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, EMPTY_POSITIO
  */
 void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn) {
 }
+
+/**
+ * その場所に打つことができるか
+ * @param  board    盤データ
+ * @param  position 打とうとする盤の位置
+ * @param  turn     手番(黒,白)
+ * @return          trueならその位置に打つことができる
+ */
+bool CheckEnableMove(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn) {
+    return false;
+}
+
+/**
+ * その位置の指定方向に打つことができるか
+ * @param  board    盤データ
+ * @param  position 打とうとする盤の位置
+ * @param  direction 打とうとする方向
+ * @param  turn     手番(黒,白)
+ * @return          trueならその方向に打つことができる
+ */
+bool CheckEnableMoveDirection(const reversi::Board& board, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
+
+	
+
+    return false;
+}
