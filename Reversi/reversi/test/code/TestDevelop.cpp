@@ -51,13 +51,23 @@ bool reversi::TestDevelop::Execute() {
 	board.Render();
 
 	{
+		IOutputConsole* console = new OutputConsole();
+
 		Move move;
 		reversi::EMPTY_POSITION emptyPosition;
 		// 空いているマスを確認
 		move.FindEmptyPosition(board, emptyPosition);
 
 		// その方向に打てるか
-		move.CheckEnableMoveDirection(board, reversi::ReversiConstant::A1, reversi::Move::DIRECTION::UP, reversi::ReversiConstant::TURN_BLACK);
+		bool result = move.CheckEnableMoveDirection(board, reversi::ReversiConstant::D3, reversi::Move::DIRECTION::DOWN, reversi::ReversiConstant::TURN_BLACK);
+
+		// そのマスに打てるか
+		result = move.CheckEnableMove(board, reversi::ReversiConstant::F4, reversi::ReversiConstant::TURN_WHITE);
+		if (result) {
+			console->PrintLine("put enable");
+		} else {
+			console->PrintLine("put disable");
+		}
 	}
 
 

@@ -29,6 +29,15 @@ public:
 		DOWN_LEFT,
 		DOWN_RIGHT
 	};
+	// 挟まれチェックの状態
+	enum SANDWICH_STATUS {
+		SANDWICH_OK,        // 挟み状態になっている
+		SANDWICH_CONTINUE,      // まだ挟み状態になっているかわからない
+		SANDWICH_NG_INVALID,   // 無効マスで挟みにならない
+		SANDWICH_NG_EMPTY,     // 空マスで挟みにならない
+		SANDWICH_NG_SELF,      // 自分の石で挟みにならない
+		SANDWICH_NG_UNKNOWN
+	};
 public:
 	/**
 	 * コンストラクタ
@@ -76,8 +85,22 @@ public:
 	 */
 	bool CheckEnableMoveDirection(const reversi::Board& board, int position, DIRECTION direction, reversi::ReversiConstant::TURN turn);
 
+	/**
+	 * 位置から盤のオフセットを取得する
+	 * @param  direction 方向
+	 * @return           盤のオフセット
+	 */
+	int ToDirectionOffset(DIRECTION direction);
 
-	//void CheckValidBoardEmptyArea(const reversi::Board& board, int position, );
+	/**
+	 * 挟まれている情報の取得
+	 * @param  isSandwichStarted 挟まれているか
+	 * @param  sandwichCount     いくつ挟まれているか
+	 * @param  turn              手番(黒,白)
+	 * @param  info              盤の情報
+	 * @return                   状態
+	 */
+	reversi::Move::SANDWICH_STATUS GetSandwichInfo(bool& isSandwichStarted, int& sandwichCount, reversi::ReversiConstant::TURN turn, reversi::ReversiConstant::BOARD_INFO info);
 
 };
 
