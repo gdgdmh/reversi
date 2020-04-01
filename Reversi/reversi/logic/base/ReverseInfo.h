@@ -26,8 +26,8 @@ public:
 	// 裏返し情報
 	typedef struct {
 		reversi::ReversiConstant::POSITION position; // 打つ位置
-		reversi::ReversiConstant::POSITION reversePositions[reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT]; // 打ったことで裏返る位置
-		int reversePositionCount; // 裏返る位置の数
+		reversi::ReversiConstant::POSITION reversePositions[ReverseInfo::MAX_DIRECTION][reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT]; // 打ったことで裏返る位置
+		int reversePositionCount[ReverseInfo::MAX_DIRECTION]; // 裏返る位置の数
 		reversi::ReversiConstant::TURN turn; // 手番情報
 	} REVERSE_INFO;
 
@@ -47,9 +47,10 @@ public:
 
 	/**
 	 * 裏返る位置を追加登録する
+	 * @param direction       方向
 	 * @param reversePosition 登録するデータ
 	 */
-	void AddReversePosition(reversi::ReversiConstant::POSITION reversePosition);
+	void AddReversePosition(reversi::ReverseInfo::DIRECTION direction, reversi::ReversiConstant::POSITION reversePosition);
 
 	/**
 	 * 打つ位置の取得
@@ -61,18 +62,18 @@ public:
 
 	/**
 	 * 裏返る位置の取得
-	 * @param  index 取得するindex
-	 * @return 裏返る位置
+	 * @param  direction 方向
+	 * @param  index     取得するindex
+	 * @return           裏返る位置
 	 */
-	reversi::ReversiConstant::POSITION GetReversePosition(int index) const;
+	reversi::ReversiConstant::POSITION GetReversePosition(reversi::ReverseInfo::DIRECTION direction, int index) const;
 
 	/**
 	 * 裏返る位置の数の取得
-	 * @return 裏返る位置のデータの数
+	 * @param  direction 方向
+	 * @return           裏返る位置のデータの数
 	 */
-	int GetReversePositionCount() const {
-		return info.reversePositionCount;
-	}
+	int GetReversePositionCount(reversi::ReverseInfo::DIRECTION direction) const;
 
 	/**
 	 * 手番情報の取得

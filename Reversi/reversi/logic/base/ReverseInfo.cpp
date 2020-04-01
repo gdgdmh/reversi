@@ -10,10 +10,20 @@
  */
 reversi::ReverseInfo::ReverseInfo(reversi::ReversiConstant::POSITION position, reversi::ReversiConstant::TURN turn) {
 	info.position = position;
-	for (int i = 0; i < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++i) {
-		info.reversePositions[i] = reversi::ReversiConstant::POSITION::A1;
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		for (int j = 0; j < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++j) {
+			reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ReverseInfo index over i");
+			reversi::Assert::AssertArrayRange(j, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::ReverseInfo index over j");
+			info.reversePositions[i][j] = reversi::ReversiConstant::POSITION::A1;
+		}
+
 	}
-	info.reversePositionCount = 0;
+
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ReverseInfo index over count i");
+		info.reversePositionCount[i] = 0;
+	}
+	
 	info.turn = turn;
 }
 
@@ -25,23 +35,40 @@ reversi::ReverseInfo::~ReverseInfo() {
 
 /**
  * 裏返る位置を追加登録する
+ * @param direction       方向
  * @param reversePosition 登録するデータ
  */
-void reversi::ReverseInfo::AddReversePosition(reversi::ReversiConstant::POSITION reversePosition) {
-	if (info.reversePositionCount < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT) {
+void reversi::ReverseInfo::AddReversePosition(reversi::ReverseInfo::DIRECTION direction, reversi::ReversiConstant::POSITION reversePosition) {
+	reversi::Assert::AssertArrayRange((int)direction, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::AddReversePosition index over direction");
+	const int directionInt = (int)direction;
+	const int positionCount = info.reversePositionCount[directionInt];
+	if (info.reversePositionCount[directionInt] < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT) {
 		return;
 	}
-	reversi::Assert::AssertArrayRange(info.reversePositionCount, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::AddReversePosition index over");
-	info.reversePositions[info.reversePositionCount] = reversePosition;
-	++info.reversePositionCount;
+	reversi::Assert::AssertArrayRange(directionInt, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::AddReversePosition index over direction 2");
+	reversi::Assert::AssertArrayRange(positionCount, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::AddReversePosition index over count");
+	info.reversePositions[directionInt][positionCount] = reversePosition;
+	++info.reversePositionCount[directionInt];
 }
 
 /**
  * 裏返る位置の取得
- * @param  index 取得するindex
- * @return 裏返る位置
+ * @param  direction 方向
+ * @param  index     取得するindex
+ * @return           裏返る位置
  */
-reversi::ReversiConstant::POSITION reversi::ReverseInfo::GetReversePosition(int index) const {
-	reversi::Assert::AssertArrayRange(info.reversePositionCount, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::GetReversePosition index over");
-	return info.reversePositions[index];
+reversi::ReversiConstant::POSITION reversi::ReverseInfo::GetReversePosition(reversi::ReverseInfo::DIRECTION direction, int index) const {
+	reversi::Assert::AssertArrayRange((int)direction, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::GetReversePosition index over direction");
+	reversi::Assert::AssertArrayRange(info.reversePositionCount[(int)direction], reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::GetReversePosition index over");
+	return info.reversePositions[(int)direction][index];
+}
+
+/**
+ * 裏返る位置の数の取得
+ * @param  direction 方向
+ * @return           裏返る位置のデータの数
+ */
+int reversi::ReverseInfo::GetReversePositionCount(reversi::ReverseInfo::DIRECTION direction) const {
+	reversi::Assert::AssertArrayRange((int)direction, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::GetReversePositionCount index over");
+	return info.reversePositionCount[(int)direction];
 }
