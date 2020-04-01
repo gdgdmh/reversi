@@ -49,8 +49,9 @@ public:
 	static const int BOARD_SIZE_Y = 8;      // 盤の大きさY(Yマスの数)
 	static const int POSITION_SIZE = 64;    // 座標の最大数
 
-	static const ReversiConstant::POSITION POSITIONS[ReversiConstant::POSITION_SIZE]; // 全ての座標(通常使用するもののみ、番兵は含まない)
+	static const int ONE_MOVE_MAX_REVERSE_COUNT = 18; // 1回の着手でひっくり返る最大数
 
+	static const ReversiConstant::POSITION POSITIONS[ReversiConstant::POSITION_SIZE]; // 全ての座標(通常使用するもののみ、番兵は含まない)
 	static const ReversiConstant::POSITION POSITION_HORIZONTALS[ReversiConstant::BOARD_SIZE_Y][ReversiConstant::BOARD_SIZE_X]; // 横方向の座標
 
 public:

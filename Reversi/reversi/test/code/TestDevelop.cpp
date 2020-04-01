@@ -76,6 +76,11 @@ bool reversi::TestDevelop::Execute() {
 		}
 	}
 
+	std::vector<int> aaa;
+	aaa.resize(16);
+
+	size_t s = aaa.size();
+
 	console->PrintLine("--- TestDevelop end -------------------");
 	return true;
 }

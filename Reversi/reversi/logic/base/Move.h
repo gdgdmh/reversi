@@ -4,6 +4,7 @@
 #include <vector>
 #include "ReversiConstant.h"
 
+// 前方宣言
 namespace reversi {
 class Board;
 }
@@ -38,6 +39,15 @@ public:
 		SANDWICH_NG_SELF,      // 自分の石で挟みにならない
 		SANDWICH_NG_UNKNOWN
 	};
+	/*
+	// 着手の情報
+	typedef struct {
+		reversi::ReversiConstant::POSITION position; // 打つ位置
+		reversi::ReversiConstant::POSITION reversePositions[reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT]; // 打ったことで裏返る位置
+		int reversePositionCount; // 裏返る位置の数
+	} MOVE_INFO;
+	*/
+
 public:
 	/**
 	 * コンストラクタ
@@ -106,4 +116,4 @@ public:
 
 }
 
-#endif  // REVERSI_LOGIC_RENDER_RENDERBOARDCONSOLE_H_
+#endif  // REVERSI_LOGIC_BASE_MOVE_H_
