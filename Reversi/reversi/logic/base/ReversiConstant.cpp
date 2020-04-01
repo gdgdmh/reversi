@@ -23,6 +23,3 @@ const int reversi::ReversiConstant::POSITION_HORIZONTALS[reversi::ReversiConstan
 	{ reversi::ReversiConstant::A8, reversi::ReversiConstant::B8, reversi::ReversiConstant::C8, reversi::ReversiConstant::D8, reversi::ReversiConstant::E8, reversi::ReversiConstant::F8, reversi::ReversiConstant::G8, reversi::ReversiConstant::H8 }
 
 };
-
-
-

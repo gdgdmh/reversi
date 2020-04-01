@@ -8,6 +8,8 @@ namespace reversi {
 // リバーシ定数クラス
 class ReversiConstant {
 public:
+
+	// 定数定義
 	// 盤の情報
 	enum BOARD_INFO {
 		NONE,       // 石が置かれていない
@@ -30,25 +32,104 @@ public:
 
 	// 着手情報
 	typedef struct {
-		POSITION position;	// 位置
-		BOARD_INFO info;	// 着手する石
+		POSITION position;  // 位置
+		BOARD_INFO info;    // 着手する石
 	} MOVE_INFO;
 
 	// 手番
 	enum TURN {
-		TURN_BLACK,	// 黒の手番
-		TURN_WHITE,	// 白の手番
+		TURN_BLACK, // 黒の手番
+		TURN_WHITE, // 白の手番
 	};
 
-	static const int BOARD_SIZE = 10 * 10;     // 盤の大きさ(1次元配列) 8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている
-	static const int BOARD_SIZE_X = 8;     	// 盤の大きさX(Xマスの数)
-	static const int BOARD_SIZE_Y = 8;     	// 盤の大きさY(Yマスの数)
-	static const int POSITION_SIZE = 64;	// 座標の最大数
+	static const int BOARD_DATA_SIZE_X = 10; // 盤のデータサイズX
+	static const int BOARD_DATA_SIZE_Y = 10; // 盤のデータサイズY
+	static const int BOARD_SIZE = ReversiConstant::BOARD_DATA_SIZE_Y * ReversiConstant::BOARD_DATA_SIZE_X;     // 盤の大きさ(1次元配列) 8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている
+	static const int BOARD_SIZE_X = 8;      // 盤の大きさX(Xマスの数)
+	static const int BOARD_SIZE_Y = 8;      // 盤の大きさY(Yマスの数)
+	static const int POSITION_SIZE = 64;    // 座標の最大数
 
-	static const int POSITIONS[ReversiConstant::POSITION_SIZE];	// 全ての座標(通常使用するもののみ、番兵は含まない)
+	static const int POSITIONS[ReversiConstant::POSITION_SIZE]; // 全ての座標(通常使用するもののみ、番兵は含まない)
 
 	static const int POSITION_HORIZONTALS[ReversiConstant::BOARD_SIZE_Y][ReversiConstant::BOARD_SIZE_X]; // 横方向の座標
 
+public:
+
+	// 座標の取得(参照回数が多くなる可能性があるのでインライン)
+	// 基本的にはPOSITIONの座標に対して使用すること
+	// INVALIDの座標に対して使用すると座標外を参照する可能性がある
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionUp(int position) {
+		return position - BOARD_DATA_SIZE_X;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionDown(int position) {
+		return position + BOARD_DATA_SIZE_X;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionLeft(int position) {
+		return position - 1;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionRight(int position) {
+		return position + 1;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionUpLeft(int position) {
+		return position - BOARD_DATA_SIZE_X - 1;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionUpRight(int position) {
+		return position - BOARD_DATA_SIZE_X + 1;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionDownLeft(int position) {
+		return position + BOARD_DATA_SIZE_X - 1;
+	}
+
+	/**
+	 * 盤の指定座標の上の座標を取得する
+	 * @param  position 指定座標
+	 * @return          指定座標の上の座標
+	 */
+	static int GetPositionDownRight(int position) {
+		return position + BOARD_DATA_SIZE_X + 1;
+	}
 };
 
 }
