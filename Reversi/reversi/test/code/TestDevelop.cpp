@@ -14,13 +14,18 @@
 /**
  * コンストラクタ
  */
-reversi::TestDevelop::TestDevelop(reversi::IOutputConsole* outputConsole) : UnitTestBase(outputConsole) {
+reversi::TestDevelop::TestDevelop(reversi::IOutputConsole* outputConsole) : UnitTestBase(outputConsole), console(NULL) {
+	console = new OutputConsole();
 }
 
 /**
  * デストラクタ
  */
 reversi::TestDevelop::~TestDevelop() {
+	if (console) {
+		delete console;
+		console = NULL;
+	}
 }
 
 /**
@@ -28,6 +33,7 @@ reversi::TestDevelop::~TestDevelop() {
  * @return trueなら成功 falseなら失敗
  */
 bool reversi::TestDevelop::Execute() {
+	console->PrintLine("--- TestDevelop start -------------------");
 
 	// UnitTest
 	{
@@ -70,25 +76,6 @@ bool reversi::TestDevelop::Execute() {
 		}
 	}
 
-
-	/*
-	{
-		Board board2;
-		board2 = board.Clone();
-
-	}
-	*/
-
-	/*
-	// コンソールテスト
-	reversi::IOutputConsole* outputConsole = new reversi::OutputConsole();
-	outputConsole->Print("aue");
-	outputConsole->PrintLine("ライン");
-	outputConsole->Print("123");
-	// ユニットテスト
-	reversi::UnitTest* unitTest = new reversi::UnitTest();
-	unitTest->Execute();
-	*/
-
+	console->PrintLine("--- TestDevelop end -------------------");
 	return true;
 }

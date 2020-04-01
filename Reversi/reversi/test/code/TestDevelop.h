@@ -3,6 +3,11 @@
 
 #include "../base/UnitTestBase.h"
 
+// 前方宣言
+namespace reversi {
+class IOutputConsole;
+}
+
 namespace reversi {
 
 	// 実装テスト用クラス
@@ -23,6 +28,9 @@ namespace reversi {
 		 * @return trueなら成功 falseなら失敗
 		 */
 		bool Execute();
+
+	private:
+		IOutputConsole* console;
 	};
 
 }

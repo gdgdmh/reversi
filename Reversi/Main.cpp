@@ -10,6 +10,9 @@
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
 
+	reversi::IOutputConsole* console = new reversi::OutputConsole();
+	console->PrintLine("--- main start -------------------");
+
 	bool isTest = true;
 	if (isTest) {
 		// 実装テスト
@@ -58,6 +61,10 @@ int main(int argc, const char* argv[]) {
 		std::cout << "Opponent move: XX" << std::endl;
 	}
 	*/
-
+	console->PrintLine("--- main end -------------------");
+	if (console) {
+		delete console;
+		console = NULL;
+	}
 	return 0;
 }
