@@ -107,8 +107,8 @@ void reversi::Board::Clear() {
 void reversi::Board::SetEmpty() {
 	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "Board::SetEmpty() index over positions");
-		reversi::Assert::AssertArrayRange(reversi::ReversiConstant::POSITIONS[i], reversi::ReversiConstant::BOARD_SIZE, "Board::SetEmpty() index over board");
-		board.boardData[reversi::ReversiConstant::POSITIONS[i]] = reversi::ReversiConstant::BOARD_INFO::NONE;
+		reversi::Assert::AssertArrayRange((int)reversi::ReversiConstant::POSITIONS[i], reversi::ReversiConstant::BOARD_SIZE, "Board::SetEmpty() index over board");
+		board.boardData[(int)reversi::ReversiConstant::POSITIONS[i]] = reversi::ReversiConstant::BOARD_INFO::NONE;
 	}
 }
 
@@ -116,8 +116,8 @@ void reversi::Board::SetEmpty() {
  * ゲーム開始のための初期配置設定
  */
 void reversi::Board::Preset() {
-	board.boardData[reversi::ReversiConstant::POSITION::D4] = reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board.boardData[reversi::ReversiConstant::POSITION::E5] = reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board.boardData[reversi::ReversiConstant::POSITION::E4] = reversi::ReversiConstant::BOARD_INFO::BLACK;
-	board.boardData[reversi::ReversiConstant::POSITION::D5] = reversi::ReversiConstant::BOARD_INFO::BLACK;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::D4] = reversi::ReversiConstant::BOARD_INFO::WHITE;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::E5] = reversi::ReversiConstant::BOARD_INFO::WHITE;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::E4] = reversi::ReversiConstant::BOARD_INFO::BLACK;
+	board.boardData[(int)reversi::ReversiConstant::POSITION::D5] = reversi::ReversiConstant::BOARD_INFO::BLACK;
 }

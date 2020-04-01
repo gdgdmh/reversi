@@ -31,16 +31,16 @@ bool reversi::TestBoard::Execute() {
 		
 		reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
 
-		reversi::Assert::AssertArrayRange(position, reversi::ReversiConstant::BOARD_SIZE, "TestBoard::Execute() board index over");
+		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "TestBoard::Execute() board index over");
 
 		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
 
-		if ((position == reversi::ReversiConstant::D4) || (position == reversi::ReversiConstant::E5)) {
+		if ((position == reversi::ReversiConstant::POSITION::D4) || (position == reversi::ReversiConstant::POSITION::E5)) {
 			// 白の初期位置
 			if (!AssertEqual(info == reversi::ReversiConstant::WHITE, "TestBoard::Execute() NOT WHITE")) {
 				return false;
 			}
-		} else if ((position == reversi::ReversiConstant::E4) || (position == reversi::ReversiConstant::D5)) {
+		} else if ((position == reversi::ReversiConstant::POSITION::E4) || (position == reversi::ReversiConstant::POSITION::D5)) {
 			// 黒の初期位置
 			if (!AssertEqual(info == reversi::ReversiConstant::BLACK, "TestBoard::Execute() NOT BLACK")) {
 				return false;

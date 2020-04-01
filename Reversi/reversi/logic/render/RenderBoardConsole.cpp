@@ -114,7 +114,7 @@ void reversi::RenderBoardConsole::RenderBoardHorizontalCells(IOutputConsole* con
 		Assert::AssertArrayRange(posY, reversi::ReversiConstant::BOARD_SIZE_Y, "Board::RenderBoardHorizontalCells() index over y");
 		Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE_X, "Board::RenderBoardHorizontalCells() index over x");
 		// 横一列の位置取得
-		int position = reversi::ReversiConstant::POSITION_HORIZONTALS[posY][i];
+		int position = (int)reversi::ReversiConstant::POSITION_HORIZONTALS[posY][i];
 
 		// boardのindex overチェック
 		Assert::AssertArrayRange(position, reversi::ReversiConstant::BOARD_SIZE, "Board::RenderBoardHorizontalCells() index over board");

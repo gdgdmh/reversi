@@ -19,7 +19,7 @@ public:
 	};
 
 	//　盤の座標
-	enum POSITION {
+	enum class POSITION {
 		A1 = 11, B1 = 12, C1 = 13, D1 = 14, E1 = 15, F1 = 16, G1 = 17, H1 = 18,
 		A2 = 21, B2 = 22, C2 = 23, D2 = 24, E2 = 25, F2 = 26, G2 = 27, H2 = 28,
 		A3 = 31, B3 = 32, C3 = 33, D3 = 34, E3 = 35, F3 = 36, G3 = 37, H3 = 38,
@@ -49,9 +49,9 @@ public:
 	static const int BOARD_SIZE_Y = 8;      // 盤の大きさY(Yマスの数)
 	static const int POSITION_SIZE = 64;    // 座標の最大数
 
-	static const int POSITIONS[ReversiConstant::POSITION_SIZE]; // 全ての座標(通常使用するもののみ、番兵は含まない)
+	static const ReversiConstant::POSITION POSITIONS[ReversiConstant::POSITION_SIZE]; // 全ての座標(通常使用するもののみ、番兵は含まない)
 
-	static const int POSITION_HORIZONTALS[ReversiConstant::BOARD_SIZE_Y][ReversiConstant::BOARD_SIZE_X]; // 横方向の座標
+	static const ReversiConstant::POSITION POSITION_HORIZONTALS[ReversiConstant::BOARD_SIZE_Y][ReversiConstant::BOARD_SIZE_X]; // 横方向の座標
 
 public:
 

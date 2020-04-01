@@ -59,10 +59,10 @@ bool reversi::TestDevelop::Execute() {
 		move.FindEmptyPosition(board, emptyPosition);
 
 		// その方向に打てるか
-		bool result = move.CheckEnableMoveDirection(board, reversi::ReversiConstant::D3, reversi::Move::DIRECTION::DOWN, reversi::ReversiConstant::TURN_BLACK);
+		bool result = move.CheckEnableMoveDirection(board, (int)reversi::ReversiConstant::POSITION::D3, reversi::Move::DIRECTION::DOWN, reversi::ReversiConstant::TURN_BLACK);
 
 		// そのマスに打てるか
-		result = move.CheckEnableMove(board, reversi::ReversiConstant::F4, reversi::ReversiConstant::TURN_WHITE);
+		result = move.CheckEnableMove(board, (int)reversi::ReversiConstant::POSITION::F4, reversi::ReversiConstant::TURN_WHITE);
 		if (result) {
 			console->PrintLine("put enable");
 		} else {
