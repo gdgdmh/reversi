@@ -40,14 +40,11 @@ public:
 		SANDWICH_NG_SELF,      // 自分の石で挟みにならない
 		SANDWICH_NG_UNKNOWN
 	};
-	/*
-	// 着手の情報
+
+	// キャッシュデータ
 	typedef struct {
-		reversi::ReversiConstant::POSITION position; // 打つ位置
-		reversi::ReversiConstant::POSITION reversePositions[reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT]; // 打ったことで裏返る位置
-		int reversePositionCount; // 裏返る位置の数
-	} MOVE_INFO;
-	*/
+		std::vector<reversi::ReverseInfo> reverseInfo; // 裏返し情報
+	} MOVE_CACHE;
 
 public:
 	/**
@@ -69,16 +66,27 @@ public:
 
 	/**
 	 * 打てる場所を探す
+	 * このデータはキャッシュされる
 	 * @param board          盤データ
 	 * @param emptyPositions 石の置かれてない場所が入ったデータ
 	 * @param turn           手番(黒,白)
 	 */
 	void FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn);
 
+	/**
+	 * 打つことができるか
+	 * 予めキャッシュを作成しておくこと
+	 * @param  position チェックする位置
+	 * @return          trueならその位置に打つことができる
+	 */
+	bool CheckEnableMoveByCache(reversi::ReversiConstant::POSITION position) const;
+
+	// 盤に適用する
+
 public:
 
 	/**
-	 * その場所に打つことができるか
+	 * その場所に打つことができるか情報を取得する
 	 * @param  board    盤データ
 	 * @param  position 打とうとする盤の位置
 	 * @param  turn     手番(黒,白)
@@ -87,12 +95,13 @@ public:
 	reversi::ReverseInfo GetEnableMoveInfo(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn);
 
 	/**
-	 * その位置の指定方向に打つことができるか
-	 * @param  board    盤データ
-	 * @param  position 打とうとする盤の位置
-	 * @param  direction 打とうとする方向
-	 * @param  turn     手番(黒,白)
-	 * @return          trueならその方向に打つことができる
+	 * その位置の指定方向に打つことができるか、情報を取得する
+	 * @param  board       盤データ
+	 * @param  reverseInfo 裏返し情報
+	 * @param  position    打とうとする盤の位置
+	 * @param  direction   チェックする方向
+	 * @param  turn        手番(黒,白)
+	 * @return             trueならその方向に打つことができる
 	 */
 	bool CheckMoveInfoDirection(const reversi::Board& board, reversi::ReverseInfo& reverseInfo, int position, DIRECTION direction, reversi::ReversiConstant::TURN turn);
 
@@ -115,8 +124,15 @@ public:
 
 private:
 
+	/**
+	 * DIRECTON型をReverseInfoのDIRECTION型に変換する
+	 * @param  direction 方向
+	 * @return           ReverseInfoのDIRECTION
+	 */
 	reversi::ReverseInfo::DIRECTION ToReverseInfoDirection(reversi::Move::DIRECTION direction);
 
+private:
+	MOVE_CACHE moveCache; // 着手のキャッシュデータ
 };
 
 }

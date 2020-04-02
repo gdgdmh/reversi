@@ -42,16 +42,48 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, EMPTY_POSITIO
 
 /**
  * 打てる場所を探す
+ * このデータはキャッシュされる
  * @param board          盤データ
  * @param emptyPositions 石の置かれてない場所が入ったデータ
  * @param turn           手番(黒,白)
  */
 void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn) {
-	
+
+	// キャッシュをクリアする
+	moveCache.reverseInfo.clear();
+
+	// 空いている場所からその場所に打てるかチェック
+	size_t size = emptyPosition.position.size();
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, (int)size, "Move::FindPutEnablePosition index over");
+		reversi::ReversiConstant::POSITION position = emptyPosition.position[i];
+		// その場所に打てるかチェック
+		reversi::ReverseInfo reverseInfo = GetEnableMoveInfo(board, (int)position, turn);
+		// キャッシュに登録
+		moveCache.reverseInfo.push_back(reverseInfo);
+	}
 }
 
 /**
- * その場所に打つことができるか
+ * 打つことができるか
+ * 予めキャッシュを作成しておくこと
+ * @param  position チェックする位置
+ * @return          trueならその位置に打つことができる
+ */
+bool reversi::Move::CheckEnableMoveByCache(reversi::ReversiConstant::POSITION position) const {
+	size_t size = moveCache.reverseInfo.size();
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
+		if (position == moveCache.reverseInfo[i].GetPosition()) {
+			return moveCache.reverseInfo[i].IsEnableMove();
+		}
+	}
+	// 空いてない位置などを指定した
+	return false;
+}
+
+/**
+ * その場所に打つことができるか情報を取得する
  * @param  board    盤データ
  * @param  position 打とうとする盤の位置
  * @param  turn     手番(黒,白)
@@ -87,12 +119,13 @@ reversi::ReverseInfo reversi::Move::GetEnableMoveInfo(const reversi::Board& boar
 }
 
 /**
- * その位置の指定方向に打つことができるか
- * @param  board    盤データ
- * @param  position 打とうとする盤の位置
- * @param  direction 打とうとする方向
- * @param  turn     手番(黒,白)
- * @return          trueならその方向に打つことができる
+ * その位置の指定方向に打つことができるか、情報を取得する
+ * @param  board       盤データ
+ * @param  reverseInfo 裏返し情報
+ * @param  position    打とうとする盤の位置
+ * @param  direction   チェックする方向
+ * @param  turn        手番(黒,白)
+ * @return             trueならその方向に打つことができる
  */
 bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi::ReverseInfo& reverseInfo, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
 
@@ -125,11 +158,13 @@ bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi:
 		case SANDWICH_STATUS::SANDWICH_OK:
 			return true;
 		case SANDWICH_STATUS::SANDWICH_CONTINUE:
+			// 取得できる石の位置を記憶
 			reverseInfo.AddReversePosition(reverseInfoDirection, (reversi::ReversiConstant::POSITION)currentPosition);
 			break;
 		case SANDWICH_STATUS::SANDWICH_NG_INVALID:
 		case SANDWICH_STATUS::SANDWICH_NG_EMPTY:
 		case SANDWICH_STATUS::SANDWICH_NG_SELF:
+			// 結果として取れないと判断されたため、裏返した情報はクリアしておく
 			reverseInfo.ClearReversePosition(reverseInfoDirection);
 			return false;
 		default:
@@ -139,7 +174,7 @@ bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi:
 		// 次の方向の位置
 		currentPosition += offset;
 	}
-    return false;
+	return false;
 }
 
 /**
@@ -229,6 +264,11 @@ reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichSt
 	return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_UNKNOWN;
 }
 
+/**
+ * DIRECTON型をReverseInfoのDIRECTION型に変換する
+ * @param  direction 方向
+ * @return           ReverseInfoのDIRECTION
+ */
 reversi::ReverseInfo::DIRECTION reversi::Move::ToReverseInfoDirection(reversi::Move::DIRECTION direction) {
 	switch (direction) {
 	case DIRECTION::UP:
