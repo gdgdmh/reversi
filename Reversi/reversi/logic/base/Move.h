@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "ReversiConstant.h"
+#include "ReverseInfo.h"
 
 // 前方宣言
 namespace reversi {
@@ -83,7 +84,7 @@ public:
 	 * @param  turn     手番(黒,白)
 	 * @return          trueならその位置に打つことができる
 	 */
-	bool CheckEnableMove(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn);
+	reversi::ReverseInfo GetEnableMoveInfo(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * その位置の指定方向に打つことができるか
@@ -93,7 +94,7 @@ public:
 	 * @param  turn     手番(黒,白)
 	 * @return          trueならその方向に打つことができる
 	 */
-	bool CheckEnableMoveDirection(const reversi::Board& board, int position, DIRECTION direction, reversi::ReversiConstant::TURN turn);
+	bool CheckMoveInfoDirection(const reversi::Board& board, reversi::ReverseInfo& reverseInfo, int position, DIRECTION direction, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * 位置から盤のオフセットを取得する
@@ -111,6 +112,10 @@ public:
 	 * @return                   状態
 	 */
 	reversi::Move::SANDWICH_STATUS GetSandwichInfo(bool& isSandwichStarted, int& sandwichCount, reversi::ReversiConstant::TURN turn, reversi::ReversiConstant::BOARD_INFO info);
+
+private:
+
+	reversi::ReverseInfo::DIRECTION ToReverseInfoDirection(reversi::Move::DIRECTION direction);
 
 };
 

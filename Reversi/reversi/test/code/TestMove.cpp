@@ -52,11 +52,17 @@ bool reversi::TestMove::Execute() {
 			case reversi::ReversiConstant::POSITION::C4:
 			case reversi::ReversiConstant::POSITION::F5:
 			case reversi::ReversiConstant::POSITION::E6:
-				AssertEqual(move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_BLACK), "TestMove::Execute invalid CheckEnableMove black enable");
+				{
+					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_BLACK);
+					AssertEqual(reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove black enable");
+				}
 				break;
 			default:
-				// 打てない
-				AssertEqual(!move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_BLACK), "TestMove::Execute invalid CheckEnableMove black disable");
+				{
+					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_BLACK);
+					// 打てない
+					AssertEqual(!reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove black disable");
+				}
 				break;
 			}
 		}
@@ -73,11 +79,17 @@ bool reversi::TestMove::Execute() {
 			case reversi::ReversiConstant::POSITION::F4:
 			case reversi::ReversiConstant::POSITION::C5:
 			case reversi::ReversiConstant::POSITION::D6:
-				AssertEqual(move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_WHITE), "TestMove::Execute invalid CheckEnableMove white enable");
+				{
+					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_WHITE);
+					AssertEqual(reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove white enable");
+				}
 				break;
 			default:
-				// 打てない
-				AssertEqual(!move.CheckEnableMove(board, (int)position,  reversi::ReversiConstant::TURN::TURN_WHITE), "TestMove::Execute invalid CheckEnableMove white disable");
+				{
+					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_WHITE);
+					// 打てない
+					AssertEqual(!reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove white disable");
+				}
 				break;
 			}
 		}

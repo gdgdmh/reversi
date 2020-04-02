@@ -57,37 +57,33 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const EMP
  * @param  turn     手番(黒,白)
  * @return          trueならその位置に打つことができる
  */
-bool reversi::Move::CheckEnableMove(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn) {
+reversi::ReverseInfo reversi::Move::GetEnableMoveInfo(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn) {
+
+	reversi::ReverseInfo info((reversi::ReversiConstant::POSITION)position, turn);
+	bool isEnable = false;
+
+	const int MAX_DIRECTION = 8;
+	reversi::Move::DIRECTION directions[MAX_DIRECTION] = {
+		reversi::Move::DIRECTION::UP,
+		reversi::Move::DIRECTION::DOWN,
+		reversi::Move::DIRECTION::LEFT,
+		reversi::Move::DIRECTION::RIGHT,
+		reversi::Move::DIRECTION::UP_LEFT,
+		reversi::Move::DIRECTION::UP_RIGHT,
+		reversi::Move::DIRECTION::DOWN_LEFT,
+		reversi::Move::DIRECTION::DOWN_RIGHT,
+	};
 
 	// それぞれの方向に対して打てるかチェック
 	// 将来的にはpositionの位置に対してチェックする方向を減らすなど(一番左のマスは左側に対するチェックをしないなど)
 	// 負荷軽減案はあるがいったん確実性を取る
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::UP, turn)) {
-		return true;
+	for (int i = 0; i < MAX_DIRECTION; ++i) {
+		reversi::Assert::AssertArrayRange(i, MAX_DIRECTION, "Move::GetEnableMoveInfo index over");
+		if (CheckMoveInfoDirection(board, info, position, directions[i], turn)) {
+			isEnable = true;
+		}
 	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::DOWN, turn)) {
-		return true;
-	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::LEFT, turn)) {
-		return true;
-	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::RIGHT, turn)) {
-		return true;
-	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::UP_LEFT, turn)) {
-		return true;
-	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::UP_RIGHT, turn)) {
-		return true;
-	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::DOWN_LEFT, turn)) {
-		return true;
-	}
-	if (CheckEnableMoveDirection(board, position, reversi::Move::DIRECTION::DOWN_RIGHT, turn)) {
-		return true;
-	}
-	// どの方向にも打てない
-	return false;
+	return info;
 }
 
 /**
@@ -98,7 +94,7 @@ bool reversi::Move::CheckEnableMove(const reversi::Board& board, int position, r
  * @param  turn     手番(黒,白)
  * @return          trueならその方向に打つことができる
  */
-bool reversi::Move::CheckEnableMoveDirection(const reversi::Board& board, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
+bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi::ReverseInfo& reverseInfo, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
 
 	const reversi::BOARD boardData = board.GetRawData();
 
@@ -118,6 +114,7 @@ bool reversi::Move::CheckEnableMoveDirection(const reversi::Board& board, int po
 	bool loop = true;
 	bool isSandwichStarted = false; // 挟まれているか
 	int sandwichCount = 0; // 挟まれている数
+	reversi::ReverseInfo::DIRECTION reverseInfoDirection = ToReverseInfoDirection(direction);
 	while (loop) {
 		// 盤情報取得
 		reversi::Assert::AssertArrayRange(currentPosition, reversi::ReversiConstant::BOARD_SIZE, "Move::CheckEnableMoveDirection() board index over(loop)");
@@ -128,14 +125,15 @@ bool reversi::Move::CheckEnableMoveDirection(const reversi::Board& board, int po
 		case SANDWICH_STATUS::SANDWICH_OK:
 			return true;
 		case SANDWICH_STATUS::SANDWICH_CONTINUE:
+			reverseInfo.AddReversePosition(reverseInfoDirection, (reversi::ReversiConstant::POSITION)currentPosition);
 			break;
 		case SANDWICH_STATUS::SANDWICH_NG_INVALID:
-			return false;
 		case SANDWICH_STATUS::SANDWICH_NG_EMPTY:
-			return false;
 		case SANDWICH_STATUS::SANDWICH_NG_SELF:
+			reverseInfo.ClearReversePosition(reverseInfoDirection);
 			return false;
 		default:
+			reverseInfo.ClearReversePosition(reverseInfoDirection);
 			return false;
 		}
 		// 次の方向の位置
@@ -229,4 +227,27 @@ reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichSt
 	// ここには来ないはず
 	reversi::Assert::AssertEquals(0, "Move::GetSandwichInfo() invalid status");
 	return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_UNKNOWN;
+}
+
+reversi::ReverseInfo::DIRECTION reversi::Move::ToReverseInfoDirection(reversi::Move::DIRECTION direction) {
+	switch (direction) {
+	case DIRECTION::UP:
+		return reversi::ReverseInfo::DIRECTION::UP;
+	case DIRECTION::DOWN:
+		return reversi::ReverseInfo::DIRECTION::DOWN;
+	case DIRECTION::LEFT:
+		return reversi::ReverseInfo::DIRECTION::LEFT;
+	case DIRECTION::RIGHT:
+		return reversi::ReverseInfo::DIRECTION::RIGHT;
+	case DIRECTION::UP_LEFT:
+		return reversi::ReverseInfo::DIRECTION::UP_LEFT;
+	case DIRECTION::UP_RIGHT:
+		return reversi::ReverseInfo::DIRECTION::UP_RIGHT;
+	case DIRECTION::DOWN_LEFT:
+		return reversi::ReverseInfo::DIRECTION::DOWN_LEFT;
+	case DIRECTION::DOWN_RIGHT:
+		return reversi::ReverseInfo::DIRECTION::DOWN_RIGHT;
+	default:
+		return reversi::ReverseInfo::DIRECTION::UP;
+	}
 }

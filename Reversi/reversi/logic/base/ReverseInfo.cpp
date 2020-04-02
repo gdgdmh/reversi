@@ -52,6 +52,21 @@ void reversi::ReverseInfo::AddReversePosition(reversi::ReverseInfo::DIRECTION di
 }
 
 /**
+ * 裏返る位置をクリアする
+ * @param direction 方向
+ */
+void reversi::ReverseInfo::ClearReversePosition(reversi::ReverseInfo::DIRECTION direction) {
+	int directionInt = (int)direction;
+	reversi::Assert::AssertArrayRange(directionInt, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ClearReversePosition index over direction");
+
+
+	for (int i = 0; i < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++i) {
+		info.reversePositions[directionInt][i] = reversi::ReversiConstant::POSITION::A1;
+	}
+	info.reversePositionCount[directionInt] = 0;
+}
+
+/**
  * 裏返る位置の取得
  * @param  direction 方向
  * @param  index     取得するindex
@@ -71,4 +86,19 @@ reversi::ReversiConstant::POSITION reversi::ReverseInfo::GetReversePosition(reve
 int reversi::ReverseInfo::GetReversePositionCount(reversi::ReverseInfo::DIRECTION direction) const {
 	reversi::Assert::AssertArrayRange((int)direction, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::GetReversePositionCount index over");
 	return info.reversePositionCount[(int)direction];
+}
+
+/**
+ * どこかの方向に打てば取ることができるか
+ * @return trueなら打つことができる
+ */
+bool reversi::ReverseInfo::IsEnableMove() const {
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::IsEnableMove index over");
+		if (info.reversePositionCount[i] > 0) {
+			// 取れる方向がある
+			return true;
+		}
+	}
+	return false;
 }

@@ -53,6 +53,12 @@ public:
 	void AddReversePosition(reversi::ReverseInfo::DIRECTION direction, reversi::ReversiConstant::POSITION reversePosition);
 
 	/**
+	 * 裏返る位置をクリアする
+	 * @param direction 方向
+	 */
+	void ClearReversePosition(reversi::ReverseInfo::DIRECTION direction);
+
+	/**
 	 * 打つ位置の取得
 	 * @return 打つ位置
 	 */
@@ -82,6 +88,12 @@ public:
 	reversi::ReversiConstant::TURN GetTurn() const {
 		return info.turn;
 	}
+
+	/**
+	 * どこかの方向に打てば取ることができるか
+	 * @return trueなら打つことができる
+	 */
+	bool IsEnableMove() const;
 
 private:
 	REVERSE_INFO info;
