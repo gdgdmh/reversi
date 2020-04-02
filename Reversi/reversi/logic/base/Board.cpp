@@ -138,4 +138,19 @@ void reversi::Board::SetBoardInfo(reversi::ReversiConstant::BOARD_INFO info, rev
  * @param position [description]
  */
 void reversi::Board::ReverseStone(reversi::ReversiConstant::POSITION position) {
+	reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::SetBoardInfo index over");
+	reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
+
+	// ひっくり返す
+	switch (info) {
+	case reversi::ReversiConstant::BOARD_INFO::BLACK:
+		SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::WHITE, position);
+		break;
+	case reversi::ReversiConstant::BOARD_INFO::WHITE:
+		SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::BLACK, position);
+		break;
+		// 石でない場所を指定したら何もしない
+	default:
+		break;
+	}
 }
