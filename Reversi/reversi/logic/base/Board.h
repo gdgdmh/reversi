@@ -101,6 +101,22 @@ private:
 	void Preset();
 
 private:
+
+	/**
+	 * 盤の情報をセットする
+	 * @param info     セットする盤情報
+	 * @param position セットする位置
+	 */
+	void SetBoardInfo(reversi::ReversiConstant::BOARD_INFO info, reversi::ReversiConstant::POSITION position);
+
+	/**
+	 * 石をひっくり返す(黒 -> 白, 白 -> 黒)
+	 * 石がなかったら何もしない
+	 * @param position [description]
+	 */
+	void ReverseStone(reversi::ReversiConstant::POSITION position);
+
+private:
 	BOARD board;
 	IRenderBoard* renderBoard;
 };

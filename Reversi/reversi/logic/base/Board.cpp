@@ -78,7 +78,7 @@ reversi::Board reversi::Board::Clone() const {
 
 	for (int i = 0; i < ReversiConstant::BOARD_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clone() index over");
-		dest.board.boardData[i] = board.boardData[i];
+		dest.SetBoardInfo((reversi::ReversiConstant::BOARD_INFO)board.boardData[i], (reversi::ReversiConstant::POSITION)i);
 	}
 	dest.board.boardSizeX = board.boardSizeX;
 	dest.board.boardSizeY = board.boardSizeY;
@@ -97,7 +97,7 @@ reversi::Board reversi::Board::Clone() const {
 void reversi::Board::Clear() {
 	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clear() index over");
-		board.boardData[i] = (int)reversi::ReversiConstant::BOARD_INFO::INVALID;
+		SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::INVALID, (reversi::ReversiConstant::POSITION)i);
 	}
 }
 
@@ -108,7 +108,7 @@ void reversi::Board::SetEmpty() {
 	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "Board::SetEmpty() index over positions");
 		reversi::Assert::AssertArrayRange((int)reversi::ReversiConstant::POSITIONS[i], reversi::ReversiConstant::BOARD_SIZE, "Board::SetEmpty() index over board");
-		board.boardData[(int)reversi::ReversiConstant::POSITIONS[i]] = (int)reversi::ReversiConstant::BOARD_INFO::NONE;
+		SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::NONE, reversi::ReversiConstant::POSITIONS[i]);
 	}
 }
 
@@ -116,8 +116,26 @@ void reversi::Board::SetEmpty() {
  * ゲーム開始のための初期配置設定
  */
 void reversi::Board::Preset() {
-	board.boardData[(int)reversi::ReversiConstant::POSITION::D4] = (int)reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board.boardData[(int)reversi::ReversiConstant::POSITION::E5] = (int)reversi::ReversiConstant::BOARD_INFO::WHITE;
-	board.boardData[(int)reversi::ReversiConstant::POSITION::E4] = (int)reversi::ReversiConstant::BOARD_INFO::BLACK;
-	board.boardData[(int)reversi::ReversiConstant::POSITION::D5] = (int)reversi::ReversiConstant::BOARD_INFO::BLACK;
+	SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::WHITE, reversi::ReversiConstant::POSITION::D4);
+	SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::WHITE, reversi::ReversiConstant::POSITION::E5);
+	SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::BLACK, reversi::ReversiConstant::POSITION::E4);
+	SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::BLACK, reversi::ReversiConstant::POSITION::D5);
+}
+
+/**
+ * 盤の情報をセットする
+ * @param info     セットする盤情報
+ * @param position セットする位置
+ */
+void reversi::Board::SetBoardInfo(reversi::ReversiConstant::BOARD_INFO info, reversi::ReversiConstant::POSITION position) {
+	reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::SetBoardInfo index over");
+	board.boardData[(int)position] = (int)info;
+}
+
+/**
+ * 石をひっくり返す(黒 -> 白, 白 -> 黒)
+ * 石がなかったら何もしない
+ * @param position [description]
+ */
+void reversi::Board::ReverseStone(reversi::ReversiConstant::POSITION position) {
 }
