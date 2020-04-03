@@ -182,5 +182,8 @@
     <ClInclude Include="reversi\logic\base\Reversi.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClInclude>
+    <ClInclude Include="reversi\logic\player\IPlayer.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

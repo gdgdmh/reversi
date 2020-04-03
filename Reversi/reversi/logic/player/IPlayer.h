@@ -1,7 +1,6 @@
-﻿#ifndef REVERSI_LOGIC_PLAYER_PLAYERMAN_H_
-#define REVERSI_LOGIC_PLAYER_PLAYERMAN_H_
+﻿#ifndef REVERSI_LOGIC_PLAYER_IPLAYER_H_
+#define REVERSI_LOGIC_PLAYER_IPLAYER_H_
 
-#include "IPlayer.h"
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 
@@ -12,23 +11,19 @@ class Board;
 
 namespace reversi {
 
-// プレイヤー(人間)クラス
-class PlayerMan : public IPlayer {
+// プレイヤーベースクラス
+class IPlayer {
 public:
-	/**
-	 * コンストラクタ
-	 */
-	PlayerMan();
-
 	/**
 	 * デストラクタ
 	 */
-	virtual ~PlayerMan();
+	virtual ~IPlayer() {
+	}
 
 	/**
 	 * 自分のターンが来たときに1度だけ呼ばれる
 	 */
-	void EventTurnStart();
+	virtual void EventTurnStart() = 0;
 
 	/**
 	 * 着手処理
@@ -37,15 +32,15 @@ public:
 	 * @param  turn  手番
 	 * @return       trueなら着手済み(moveに情報が入っている)
 	 */
-	bool SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn);
+	virtual bool SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) = 0;
 
 	/**
 	 * 着手後に呼ばれる
 	 */
-	void EventMoveAfter();
+	virtual void EventMoveAfter() = 0;
 
 };
 
 }
 
-#endif  // REVERSI_LOGIC_PLAYER_PLAYERMAN_H_
+#endif  // REVERSI_LOGIC_PLAYER_IPLAYER_H_

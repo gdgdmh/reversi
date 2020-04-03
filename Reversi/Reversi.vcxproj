@@ -176,6 +176,7 @@
     <ClInclude Include="reversi\logic\base\ReverseInfo.h" />
     <ClInclude Include="reversi\logic\base\Reversi.h" />
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
+    <ClInclude Include="reversi\logic\player\IPlayer.h" />
     <ClInclude Include="reversi\logic\player\PlayerCpu.h" />
     <ClInclude Include="reversi\logic\player\PlayerMan.h" />
     <ClInclude Include="reversi\logic\render\IRenderBoard.h" />

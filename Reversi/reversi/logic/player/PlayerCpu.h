@@ -1,6 +1,7 @@
 ﻿#ifndef REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
 #define REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
 
+#include "IPlayer.h"
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 
@@ -12,7 +13,7 @@ class Board;
 namespace reversi {
 
 // プレイヤー(CPU)クラス
-class PlayerCpu {
+class PlayerCpu : public IPlayer {
 public:
 	/**
 	 * コンストラクタ
