@@ -20,6 +20,11 @@ public:
 public:
 
 	/**
+	 * デフォルトコンストラクタ(IPlayer::SelectMove用なのでその他の用途では使わないこと)
+	 */
+	MoveInfo();
+
+	/**
 	 * コンストラクタ
 	 * @param moveInfo    着手情報
 	 * @param reverseInfo 裏返し情報

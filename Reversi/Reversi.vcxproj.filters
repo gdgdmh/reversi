@@ -43,6 +43,9 @@
     <Filter Include="ソース ファイル\reversi\logic\player">
       <UniqueIdentifier>{6829d4b3-1c64-4336-a3a6-12661fc10972}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\reversi\game">
+      <UniqueIdentifier>{0ef7882d-6e56-456f-bf2d-926c2272d688}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -107,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="reversi\logic\base\Reversi.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\game\ReversiGameLoop.cpp">
+      <Filter>ソース ファイル\reversi\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\player\IPlayer.h">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\game\ReversiGameLoop.h">
+      <Filter>ソース ファイル\reversi\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "reversi/test/code/TestDevelop.h"
 #include "reversi/util/IOutputConsole.h"
 #include "reversi/util/OutputConsole.h"
+#include "reversi/game/ReversiGameLoop.h"
 
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
@@ -13,7 +14,7 @@ int main(int argc, const char* argv[]) {
 	reversi::IOutputConsole* console = new reversi::OutputConsole();
 	console->PrintLine("--- main start -------------------");
 
-	bool isTest = true;
+	bool isTest = false;
 	if (isTest) {
 		// 実装テスト
 		reversi::IOutputConsole* console = new reversi::OutputConsole();
@@ -25,12 +26,9 @@ int main(int argc, const char* argv[]) {
 		}
 	} else {
 		// リバーシゲーム
-		reversi::ReversiGame* reversiGame = new reversi::ReversiGame();
-		reversiGame->Task();
-		if (reversiGame) {
-			delete reversiGame;
-			reversiGame = NULL;
-		}
+		reversi::ReversiGameLoop gameLoop;
+		gameLoop.Initialize();
+		gameLoop.Task();
 	}
 
 	/*

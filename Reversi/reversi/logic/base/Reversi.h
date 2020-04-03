@@ -13,6 +13,12 @@ public:
 	static const int PLAYER_COUNT = 2;
 	static const int PLAYER_BLACK = 0;
 	static const int PLAYER_WHITE = 1;
+	enum class SCENE {
+		INITIALIZE,
+		MOVE_START,
+		MOVE_SELECT,
+		END
+	};
 public:
 
 	/**
@@ -40,20 +46,29 @@ public:
 	 */
 	void Task();
 
-
-	reversi::ReversiConstant::TURN GetTurn() {
-		return turn;
-	}
-
 private:
+
+	/**
+	 * プレイヤーをリセットする(NULLクリア)
+	 */
 	void ResetPlayer();
 
+	/**
+	 * プレイヤーを削除する(DELETE)
+	 */
 	void ReleasePlayer();
+
+	/**
+	 * シーンをセットする
+	 * @param nextScene 次のシーン
+	 */
+	void SetScene(reversi::Reversi::SCENE nextScene);
 
 private:
 	reversi::Board board;
 	reversi::ReversiConstant::TURN turn;
 	reversi::IPlayer* player[PLAYER_COUNT];
+	reversi::Reversi::SCENE scene;
 
 };
 

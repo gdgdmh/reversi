@@ -2,6 +2,15 @@
 #include "../../util/Assert.h"
 
 /**
+ * デフォルトコンストラクタ(IPlayer::SelectMove用なのでその他の用途では使わないこと)
+ */
+reversi::MoveInfo::MoveInfo() : reverseInfo(reversi::ReversiConstant::POSITION::A1, reversi::ReversiConstant::TURN::TURN_BLACK) {
+    moveInfo.position = reversi::ReversiConstant::POSITION::A1;
+    moveInfo.turn = reversi::ReversiConstant::TURN::TURN_BLACK;
+    moveInfo.info = reversi::ReversiConstant::BOARD_INFO::BLACK;
+}
+
+/**
  * コンストラクタ
  * @param moveInfo    着手情報
  * @param reverseInfo 裏返し情報
