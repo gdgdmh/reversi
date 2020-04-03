@@ -152,6 +152,7 @@
     <ClCompile Include="reversi\logic\base\Move.cpp" />
     <ClCompile Include="reversi\logic\base\MoveInfo.cpp" />
     <ClCompile Include="reversi\logic\base\ReverseInfo.cpp" />
+    <ClCompile Include="reversi\logic\base\Reversi.cpp" />
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerCpu.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerMan.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="reversi\logic\base\Move.h" />
     <ClInclude Include="reversi\logic\base\MoveInfo.h" />
     <ClInclude Include="reversi\logic\base\ReverseInfo.h" />
+    <ClInclude Include="reversi\logic\base\Reversi.h" />
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
     <ClInclude Include="reversi\logic\player\PlayerCpu.h" />
     <ClInclude Include="reversi\logic\player\PlayerMan.h" />

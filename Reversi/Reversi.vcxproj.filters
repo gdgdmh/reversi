@@ -105,6 +105,9 @@
     <ClCompile Include="reversi\logic\base\MoveInfo.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\logic\base\Reversi.cpp">
+      <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\ReversiGame.h">
@@ -174,6 +177,9 @@
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClInclude>
     <ClInclude Include="reversi\logic\base\MoveInfo.h">
+      <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\base\Reversi.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClInclude>
   </ItemGroup>

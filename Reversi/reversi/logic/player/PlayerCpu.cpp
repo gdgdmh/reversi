@@ -28,6 +28,7 @@ void reversi::PlayerCpu::EventTurnStart() {
  * @return       trueなら着手済み(moveに情報が入っている)
  */
 bool reversi::PlayerCpu::SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
+    return false;
 }
 
 /**

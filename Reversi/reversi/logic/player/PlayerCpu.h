@@ -2,6 +2,7 @@
 #define REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
 
 #include "../base/ReversiConstant.h"
+#include "../base/MoveInfo.h"
 
 // 前方宣言
 namespace reversi {
