@@ -15,16 +15,16 @@ public:
 		reversi::ReversiConstant::POSITION position;    // 位置
 		reversi::ReversiConstant::BOARD_INFO info;  // 着手する石
 		reversi::ReversiConstant::TURN turn;            // 手番
-		reversi::ReverseInfo::REVERSE_INFO reverseInfo; // 裏返し情報
 	} MOVE_INFO;
 
 public:
 
 	/**
 	 * コンストラクタ
-	 * @param info 着手情報
+	 * @param moveInfo    着手情報
+	 * @param reverseInfo 裏返し情報
 	 */
-	MoveInfo(MOVE_INFO info);
+	MoveInfo(MOVE_INFO moveInfo, const reversi::ReverseInfo& reverseInfo);
 
 	/**
 	 * デストラクタ
@@ -35,12 +35,17 @@ public:
 	 * 着手情報取得
 	 * @return 着手情報
 	 */
-	MOVE_INFO Get() {
+	MOVE_INFO GetMoveInfo() {
 		return moveInfo;
 	};
 
+	reversi::ReverseInfo GetReverseInfo() const {
+		return reverseInfo;
+	}
+
 private:
 	MOVE_INFO moveInfo;
+	reversi::ReverseInfo reverseInfo;
 };
 
 }

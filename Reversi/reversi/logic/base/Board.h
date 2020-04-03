@@ -5,6 +5,7 @@
 #include <vector>
 #include "ReversiConstant.h"
 #include "ReverseInfo.h"
+#include "MoveInfo.h"
 #include "../render/IRenderBoard.h"
 
 // 前方宣言
@@ -58,7 +59,8 @@ public:
 	 * @param  reverseInfo 裏返し情報
 	 * @return             trueなら正常 falseなら何かしらの理由で失敗
 	 */
-	bool Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo);
+	bool Move(reversi::MoveInfo moveInfo);
+	//bool Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo);
 
 	/**
 	 * 盤の情報を取得する

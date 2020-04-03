@@ -73,11 +73,13 @@ bool reversi::TestBoard::Execute() {
 
 		// 着手処理
 		const reversi::ReverseInfo reverseInfo = move.GetReverseInfo(position);
-		reversi::ReversiConstant::MOVE_INFO moveInfo;
+		reversi::MoveInfo::MOVE_INFO moveInfo;
 		moveInfo.position = reversi::ReversiConstant::POSITION::D3;
 		moveInfo.info = reversi::ReversiConstant::BOARD_INFO::BLACK;
 		moveInfo.turn = reversi::ReversiConstant::TURN::TURN_BLACK;
-		AssertEqual(board.Move(moveInfo, reverseInfo), "TestBoard::Execute() not move");
+		reversi::MoveInfo moveInfoClass(moveInfo, reverseInfo);
+
+		AssertEqual(board.Move(moveInfoClass), "TestBoard::Execute() not move");
 
 		// 盤の状態のチェック(裏返しがちゃんとできているか)
 		{

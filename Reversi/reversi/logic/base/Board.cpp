@@ -38,6 +38,37 @@ void reversi::Board::InitializeGame() {
  * @param  reverseInfo 裏返し情報
  * @return             trueなら正常 falseなら何かしらの理由で失敗
  */
+bool reversi::Board::Move(reversi::MoveInfo moveInfo) {
+	reversi::MoveInfo::MOVE_INFO info = moveInfo.GetMoveInfo();
+	reversi::ReverseInfo reverseInfo = moveInfo.GetReverseInfo();
+	reversi::Assert::AssertEquals(info.position == reverseInfo.GetPosition(), "Board::Move position not same");
+
+	// 着手位置のマスをチェック
+	if (!CheckEmpty(info.position)) {
+		// 空マスではない
+		return false;
+	}
+
+	// 着手位置に石を置く
+	reversi::ReversiConstant::BOARD_INFO boardInfo = GetTurnToStone(info.turn);
+	SetBoardInfo(boardInfo, info.position);
+
+	// 裏返し情報キャッシュから裏返す位置を取得
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "Board::Move index over i");
+		int reverseCount = reverseInfo.GetReversePositionCount((reversi::ReverseInfo::DIRECTION)i);
+		for (int j = 0; j < reverseCount; ++j) {
+			reversi::Assert::AssertArrayRange(j, reverseCount, "Board::Move index over j");
+			// 裏返す
+			reversi::ReversiConstant::POSITION position = reverseInfo.GetReversePosition((reversi::ReverseInfo::DIRECTION)i, j);
+			ReverseStone(position);
+		}
+	}
+
+	return true;
+
+}
+/*
 bool reversi::Board::Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo) {
 
 	reversi::Assert::AssertEquals(moveInfo.position == reverseInfo.GetPosition(), "Board::Move position not same");
@@ -66,6 +97,7 @@ bool reversi::Board::Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::Re
 
 	return true;
 }
+*/
 
 /**
  * 盤の情報を取得する
