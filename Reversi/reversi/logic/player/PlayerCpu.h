@@ -30,10 +30,12 @@ public:
 
 	/**
 	 * 着手処理
-	 * @param board 盤情報
-	 * @param turn  手番
+	 * @param  board 盤情報
+	 * @param  move  着手情報
+	 * @param  turn  手番
+	 * @return       trueなら着手済み(moveに情報が入っている)
 	 */
-	void SelectMove(const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+	bool SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * 着手後に呼ばれる
