@@ -1,10 +1,11 @@
 ﻿#ifndef REVERSI_LOGIC_BASE_BOARD_H_
 #define REVERSI_LOGIC_BASE_BOARD_H_
 
-#include "ReversiConstant.h"
-#include "../render/IRenderBoard.h"
 #include <string>
 #include <vector>
+#include "ReversiConstant.h"
+#include "ReverseInfo.h"
+#include "../render/IRenderBoard.h"
 
 // 前方宣言
 namespace reversi {
@@ -53,17 +54,18 @@ public:
 
 	/**
 	 * 着手処理
-	 * @param moveInfo 着手情報
+	 * @param  moveInfo    着手情報
+	 * @param  reverseInfo 裏返し情報
+	 * @return             trueなら正常 falseなら何かしらの理由で失敗
 	 */
-	void Move(ReversiConstant::MOVE_INFO moveInfo);
+	bool Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo);
 
 	/**
-	 * 盤の座標に設定されている石の情報を取得する
-	 * @param  x 座標X
-	 * @param  y 座標Y
-	 * @return   石情報
+	 * 盤の情報を取得する
+	 * @param  position 盤の位置
+	 * @return          盤情報
 	 */
-	ReversiConstant::BOARD_INFO GetStone(int x, int y);
+	ReversiConstant::BOARD_INFO GetBoardInfo(int position);
 
 	/**
 	 * 盤の表示(コンソール)
@@ -100,6 +102,20 @@ private:
 	 */
 	void Preset();
 
+	/**
+	 * 空マスかどうかチェック
+	 * @param  position 位置
+	 * @return          trueなら空マス
+	 */
+	bool CheckEmpty(reversi::ReversiConstant::POSITION position);
+
+	/**
+	 * 手番から石を取得する(黒の手番なら黒の石)
+	 * @param  turn 手番
+	 * @return      手番に対応した石
+	 */
+	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
+
 private:
 
 	/**
@@ -112,13 +128,13 @@ private:
 	/**
 	 * 石をひっくり返す(黒 -> 白, 白 -> 黒)
 	 * 石がなかったら何もしない
-	 * @param position [description]
+	 * @param position 位置
 	 */
 	void ReverseStone(reversi::ReversiConstant::POSITION position);
 
 private:
-	BOARD board;
-	IRenderBoard* renderBoard;
+	BOARD board; // 盤情報
+	IRenderBoard* renderBoard; // 盤表示インターフェース
 };
 
 }

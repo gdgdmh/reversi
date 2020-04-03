@@ -81,7 +81,13 @@ public:
 	 */
 	bool CheckEnableMoveByCache(reversi::ReversiConstant::POSITION position) const;
 
-	// 盤に適用する
+	/**
+	 * 裏返し情報の取得
+	 * 予めキャッシュを作成しておくこと
+	 * @param  position 位置
+	 * @return          裏返し情報
+	 */
+	const reversi::ReverseInfo GetReverseInfo(reversi::ReversiConstant::POSITION position) const;
 
 public:
 

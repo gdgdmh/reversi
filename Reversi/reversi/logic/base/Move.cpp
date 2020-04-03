@@ -83,6 +83,27 @@ bool reversi::Move::CheckEnableMoveByCache(reversi::ReversiConstant::POSITION po
 }
 
 /**
+ * 裏返し情報の取得
+ * 予めキャッシュを作成しておくこと
+ * @param  position 位置
+ * @return          裏返し情報
+ */
+const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstant::POSITION position) const {
+	size_t size = moveCache.reverseInfo.size();
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, (int)size, "Move::GetReverseInfo index over");
+		if (position == moveCache.reverseInfo[i].GetPosition()) {
+			return moveCache.reverseInfo[i];
+		}
+	}
+	// 見つからなかった(CheckEnableMoveByCacheでチェックしておけば起こらないはず)
+	reversi::Assert::AssertEquals(0, "Move::GetReverseInfo not found");
+	reversi::ReverseInfo info(reversi::ReversiConstant::POSITION::A1, reversi::ReversiConstant::TURN::TURN_BLACK);
+	return info;
+}
+
+
+/**
  * その場所に打つことができるか情報を取得する
  * @param  board    盤データ
  * @param  position 打とうとする盤の位置

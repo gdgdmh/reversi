@@ -1,6 +1,7 @@
 ﻿#include "TestBoard.h"
 // test
 #include "../../logic/base/Board.h"
+#include "../../logic/base/Move.h"
 #include "../../util/Assert.h"
 
 /**
@@ -20,35 +21,96 @@ reversi::TestBoard::~TestBoard() {
  * @return trueなら成功 falseなら失敗
  */
 bool reversi::TestBoard::Execute() {
-	reversi::Board board;
-	board.InitializeGame();
+	{
+		reversi::Board board;
+		board.InitializeGame();
 
-	// 盤が初期位置になっているかチェック
-	int size = reversi::ReversiConstant::POSITION_SIZE;
-	const reversi::BOARD boardData = board.GetRawData();
-	for (int i = 0; i < size; ++i) {
-		reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
-		
-		reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
+		// 盤が初期位置になっているかチェック
+		int size = reversi::ReversiConstant::POSITION_SIZE;
+		const reversi::BOARD boardData = board.GetRawData();
+		for (int i = 0; i < size; ++i) {
+			reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
+			
+			reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
 
-		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "TestBoard::Execute() board index over");
+			reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "TestBoard::Execute() board index over");
 
-		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
+			reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
 
-		if ((position == reversi::ReversiConstant::POSITION::D4) || (position == reversi::ReversiConstant::POSITION::E5)) {
-			// 白の初期位置
-			if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::WHITE, "TestBoard::Execute() NOT WHITE")) {
-				return false;
+			if ((position == reversi::ReversiConstant::POSITION::D4) || (position == reversi::ReversiConstant::POSITION::E5)) {
+				// 白の初期位置
+				if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::WHITE, "TestBoard::Execute() NOT WHITE")) {
+					return false;
+				}
+			} else if ((position == reversi::ReversiConstant::POSITION::E4) || (position == reversi::ReversiConstant::POSITION::D5)) {
+				// 黒の初期位置
+				if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::BLACK, "TestBoard::Execute() NOT BLACK")) {
+					return false;
+				}
+			} else {
+				// 空白
+				if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::NONE, "TestBoard::Execute() NOT NONE")) {
+					return false;
+				}
 			}
-		} else if ((position == reversi::ReversiConstant::POSITION::E4) || (position == reversi::ReversiConstant::POSITION::D5)) {
-			// 黒の初期位置
-			if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::BLACK, "TestBoard::Execute() NOT BLACK")) {
-				return false;
-			}
-		} else {
-			// 空白
-			if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::NONE, "TestBoard::Execute() NOT NONE")) {
-				return false;
+		}
+	}
+	// 裏返し処理のチェック
+	{
+		reversi::Board board;
+		board.InitializeGame();
+
+		reversi::Move move;
+		reversi::EMPTY_POSITION emptyPosition;
+		// 空マスの取得
+		move.FindEmptyPosition(board, emptyPosition);
+		// 黒のおける位置の取得
+		move.FindPutEnablePosition(board, emptyPosition, reversi::ReversiConstant::TURN::TURN_BLACK);
+
+		// 打てるか(D3)
+		reversi::ReversiConstant::POSITION position = reversi::ReversiConstant::POSITION::D3;
+		AssertEqual(move.CheckEnableMoveByCache(position), "TestBoard::Execute() check not move");
+
+		// 着手処理
+		const reversi::ReverseInfo reverseInfo = move.GetReverseInfo(position);
+		reversi::ReversiConstant::MOVE_INFO moveInfo;
+		moveInfo.position = reversi::ReversiConstant::POSITION::D3;
+		moveInfo.info = reversi::ReversiConstant::BOARD_INFO::BLACK;
+		moveInfo.turn = reversi::ReversiConstant::TURN::TURN_BLACK;
+		AssertEqual(board.Move(moveInfo, reverseInfo), "TestBoard::Execute() not move");
+
+		// 盤の状態のチェック(裏返しがちゃんとできているか)
+		{
+			int size = reversi::ReversiConstant::POSITION_SIZE;
+			const reversi::BOARD boardData = board.GetRawData();
+			for (int i = 0; i < size; ++i) {
+				reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
+				reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
+				reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "TestBoard::Execute() board index over");
+				reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
+
+				switch (position) {
+				case reversi::ReversiConstant::POSITION::E5:
+					// 白
+					if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::WHITE, "TestBoard::Execute() NOT WHITE")) {
+						return false;
+					}
+					break;
+				case reversi::ReversiConstant::POSITION::D3:
+				case reversi::ReversiConstant::POSITION::D4:
+				case reversi::ReversiConstant::POSITION::E4:
+				case reversi::ReversiConstant::POSITION::D5:
+					// 黒
+					if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::BLACK, "TestBoard::Execute() NOT BLACK")) {
+						return false;
+					}
+					break;
+				default:
+					if (!AssertEqual(info == reversi::ReversiConstant::BOARD_INFO::NONE, "TestBoard::Execute() NOT NONE")) {
+						return false;
+					}
+					break;
+				}
 			}
 		}
 	}

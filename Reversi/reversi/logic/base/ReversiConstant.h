@@ -30,17 +30,18 @@ public:
 		A8 = 81, B8 = 82, C8 = 83, D8 = 84, E8 = 85, F8 = 86, G8 = 87, H8 = 88
 	};
 
-	// 着手情報
-	typedef struct {
-		POSITION position;  // 位置
-		BOARD_INFO info;    // 着手する石
-	} MOVE_INFO;
-
 	// 手番
 	enum class TURN {
 		TURN_BLACK, // 黒の手番
 		TURN_WHITE, // 白の手番
 	};
+
+	// 着手情報
+	typedef struct {
+		POSITION position;	// 位置
+		BOARD_INFO info;	// 着手する石
+		TURN turn;			// 手番
+	} MOVE_INFO;
 
 	static const int BOARD_DATA_SIZE_X = 10; // 盤のデータサイズX
 	static const int BOARD_DATA_SIZE_Y = 10; // 盤のデータサイズY
