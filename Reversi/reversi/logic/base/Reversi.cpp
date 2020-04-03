@@ -4,13 +4,15 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK) {
+    ResetPlayer();
 }
 
 /**
  * デストラクタ
  */
 reversi::Reversi::~Reversi() {
+    ReleasePlayer();
 }
 
 /**
@@ -33,4 +35,19 @@ void reversi::Reversi::InitializeGame() {
  * 更新処理
  */
 void reversi::Reversi::Task() {
+}
+
+void reversi::Reversi::ResetPlayer() {
+    for (int i = 0; i < PLAYER_COUNT; ++i) {
+        player[i] = NULL;
+    }
+}
+
+void reversi::Reversi::ReleasePlayer() {
+    for (int i = 0; i < PLAYER_COUNT; ++i) {
+        if (player[i] != NULL) {
+            delete player[i];
+            player[i] = NULL;
+        }
+    }
 }

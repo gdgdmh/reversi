@@ -3,11 +3,16 @@
 
 #include "ReversiConstant.h"
 #include "Board.h"
+#include "../player/IPlayer.h"
 
 namespace reversi {
 
 // リバーシクラス
 class Reversi {
+public:
+	static const int PLAYER_COUNT = 2;
+	static const int PLAYER_BLACK = 0;
+	static const int PLAYER_WHITE = 1;
 public:
 
 	/**
@@ -41,8 +46,14 @@ public:
 	}
 
 private:
+	void ResetPlayer();
+
+	void ReleasePlayer();
+
+private:
 	reversi::Board board;
 	reversi::ReversiConstant::TURN turn;
+	reversi::IPlayer* player[PLAYER_COUNT];
 
 };
 
