@@ -1,6 +1,13 @@
 ﻿#ifndef REVERSI_LOGIC_PLAYER_PLAYERMAN_H_
 #define REVERSI_LOGIC_PLAYER_PLAYERMAN_H_
 
+#include "../base/ReversiConstant.h"
+
+// 前方宣言
+namespace reversi {
+class Board;
+}
+
 namespace reversi {
 
 // プレイヤー(人間)クラス
@@ -15,6 +22,24 @@ public:
 	 * デストラクタ
 	 */
 	virtual ~PlayerMan();
+
+	/**
+	 * 自分のターンが来たときに1度だけ呼ばれる
+	 */
+	void EventTurnStart();
+
+	/**
+	 * 着手処理
+	 * @param board 盤情報
+	 * @param turn  手番
+	 */
+	void SelectMove(const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+
+	/**
+	 * 着手後に呼ばれる
+	 */
+	void EventMoveAfter();
+
 };
 
 }
