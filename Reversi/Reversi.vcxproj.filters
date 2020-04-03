@@ -40,6 +40,9 @@
     <Filter Include="ソース ファイル\reversi\test\code">
       <UniqueIdentifier>{d0363eb7-1ab1-4721-b012-7fbabdab8261}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\reversi\logic\player">
+      <UniqueIdentifier>{6829d4b3-1c64-4336-a3a6-12661fc10972}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -92,6 +95,12 @@
     </ClCompile>
     <ClCompile Include="reversi\test\code\TestReverseInfo.cpp">
       <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\logic\player\PlayerMan.cpp">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\logic\player\PlayerCpu.cpp">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="reversi\test\code\TestReverseInfo.h">
       <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\PlayerMan.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\PlayerCpu.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
