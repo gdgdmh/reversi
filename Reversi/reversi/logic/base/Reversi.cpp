@@ -1,20 +1,25 @@
 ﻿#include "Reversi.h"
 #include "../../util/Assert.h"
+#include "../../util/OutputConsole.h"
 #include "../player/PlayerMan.h"
 #include "../player/PlayerCpu.h"
 
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE) {
-    ResetPlayer();
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL) {
+	ResetPlayer();
 }
 
 /**
  * デストラクタ
  */
 reversi::Reversi::~Reversi() {
-    ReleasePlayer();
+	ReleasePlayer();
+	if (console) {
+		delete console;
+		console = NULL;
+	}
 }
 
 /**
@@ -27,7 +32,10 @@ void reversi::Reversi::Initialize() {
 	// 暫定として人間vs人間としておく
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
 		player[i] = new PlayerMan();
-        player[i]->Initialize();
+		player[i]->Initialize();
+	}
+	if (console == NULL) {
+		console = new OutputConsole();
 	}
 }
 
@@ -68,9 +76,15 @@ void reversi::Reversi::TaskInitialize() {
  */
 void reversi::Reversi::TaskMoveSelectStart() {
 	board.Render();
-    int playerIndex = TurnToPlayerIndex(turn);
-    player[playerIndex]->EventTurnStart(board, turn);
+	int playerIndex = TurnToPlayerIndex(turn);
+	player[playerIndex]->EventTurnStart(board, turn);
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
+	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+		console->PrintLine("黒のターン");
+	} else {
+		console->PrintLine("白のターン");
+	}
+
 }
 
 /**
@@ -81,12 +95,12 @@ void reversi::Reversi::TaskMoveSelect() {
 	reversi::MoveInfo move;
 	
 	bool isDecide = player[playerIndex]->SelectMove(board, move, turn);
-    if (isDecide) {
-        moveInfo = move;
-        bool isMove = board.Move(moveInfo);
-        reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
-        SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
-    }
+	if (isDecide) {
+		moveInfo = move;
+		bool isMove = board.Move(moveInfo);
+		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
+		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
+	}
 }
 
 /**
@@ -94,20 +108,18 @@ void reversi::Reversi::TaskMoveSelect() {
  */
 void reversi::Reversi::TaskMoveAfter() {
 
-    int playerIndex = TurnToPlayerIndex(turn);
-    player[playerIndex]->EventMoveAfter();
+	int playerIndex = TurnToPlayerIndex(turn);
+	player[playerIndex]->EventMoveAfter();
 
-    // ターン切り替え
-    ChangeTurn(turn);
+	// ターン切り替え
+	ChangeTurn(turn);
 
-    SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
-    /*
-std::string input;
-std::cout << "Your move: ";
-std::getline(std::cin, input);
-std::cout << "Opponent move: XX" << std::endl;
-
-    */
+	if (IsEnded()) {
+		// 終局
+		SetScene(reversi::Reversi::SCENE::END);
+		return;
+	}
+	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 }
 
 /**
@@ -120,21 +132,21 @@ void reversi::Reversi::TaskEnd() {
  * プレイヤーをリセットする(NULLクリア)
  */
 void reversi::Reversi::ResetPlayer() {
-    for (int i = 0; i < PLAYER_COUNT; ++i) {
-        player[i] = NULL;
-    }
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		player[i] = NULL;
+	}
 }
 
 /**
  * プレイヤーを削除する(DELETE)
  */
 void reversi::Reversi::ReleasePlayer() {
-    for (int i = 0; i < PLAYER_COUNT; ++i) {
-        if (player[i] != NULL) {
-            delete player[i];
-            player[i] = NULL;
-        }
-    }
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		if (player[i] != NULL) {
+			delete player[i];
+			player[i] = NULL;
+		}
+	}
 }
 
 /**
@@ -142,7 +154,7 @@ void reversi::Reversi::ReleasePlayer() {
  * @param nextScene 次のシーン
  */
 void reversi::Reversi::SetScene(reversi::Reversi::SCENE nextScene) {
-    scene = nextScene;
+	scene = nextScene;
 }
 
 /**
@@ -159,10 +171,18 @@ int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN turn) {
 }
 
 void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& turn) {
-    // 手番切り替え(黒->白, 白->黒)
-    if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
-        turn = reversi::ReversiConstant::TURN::TURN_WHITE;
-    } else {
-        turn = reversi::ReversiConstant::TURN::TURN_BLACK;
-    }
+	// 手番切り替え(黒->白, 白->黒)
+	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+		turn = reversi::ReversiConstant::TURN::TURN_WHITE;
+	} else {
+		turn = reversi::ReversiConstant::TURN::TURN_BLACK;
+	}
+}
+
+bool reversi::Reversi::IsEnded() {
+	if (board.IsFull()) {
+		// 盤面が全て埋まっている
+		return true;
+	}
+	return false;
 }

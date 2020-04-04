@@ -87,6 +87,12 @@ public:
 	 */
 	Board Clone() const;
 
+	/**
+	 * 盤が埋まっているか
+	 * @return trueなら埋まっている
+	 */
+	bool IsFull() const;
+
 private:
 
 	/**

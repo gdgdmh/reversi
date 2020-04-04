@@ -149,6 +149,28 @@ reversi::Board reversi::Board::Clone() const {
 	return dest;
 }
 
+/**
+ * 盤が埋まっているか
+ * @return trueなら埋まっている
+ */
+bool reversi::Board::IsFull() const {
+
+	int size = reversi::ReversiConstant::POSITION_SIZE;
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, size, "Board::IsFull() position index over");
+		// 位置を取得
+		reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
+
+		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::IsFull() board index over");
+
+		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
+		if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
+			// 空マスが1つでもあったら埋まってない
+			return false;
+		}
+	}
+	return true;
+}
 
 /**
  * 盤のクリア(全て石なしとする)

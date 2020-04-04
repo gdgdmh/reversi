@@ -4,6 +4,7 @@
 #include "ReversiConstant.h"
 #include "Board.h"
 #include "../player/IPlayer.h"
+#include "../../util/IOutputConsole.h"
 
 namespace reversi {
 
@@ -99,12 +100,16 @@ private:
 
 	void ChangeTurn(reversi::ReversiConstant::TURN& turn);
 
+	// 終局したか
+	bool IsEnded();
+
 private:
 	reversi::Board board;
 	reversi::ReversiConstant::TURN turn;
 	reversi::IPlayer* player[PLAYER_COUNT];
 	reversi::Reversi::SCENE scene;
 	reversi::MoveInfo moveInfo;
+	reversi::IOutputConsole* console;
 };
 
 }
