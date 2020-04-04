@@ -142,6 +142,20 @@ bool reversi::TestBoard::Execute() {
 			return false;
 		}
 	}
+	// カウント
+	{
+		reversi::Board board;
+		board.InitializeGame();
+
+		int black, white, none;
+		board.GetCount(black, white, none);
+		const int BLACK_CNT = 2;
+		const int WHITE_CNT = 2;
+		const int NONE_CNT = reversi::ReversiConstant::POSITION_SIZE - BLACK_CNT - WHITE_CNT;
+		if (!AssertEqual((black == BLACK_CNT) && (white == WHITE_CNT) && (none == NONE_CNT), "TestBoard::Execute() not count")) {
+			return false;
+		}
+	}
 	return true;
 }
 

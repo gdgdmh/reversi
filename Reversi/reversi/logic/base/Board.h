@@ -69,6 +69,9 @@ public:
 	 */
 	ReversiConstant::BOARD_INFO GetBoardInfo(int position);
 
+	// 盤の情報をカウントする
+	void GetCount(int& blackCount, int& whiteCount, int& noneCount);
+
 	/**
 	 * 盤の表示(コンソール)
 	 * @param console コンソール出力先

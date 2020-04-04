@@ -109,6 +109,30 @@ reversi::ReversiConstant::BOARD_INFO reversi::Board::GetBoardInfo(int position) 
 	return (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
 }
 
+// 盤の情報をカウントする
+void reversi::Board::GetCount(int& blackCount, int& whiteCount, int& noneCount) {
+
+	blackCount = 0;
+	whiteCount = 0;
+	noneCount = 0;
+	int size = reversi::ReversiConstant::POSITION_SIZE;
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, size, "Board::GetCount() position index over");
+		// 位置を取得
+		reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
+		// 位置から盤情報を取得
+		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::GetCount() board index over");
+		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
+		if (info == reversi::ReversiConstant::BOARD_INFO::BLACK) {
+			++blackCount;
+		} else if (info == reversi::ReversiConstant::BOARD_INFO::WHITE) {
+			++whiteCount;
+		} else if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
+			++noneCount;
+		}
+	}
+}
+
 /**
  * 盤の表示(コンソール)
  * @param console コンソール出力先
