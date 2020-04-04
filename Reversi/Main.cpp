@@ -13,7 +13,7 @@ int main(int argc, const char* argv[]) {
 	reversi::IOutputConsole* console = new reversi::OutputConsole();
 	console->PrintLine("--- main start -------------------");
 
-	bool isTest = false;
+	bool isTest = true;
 	if (isTest) {
 		// 実装テスト
 		reversi::IOutputConsole* console = new reversi::OutputConsole();
@@ -23,12 +23,12 @@ int main(int argc, const char* argv[]) {
 			delete testDevelop;
 			testDevelop = NULL;
 		}
-	} else {
-		// リバーシゲーム
-		reversi::ReversiGameLoop gameLoop;
-		gameLoop.Initialize();
-		gameLoop.Task();
 	}
+
+	// リバーシゲーム
+	reversi::ReversiGameLoop gameLoop;
+	gameLoop.Initialize();
+	gameLoop.Task();
 
 	/*
 	while (true)

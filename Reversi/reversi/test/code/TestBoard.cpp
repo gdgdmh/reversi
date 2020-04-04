@@ -116,6 +116,32 @@ bool reversi::TestBoard::Execute() {
 			}
 		}
 	}
+	// 盤面Fullチェック
+	{
+		reversi::Board board;
+		board.InitializeGame();
+
+		board.ExecuteFull(reversi::ReversiConstant::BOARD_INFO::BLACK);
+		//board.Render();
+
+		int size = reversi::ReversiConstant::POSITION_SIZE;
+		const reversi::BOARD boardData = board.GetRawData();
+		for (int i = 0; i < size; ++i) {
+			reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
+			reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
+			reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "TestBoard::Execute() board index over");
+			reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
+
+			if (!AssertEqual((info == reversi::ReversiConstant::BOARD_INFO::BLACK) || (info == reversi::ReversiConstant::BOARD_INFO::WHITE), "TestBoard::Execute() NOT FULL")) {
+				return false;
+			}
+		}
+
+		// 盤面が埋まったか
+		if (!AssertEqual(board.IsFull(), "TestBoard::Execute() NOT FULL 2")) {
+			return false;
+		}
+	}
 	return true;
 }
 

@@ -93,6 +93,9 @@ public:
 	 */
 	bool IsFull() const;
 
+	// 盤を埋める
+	void ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo);
+
 private:
 
 	/**
