@@ -36,7 +36,7 @@ void reversi::Reversi::Initialize() {
 void reversi::Reversi::InitializeGame() {
 	board.InitializeGame();
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
-	SetScene(reversi::Reversi::SCENE::MOVE_START);
+	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 }
 
 /**
@@ -44,21 +44,72 @@ void reversi::Reversi::InitializeGame() {
  */
 void reversi::Reversi::Task() {
 	if (scene == reversi::Reversi::SCENE::INITIALIZE) {
-	} else if (scene == reversi::Reversi::SCENE::MOVE_START) {
-		board.Render();
-		SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
+		TaskInitialize();
+	} else if (scene == reversi::Reversi::SCENE::MOVE_SELECT_START) {
+		TaskMoveSelectStart();
 	} else if (scene == reversi::Reversi::SCENE::MOVE_SELECT) {
-		if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
-			reversi::MoveInfo move;
-            bool isDecide = false;
-            isDecide = player[PLAYER_BLACK]->SelectMove(board, move, turn);
-		} else {
-            reversi::MoveInfo move;
-            bool isDecide = false;
-            isDecide = player[PLAYER_WHITE]->SelectMove(board, move, turn);
-        }
+		TaskMoveSelect();
+	} else if (scene == reversi::Reversi::SCENE::MOVE_AFTER) {
+		TaskMoveAfter();
 	} else if (scene == reversi::Reversi::SCENE::END) {
+		TaskEnd();
 	}
+}
+
+/**
+ * 初期化
+ */
+void reversi::Reversi::TaskInitialize() {
+}
+
+/**
+ * 着手選択開始
+ */
+void reversi::Reversi::TaskMoveSelectStart() {
+	board.Render();
+    int playerIndex = TurnToPlayerIndex(turn);
+    player[playerIndex]->EventTurnStart();
+	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
+}
+
+/**
+ * 着手選択
+ */
+void reversi::Reversi::TaskMoveSelect() {
+	int playerIndex = TurnToPlayerIndex(turn);
+	reversi::MoveInfo move;
+	
+	bool isDecide = player[playerIndex]->SelectMove(board, move, turn);
+    if (isDecide) {
+        moveInfo = move;
+        bool isMove = board.Move(moveInfo);
+        reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
+        SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
+    }
+}
+
+/**
+ * 着手後処理
+ */
+void reversi::Reversi::TaskMoveAfter() {
+
+    int playerIndex = TurnToPlayerIndex(turn);
+    player[playerIndex]->EventMoveAfter();
+
+    SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
+    /*
+std::string input;
+std::cout << "Your move: ";
+std::getline(std::cin, input);
+std::cout << "Opponent move: XX" << std::endl;
+
+    */
+}
+
+/**
+ * 対局終了
+ */
+void reversi::Reversi::TaskEnd() {
 }
 
 /**
@@ -88,5 +139,18 @@ void reversi::Reversi::ReleasePlayer() {
  */
 void reversi::Reversi::SetScene(reversi::Reversi::SCENE nextScene) {
     scene = nextScene;
+}
+
+/**
+ * 手番からプレイヤーのindexを取得する
+ * @param  turn 手番
+ * @return      プレイヤーindex
+ */
+int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN turn) {
+	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+		return PLAYER_BLACK;
+	} else {
+		return PLAYER_WHITE;
+	}
 }
 

@@ -15,8 +15,9 @@ public:
 	static const int PLAYER_WHITE = 1;
 	enum class SCENE {
 		INITIALIZE,
-		MOVE_START,
+		MOVE_SELECT_START,
 		MOVE_SELECT,
+		MOVE_AFTER,
 		END
 	};
 public:
@@ -49,6 +50,31 @@ public:
 private:
 
 	/**
+	 * 初期化
+	 */
+	void TaskInitialize();
+
+	/**
+	 * 着手選択開始
+	 */
+	void TaskMoveSelectStart();
+
+	/**
+	 * 着手選択
+	 */
+	void TaskMoveSelect();
+
+	/**
+	 * 着手後処理
+	 */
+	void TaskMoveAfter();
+
+	/**
+	 * 対局終了
+	 */
+	void TaskEnd();
+
+	/**
 	 * プレイヤーをリセットする(NULLクリア)
 	 */
 	void ResetPlayer();
@@ -64,12 +90,19 @@ private:
 	 */
 	void SetScene(reversi::Reversi::SCENE nextScene);
 
+	/**
+	 * 手番からプレイヤーのindexを取得する
+	 * @param  turn 手番
+	 * @return      プレイヤーindex
+	 */
+	int TurnToPlayerIndex(reversi::ReversiConstant::TURN turn);
+
 private:
 	reversi::Board board;
 	reversi::ReversiConstant::TURN turn;
 	reversi::IPlayer* player[PLAYER_COUNT];
 	reversi::Reversi::SCENE scene;
-
+	reversi::MoveInfo moveInfo;
 };
 
 }
