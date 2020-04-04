@@ -97,6 +97,9 @@ void reversi::Reversi::TaskMoveAfter() {
     int playerIndex = TurnToPlayerIndex(turn);
     player[playerIndex]->EventMoveAfter();
 
+    // ターン切り替え
+    ChangeTurn(turn);
+
     SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
     /*
 std::string input;
@@ -155,3 +158,11 @@ int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN turn) {
 	}
 }
 
+void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& turn) {
+    // 手番切り替え(黒->白, 白->黒)
+    if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+        turn = reversi::ReversiConstant::TURN::TURN_WHITE;
+    } else {
+        turn = reversi::ReversiConstant::TURN::TURN_BLACK;
+    }
+}

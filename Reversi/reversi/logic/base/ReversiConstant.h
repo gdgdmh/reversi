@@ -54,6 +54,7 @@ public:
 
 	static const ReversiConstant::POSITION POSITIONS[ReversiConstant::POSITION_SIZE]; // 全ての座標(通常使用するもののみ、番兵は含まない)
 	static const ReversiConstant::POSITION POSITION_HORIZONTALS[ReversiConstant::BOARD_SIZE_Y][ReversiConstant::BOARD_SIZE_X]; // 横方向の座標
+	static const std::string POSITION_STRINGS[ReversiConstant::POSITION_SIZE]; // 位置の文字列テーブル
 
 public:
 
@@ -132,6 +133,8 @@ public:
 	static int GetPositionDownRight(int position) {
 		return position + BOARD_DATA_SIZE_X + 1;
 	}
+
+	static bool GetStringToPosition(const std::string& positionString, reversi::ReversiConstant::POSITION& position);
 };
 
 }

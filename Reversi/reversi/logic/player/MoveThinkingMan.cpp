@@ -1,4 +1,5 @@
-﻿#include "MoveThinkingMan.h"
+﻿#include <iostream>
+#include "MoveThinkingMan.h"
 #include "../../util/IOutputConsole.h"
 #include "../../util/Assert.h"
 
@@ -98,13 +99,12 @@ bool reversi::MoveThinkingMan::MoveThinking(const reversi::Board& board, reversi
 
 bool reversi::MoveThinkingMan::GetPositionByInput(reversi::ReversiConstant::POSITION& position) {
 
-	/*
-	// greet the user
-    std::string name;
-    std::cout << "What is your name? ";
-    std::getline(std::cin, name);
-    std::cout << "Hello " << name << ", nice to meet you.\n";
-	*/
+	std::string positionName = "";
+	std::getline(std::cin, positionName);
+
+	if (reversi::ReversiConstant::GetStringToPosition(positionName, position)) {
+		return true;
+	}
 	return false;
 }
 

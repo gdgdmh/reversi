@@ -97,6 +97,8 @@ private:
 	 */
 	int TurnToPlayerIndex(reversi::ReversiConstant::TURN turn);
 
+	void ChangeTurn(reversi::ReversiConstant::TURN& turn);
+
 private:
 	reversi::Board board;
 	reversi::ReversiConstant::TURN turn;
