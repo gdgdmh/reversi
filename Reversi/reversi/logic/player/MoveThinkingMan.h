@@ -4,6 +4,7 @@
 #include "IMoveThinking.h"
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
+#include "../base/Move.h"
 
 // 前方宣言
 namespace reversi {
@@ -43,6 +44,14 @@ public:
 	 */
 	bool MoveThinking(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn);
 
+private:
+
+	bool GetPositionByInput(reversi::ReversiConstant::POSITION& position);
+
+	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
+
+private:
+	reversi::Move reversiMove;
 
 };
 

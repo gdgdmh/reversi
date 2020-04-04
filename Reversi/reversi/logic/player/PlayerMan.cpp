@@ -34,7 +34,7 @@ void reversi::PlayerMan::Initialize() {
  * @param turn  手番
  */
 void reversi::PlayerMan::EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
-	//moveThinking->InitializeMoveThinking();
+	moveThinking->InitializeMoveThinking(board, turn);
 }
 
 /**
@@ -45,7 +45,7 @@ void reversi::PlayerMan::EventTurnStart(const reversi::Board& board, reversi::Re
  * @return       trueなら着手済み(moveに情報が入っている)
  */
 bool reversi::PlayerMan::SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-	return false;
+	return moveThinking->MoveThinking(board, move, turn);
 }
 
 /**

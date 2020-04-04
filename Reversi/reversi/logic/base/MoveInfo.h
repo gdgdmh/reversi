@@ -36,11 +36,13 @@ public:
 	 */
 	virtual ~MoveInfo();
 
+	void Copy(const MoveInfo& source);
+
 	/**
 	 * 着手情報取得
 	 * @return 着手情報
 	 */
-	MOVE_INFO GetMoveInfo() {
+	MOVE_INFO GetMoveInfo() const {
 		return moveInfo;
 	};
 

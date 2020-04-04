@@ -23,3 +23,10 @@ reversi::MoveInfo::MoveInfo(MOVE_INFO moveInfo, const reversi::ReverseInfo& reve
  */
 reversi::MoveInfo::~MoveInfo() {
 }
+
+void reversi::MoveInfo::Copy(const reversi::MoveInfo& source) {
+    moveInfo.position = source.moveInfo.position;
+    moveInfo.turn = source.moveInfo.turn;
+    moveInfo.info = source.moveInfo.info;
+    reverseInfo = source.reverseInfo;
+}

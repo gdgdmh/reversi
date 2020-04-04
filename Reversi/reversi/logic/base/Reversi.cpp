@@ -27,6 +27,7 @@ void reversi::Reversi::Initialize() {
 	// 暫定として人間vs人間としておく
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
 		player[i] = new PlayerMan();
+        player[i]->Initialize();
 	}
 }
 
