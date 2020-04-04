@@ -14,7 +14,8 @@ public:
 	/**
 	 * デストラクタ
 	 */
-	virtual ~IMoveThinking();
+	virtual ~IMoveThinking() {
+	}
 
 	/**
 	 * 思考
