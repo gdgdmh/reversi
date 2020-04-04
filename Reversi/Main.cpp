@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include "reversi/ReversiGame.h"
 #include "reversi/test/code/TestDevelop.h"
 #include "reversi/util/IOutputConsole.h"
 #include "reversi/util/OutputConsole.h"

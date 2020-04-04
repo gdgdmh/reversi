@@ -159,7 +159,6 @@
     <ClCompile Include="reversi\logic\player\PlayerCpu.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerMan.cpp" />
     <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp" />
-    <ClCompile Include="reversi\ReversiGame.cpp" />
     <ClCompile Include="reversi\scene\TestScene.cpp" />
     <ClCompile Include="reversi\test\base\UnitTest.cpp" />
     <ClCompile Include="reversi\test\base\UnitTestBase.cpp" />
@@ -186,7 +185,6 @@
     <ClInclude Include="reversi\logic\player\PlayerMan.h" />
     <ClInclude Include="reversi\logic\render\IRenderBoard.h" />
     <ClInclude Include="reversi\logic\render\RenderBoardConsole.h" />
-    <ClInclude Include="reversi\ReversiGame.h" />
     <ClInclude Include="reversi\scene\SceneBase.h" />
     <ClInclude Include="reversi\scene\TestScene.h" />
     <ClInclude Include="reversi\test\base\UnitTest.h" />
