@@ -15,9 +15,17 @@ reversi::PlayerCpu::~PlayerCpu() {
 }
 
 /**
- * 自分のターンが来たときに1度だけ呼ばれる
+ * 初期化
  */
-void reversi::PlayerCpu::EventTurnStart() {
+void reversi::PlayerCpu::Initialize() {
+}
+
+/**
+ * 自分のターンが来たときに1度だけ呼ばれる
+ * @param board 盤情報
+ * @param turn  手番
+ */
+void reversi::PlayerCpu::EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 }
 
 /**
@@ -28,7 +36,7 @@ void reversi::PlayerCpu::EventTurnStart() {
  * @return       trueなら着手済み(moveに情報が入っている)
  */
 bool reversi::PlayerCpu::SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-    return false;
+	return false;
 }
 
 /**

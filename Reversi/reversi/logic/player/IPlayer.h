@@ -21,9 +21,16 @@ public:
 	}
 
 	/**
-	 * 自分のターンが来たときに1度だけ呼ばれる
+	 * 初期化
 	 */
-	virtual void EventTurnStart() = 0;
+	virtual void Initialize() = 0;
+
+	/**
+	 * 自分のターンが来たときに1度だけ呼ばれる
+	 * @param board 盤情報
+	 * @param turn  手番
+	 */
+	virtual void EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn) = 0;
 
 	/**
 	 * 着手処理

@@ -2,6 +2,7 @@
 #define REVERSI_LOGIC_PLAYER_PLAYERMAN_H_
 
 #include "IPlayer.h"
+#include "IMoveThinking.h"
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 
@@ -26,9 +27,16 @@ public:
 	virtual ~PlayerMan();
 
 	/**
-	 * 自分のターンが来たときに1度だけ呼ばれる
+	 * 初期化
 	 */
-	void EventTurnStart();
+	void Initialize();
+
+	/**
+	 * 自分のターンが来たときに1度だけ呼ばれる
+	 * @param board 盤情報
+	 * @param turn  手番
+	 */
+	void EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * 着手処理
@@ -43,6 +51,9 @@ public:
 	 * 着手後に呼ばれる
 	 */
 	void EventMoveAfter();
+
+private:
+	IMoveThinking* moveThinking;
 
 };
 

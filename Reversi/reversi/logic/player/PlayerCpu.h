@@ -26,9 +26,16 @@ public:
 	virtual ~PlayerCpu();
 
 	/**
-	 * 自分のターンが来たときに1度だけ呼ばれる
+	 * 初期化
 	 */
-	void EventTurnStart();
+	void Initialize();
+
+	/**
+	 * 自分のターンが来たときに1度だけ呼ばれる
+	 * @param board 盤情報
+	 * @param turn  手番
+	 */
+	void EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * 着手処理

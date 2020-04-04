@@ -68,7 +68,7 @@ void reversi::Reversi::TaskInitialize() {
 void reversi::Reversi::TaskMoveSelectStart() {
 	board.Render();
     int playerIndex = TurnToPlayerIndex(turn);
-    player[playerIndex]->EventTurnStart();
+    player[playerIndex]->EventTurnStart(board, turn);
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
 }
 
