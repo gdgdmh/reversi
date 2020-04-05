@@ -81,6 +81,8 @@ public:
 	 */
 	bool CheckEnableMoveByCache(reversi::ReversiConstant::POSITION position) const;
 
+	bool CheckSomewherePutEnableByCache();
+
 	/**
 	 * 裏返し情報の取得
 	 * 予めキャッシュを作成しておくこと

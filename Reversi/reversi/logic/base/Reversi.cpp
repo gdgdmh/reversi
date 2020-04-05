@@ -3,12 +3,14 @@
 #include "../../util/OutputConsole.h"
 #include "../player/PlayerMan.h"
 #include "../player/PlayerCpu.h"
+#include "Move.h"
 
 /**
  * コンストラクタ
  */
 reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), result(reversi::Reversi::RESULT::NONE), resultBlackCount(0), resultWhiteCount(0) {
 	ResetPlayer();
+	ResetPassCheck();
 }
 
 /**
@@ -38,6 +40,7 @@ void reversi::Reversi::Initialize() {
 		console = new OutputConsole();
 	}
 	result = reversi::Reversi::RESULT::NONE;
+	ResetPassCheck();
 	resultBlackCount = 0;
 	resultWhiteCount = 0;
 }
@@ -50,6 +53,7 @@ void reversi::Reversi::InitializeGame() {
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	result = reversi::Reversi::RESULT::NONE;
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
+	ResetPassCheck();
 	resultBlackCount = 0;
 	resultWhiteCount = 0;
 }
@@ -86,6 +90,22 @@ void reversi::Reversi::TaskInitialize() {
  */
 void reversi::Reversi::TaskMoveSelectStart() {
 	board.Render();
+
+	if (IsEveryonePass()) {
+		// 両者パスしたので終局
+		SetScene(reversi::Reversi::SCENE::RESULT);
+		return;
+	}
+
+	if (CheckPass(turn)) {
+		// 打つことができないのでパス
+		SetPassCheck(turn);
+		SetScene(reversi::Reversi::SCENE::PASS);
+		return;
+	}
+	// パスフラグリセット
+	ResetPassCheck();
+
 	int playerIndex = TurnToPlayerIndex(turn);
 	player[playerIndex]->EventTurnStart(board, turn);
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
@@ -203,29 +223,61 @@ void reversi::Reversi::SetScene(reversi::Reversi::SCENE nextScene) {
 
 /**
  * 手番からプレイヤーのindexを取得する
- * @param  turn 手番
- * @return      プレイヤーindex
+ * @param  targetTurn 手番
+ * @return            プレイヤーindex
  */
-int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN turn) {
-	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTurn) {
+	if (targetTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		return PLAYER_BLACK;
 	} else {
 		return PLAYER_WHITE;
 	}
 }
 
-void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& turn) {
+void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& targetTurn) {
 	// 手番切り替え(黒->白, 白->黒)
-	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
-		turn = reversi::ReversiConstant::TURN::TURN_WHITE;
+	if (targetTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+		targetTurn = reversi::ReversiConstant::TURN::TURN_WHITE;
 	} else {
-		turn = reversi::ReversiConstant::TURN::TURN_BLACK;
+		targetTurn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	}
 }
 
 bool reversi::Reversi::IsEnded() {
 	if (board.IsFull()) {
 		// 盤面が全て埋まっている
+		return true;
+	}
+	return false;
+}
+
+bool reversi::Reversi::CheckPass(reversi::ReversiConstant::TURN targetTurn) {
+
+	reversi::Move move;
+	reversi::EMPTY_POSITION emptyPosition;
+	move.FindEmptyPosition(board, emptyPosition);
+
+	// キャッシュを作成する
+	move.FindPutEnablePosition(board, emptyPosition, targetTurn);
+
+	return (!move.CheckSomewherePutEnableByCache());
+}
+
+void reversi::Reversi::ResetPassCheck() {
+	passCheck.passBlack = false;
+	passCheck.passWhite = false;
+}
+
+void reversi::Reversi::SetPassCheck(reversi::ReversiConstant::TURN targetTurn) {
+	if (targetTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+		passCheck.passBlack = true;
+	} else {
+		passCheck.passWhite = false;
+	}
+}
+
+bool reversi::Reversi::IsEveryonePass() const {
+	if ((passCheck.passBlack) && (passCheck.passWhite)) {
 		return true;
 	}
 	return false;

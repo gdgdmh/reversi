@@ -29,6 +29,10 @@ public:
 		WHITE,	// 白の勝ち
 		DRAW	// 引き分け
 	};
+	typedef struct {
+		bool passBlack;
+		bool passWhite;
+	} PASS_CHECK;
 public:
 
 	/**
@@ -111,15 +115,21 @@ private:
 
 	/**
 	 * 手番からプレイヤーのindexを取得する
-	 * @param  turn 手番
-	 * @return      プレイヤーindex
+	 * @param  targetTurn 手番
+	 * @return            プレイヤーindex
 	 */
-	int TurnToPlayerIndex(reversi::ReversiConstant::TURN turn);
+	int TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTurn);
 
-	void ChangeTurn(reversi::ReversiConstant::TURN& turn);
+	void ChangeTurn(reversi::ReversiConstant::TURN& targetTurn);
 
 	// 終局したか
 	bool IsEnded();
+
+	bool CheckPass(reversi::ReversiConstant::TURN targetTurn);
+
+	void ResetPassCheck();
+	void SetPassCheck(reversi::ReversiConstant::TURN targetTurn);
+	bool IsEveryonePass() const;
 
 private:
 	reversi::Board board;
@@ -129,6 +139,7 @@ private:
 	reversi::MoveInfo moveInfo;
 	reversi::IOutputConsole* console;
 	reversi::Reversi::RESULT result;
+	reversi::Reversi::PASS_CHECK passCheck; // パス確認用(どっちもパスしかできなかったら終局)
 	int resultBlackCount;
 	int resultWhiteCount;
 };
