@@ -18,6 +18,7 @@ public:
 		INITIALIZE,
 		MOVE_SELECT_START,
 		MOVE_SELECT,
+		PASS,
 		MOVE_AFTER,
 		RESULT,
 		END
@@ -71,6 +72,11 @@ private:
 	 * 着手選択
 	 */
 	void TaskMoveSelect();
+
+	/**
+	 * パス
+	 */
+	void TaskPass();
 
 	/**
 	 * 着手後処理

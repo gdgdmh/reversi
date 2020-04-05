@@ -64,6 +64,8 @@ void reversi::Reversi::Task() {
 		TaskMoveSelectStart();
 	} else if (scene == reversi::Reversi::SCENE::MOVE_SELECT) {
 		TaskMoveSelect();
+	} else if (scene == reversi::Reversi::SCENE::PASS) {
+		TaskPass();
 	} else if (scene == reversi::Reversi::SCENE::MOVE_AFTER) {
 		TaskMoveAfter();
 	} else if (scene == reversi::Reversi::SCENE::RESULT) {
@@ -109,6 +111,15 @@ void reversi::Reversi::TaskMoveSelect() {
 		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
 	}
+}
+
+/**
+ * パス
+ */
+void reversi::Reversi::TaskPass() {
+	// ターン切り替え
+	ChangeTurn(turn);
+	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 }
 
 /**
