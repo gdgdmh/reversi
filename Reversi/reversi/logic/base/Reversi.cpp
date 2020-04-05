@@ -7,7 +7,7 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL) {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), result(reversi::Reversi::RESULT::NONE), resultBlackCount(0), resultWhiteCount(0) {
 	ResetPlayer();
 }
 
@@ -37,6 +37,9 @@ void reversi::Reversi::Initialize() {
 	if (console == NULL) {
 		console = new OutputConsole();
 	}
+	result = reversi::Reversi::RESULT::NONE;
+	resultBlackCount = 0;
+	resultWhiteCount = 0;
 }
 
 /**
@@ -45,7 +48,10 @@ void reversi::Reversi::Initialize() {
 void reversi::Reversi::InitializeGame() {
 	board.InitializeGame();
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
+	result = reversi::Reversi::RESULT::NONE;
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
+	resultBlackCount = 0;
+	resultWhiteCount = 0;
 }
 
 /**
@@ -60,6 +66,8 @@ void reversi::Reversi::Task() {
 		TaskMoveSelect();
 	} else if (scene == reversi::Reversi::SCENE::MOVE_AFTER) {
 		TaskMoveAfter();
+	} else if (scene == reversi::Reversi::SCENE::RESULT) {
+		TaskResult();
 	} else if (scene == reversi::Reversi::SCENE::END) {
 		TaskEnd();
 	}
@@ -115,11 +123,36 @@ void reversi::Reversi::TaskMoveAfter() {
 	ChangeTurn(turn);
 
 	if (IsEnded()) {
-		// 終局
-		SetScene(reversi::Reversi::SCENE::END);
+		// 結果
+		SetScene(reversi::Reversi::SCENE::RESULT);
 		return;
 	}
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
+}
+
+/**
+ * 結果処理
+ */
+void reversi::Reversi::TaskResult() {
+
+	// 石の数を取得
+	int black, white, none;
+	board.GetCount(black, white, none);
+
+	// 結果
+	if (black == white) {
+		result = reversi::Reversi::RESULT::DRAW;
+	} else if (black > white) {
+		result = reversi::Reversi::RESULT::BLACK;
+	} else if (black < white) {
+		result = reversi::Reversi::RESULT::WHITE;
+	}
+	// 石の数
+	resultBlackCount = black;
+	resultWhiteCount = white;
+
+	// 終了
+	SetScene(reversi::Reversi::SCENE::END);
 }
 
 /**

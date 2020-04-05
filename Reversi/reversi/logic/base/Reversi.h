@@ -19,7 +19,14 @@ public:
 		MOVE_SELECT_START,
 		MOVE_SELECT,
 		MOVE_AFTER,
+		RESULT,
 		END
+	};
+	enum class RESULT {
+		NONE,	// 勝敗がついていない
+		BLACK,	// 黒の勝ち
+		WHITE,	// 白の勝ち
+		DRAW	// 引き分け
 	};
 public:
 
@@ -71,6 +78,11 @@ private:
 	void TaskMoveAfter();
 
 	/**
+	 * 結果処理
+	 */
+	void TaskResult();
+
+	/**
 	 * 対局終了
 	 */
 	void TaskEnd();
@@ -110,6 +122,9 @@ private:
 	reversi::Reversi::SCENE scene;
 	reversi::MoveInfo moveInfo;
 	reversi::IOutputConsole* console;
+	reversi::Reversi::RESULT result;
+	int resultBlackCount;
+	int resultWhiteCount;
 };
 
 }
