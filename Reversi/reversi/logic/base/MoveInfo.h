@@ -46,6 +46,10 @@ public:
 		return moveInfo;
 	};
 
+	/**
+	 * 裏返し情報を取得
+	 * @return 裏返し情報
+	 */
 	reversi::ReverseInfo GetReverseInfo() const {
 		return reverseInfo;
 	}

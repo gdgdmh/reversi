@@ -24,10 +24,10 @@ public:
 		END
 	};
 	enum class RESULT {
-		NONE,	// 勝敗がついていない
-		BLACK,	// 黒の勝ち
-		WHITE,	// 白の勝ち
-		DRAW	// 引き分け
+		NONE,   // 勝敗がついていない
+		BLACK,  // 黒の勝ち
+		WHITE,  // 白の勝ち
+		DRAW    // 引き分け
 	};
 	typedef struct {
 		bool passBlack;
@@ -60,12 +60,34 @@ public:
 	 */
 	void Task();
 
+	/**
+	 * 盤面をコピーする(デバッグ用途)
+	 * @param source コピー元
+	 */
 	void CopyBoard(const reversi::Board& source);
 
-	reversi::Reversi::SCENE GetScene() const { return scene; }
+	/**
+	 * 現在のシーンを取得する
+	 * @return シーン
+	 */
+	reversi::Reversi::SCENE GetScene() const {
+		return scene;
+	}
 
-	reversi::Reversi::RESULT GetResult() const { return result; }
+	/**
+	 * 結果を取得する
+	 * @return 結果
+	 */
+	reversi::Reversi::RESULT GetResult() const {
+		return result;
+	}
 
+	/**
+	 * 最終結果の石や空白の数を取得する
+	 * @param black 黒石
+	 * @param white 白石
+	 * @param none  空白
+	 */
 	void GetResultStone(int& black, int& white, int& none);
 
 private:
@@ -128,31 +150,63 @@ private:
 	 */
 	int TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTurn);
 
+	/**
+	 * 手番の切り替え
+	 * @param targetTurn 現在の手番
+	 */
 	void ChangeTurn(reversi::ReversiConstant::TURN& targetTurn);
 
-	// 終局したか
+	/**
+	 * 終局したか
+	 * @return trueなら終局している
+	 */
 	bool IsEnded();
 
+	/**
+	 * 打つ場所がなくてパスかどうかチェック
+	 * @param  targetTurn 現在の手番
+	 * @return            trueならパス(打つ場所がない)
+	 */
 	bool CheckPass(reversi::ReversiConstant::TURN targetTurn);
 
+	/**
+	 * パスのチェックフラグをリセットする
+	 */
 	void ResetPassCheck();
+
+	/**
+	 * パスのチェックフラグをセットする
+	 * @param targetTurn 現在の手番
+	 */
 	void SetPassCheck(reversi::ReversiConstant::TURN targetTurn);
+
+	/**
+	 * プレイヤー2人ともパスしているか
+	 * @return trueなら2人ともパスしている
+	 */
 	bool IsEveryonePass() const;
 
+	/**
+	 * 結果の石をセットする(空白を勝者の石とする)
+	 * @param black  現在の黒石の数
+	 * @param white  現在の白石の数
+	 * @param none   現在の空白の数
+	 * @param result 勝敗結果
+	 */
 	void SetResultStone(int& black, int& white, int& none, reversi::Reversi::RESULT result);
 
 private:
-	reversi::Board board;
-	reversi::ReversiConstant::TURN turn;
-	reversi::IPlayer* player[PLAYER_COUNT];
-	reversi::Reversi::SCENE scene;
-	reversi::MoveInfo moveInfo;
-	reversi::IOutputConsole* console;
-	reversi::Reversi::RESULT result;
-	reversi::Reversi::PASS_CHECK passCheck; // パス確認用(どっちもパスしかできなかったら終局)
-	int resultBlackCount;
-	int resultWhiteCount;
-	int resultNoneCount;
+	reversi::Board board;                       // 盤
+	reversi::ReversiConstant::TURN turn;        // 現在の手番
+	reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
+	reversi::Reversi::SCENE scene;              // シーン
+	reversi::MoveInfo moveInfo;                 // 着手キャッシュ
+	reversi::IOutputConsole* console;           // コンソール出力クラス
+	reversi::Reversi::RESULT result;            // 対局の結果
+	reversi::Reversi::PASS_CHECK passCheck;     // パス確認用(どっちもパスしかできなかったら終局)
+	int resultBlackCount;                       // 黒石最終結果
+	int resultWhiteCount;                       // 白石最終結果
+	int resultNoneCount;                        // 空白最終結果(あくまで盤の空きマスの数)
 };
 
 }

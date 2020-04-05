@@ -14,16 +14,19 @@ reversi::ReversiGameLoop::ReversiGameLoop() {
 reversi::ReversiGameLoop::~ReversiGameLoop() {
 }
 
+/**
+ * 初期化
+ */
 void reversi::ReversiGameLoop::Initialize() {
-    reversi.Initialize();
-    reversi.InitializeGame();
+	reversi.Initialize();
+	reversi.InitializeGame();
 }
 
 /**
  * メイン処理
  */
 void reversi::ReversiGameLoop::Task() {
-    while (true) {
-        reversi.Task();
-    }
+	while (true) {
+		reversi.Task();
+	}
 }

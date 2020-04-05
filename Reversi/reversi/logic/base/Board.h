@@ -60,7 +60,6 @@ public:
 	 * @return             trueなら正常 falseなら何かしらの理由で失敗
 	 */
 	bool Move(reversi::MoveInfo moveInfo);
-	//bool Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo);
 
 	/**
 	 * 盤の情報を取得する
@@ -69,7 +68,12 @@ public:
 	 */
 	ReversiConstant::BOARD_INFO GetBoardInfo(int position);
 
-	// 盤の情報をカウントする
+	/**
+	 * 盤の情報をカウントする
+	 * @param blackCount 現在の盤の黒石の数
+	 * @param whiteCount 現在の盤の白石数
+	 * @param noneCount  現在の盤の空白数
+	 */
 	void GetCount(int& blackCount, int& whiteCount, int& noneCount);
 
 	/**
@@ -90,6 +94,10 @@ public:
 	 */
 	Board Clone() const;
 
+	/**
+	 * 盤をコピーする
+	 * @param source コピー元
+	 */
 	void Copy(const reversi::Board& source);
 
 	/**
@@ -98,9 +106,15 @@ public:
 	 */
 	bool IsFull() const;
 
-	// 盤を埋める
+	/**
+	 * 盤を埋める(デバッグ用)
+	 * @param setInfo 埋めるために使う黒石か白石を指定
+	 */
 	void ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo);
 
+	/**
+	 * 両者がパスするような盤面を設定する
+	 */
 	void SetDebugPass();
 
 private:

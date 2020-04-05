@@ -69,35 +69,35 @@ bool reversi::Board::Move(reversi::MoveInfo moveInfo) {
 
 }
 /*
-bool reversi::Board::Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo) {
+   bool reversi::Board::Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo) {
 
-	reversi::Assert::AssertEquals(moveInfo.position == reverseInfo.GetPosition(), "Board::Move position not same");
+    reversi::Assert::AssertEquals(moveInfo.position == reverseInfo.GetPosition(), "Board::Move position not same");
 
-	// 着手位置のマスをチェック
-	if (!CheckEmpty(moveInfo.position)) {
-		// 空マスではない
-		return false;
-	}
-	
-	// 着手位置に石を置く
-	reversi::ReversiConstant::BOARD_INFO info = GetTurnToStone(moveInfo.turn);
-	SetBoardInfo(info, moveInfo.position);
+    // 着手位置のマスをチェック
+    if (!CheckEmpty(moveInfo.position)) {
+        // 空マスではない
+        return false;
+    }
 
-	// 裏返し情報キャッシュから裏返す位置を取得
-	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
-		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "Board::Move index over i");
-		int reverseCount = reverseInfo.GetReversePositionCount((reversi::ReverseInfo::DIRECTION)i); //reverseInfo.reversePositionCount[i];
-		for (int j = 0; j < reverseCount; ++j) {
-			reversi::Assert::AssertArrayRange(j, reverseCount, "Board::Move index over j");
-			// 裏返す
-			reversi::ReversiConstant::POSITION position = reverseInfo.GetReversePosition((reversi::ReverseInfo::DIRECTION)i, j);
-			ReverseStone(position);
-		}
-	}
+    // 着手位置に石を置く
+    reversi::ReversiConstant::BOARD_INFO info = GetTurnToStone(moveInfo.turn);
+    SetBoardInfo(info, moveInfo.position);
 
-	return true;
-}
-*/
+    // 裏返し情報キャッシュから裏返す位置を取得
+    for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+        reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "Board::Move index over i");
+        int reverseCount = reverseInfo.GetReversePositionCount((reversi::ReverseInfo::DIRECTION)i); //reverseInfo.reversePositionCount[i];
+        for (int j = 0; j < reverseCount; ++j) {
+            reversi::Assert::AssertArrayRange(j, reverseCount, "Board::Move index over j");
+            // 裏返す
+            reversi::ReversiConstant::POSITION position = reverseInfo.GetReversePosition((reversi::ReverseInfo::DIRECTION)i, j);
+            ReverseStone(position);
+        }
+    }
+
+    return true;
+   }
+ */
 
 /**
  * 盤の情報を取得する
@@ -109,7 +109,12 @@ reversi::ReversiConstant::BOARD_INFO reversi::Board::GetBoardInfo(int position) 
 	return (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
 }
 
-// 盤の情報をカウントする
+/**
+ * 盤の情報をカウントする
+ * @param blackCount 現在の盤の黒石の数
+ * @param whiteCount 現在の盤の白石数
+ * @param noneCount  現在の盤の空白数
+ */
 void reversi::Board::GetCount(int& blackCount, int& whiteCount, int& noneCount) {
 
 	blackCount = 0;
@@ -173,6 +178,10 @@ reversi::Board reversi::Board::Clone() const {
 	return dest;
 }
 
+/**
+ * 盤をコピーする
+ * @param source コピー元
+ */
 void reversi::Board::Copy(const reversi::Board& source) {
 	for (int i = 0; i < ReversiConstant::BOARD_SIZE; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clone() index over");
@@ -206,7 +215,10 @@ bool reversi::Board::IsFull() const {
 	return true;
 }
 
-// 盤を埋める
+/**
+ * 盤を埋める(デバッグ用)
+ * @param setInfo 埋めるために使う黒石か白石を指定
+ */
 void reversi::Board::ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo) {
 
 	// 黒か白しか指定してはいけない
@@ -228,6 +240,9 @@ void reversi::Board::ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo) {
 	}
 }
 
+/**
+ * 両者がパスするような盤面を設定する
+ */
 void reversi::Board::SetDebugPass() {
 	// 空の盤面
 	Clear();
@@ -347,7 +362,7 @@ void reversi::Board::ReverseStone(reversi::ReversiConstant::POSITION position) {
 	case reversi::ReversiConstant::BOARD_INFO::WHITE:
 		SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::BLACK, position);
 		break;
-		// 石でない場所を指定したら何もしない
+	// 石でない場所を指定したら何もしない
 	default:
 		reversi::Assert::AssertEquals(0, "Board::ReverseStone not info black or white");
 		break;

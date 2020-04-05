@@ -20,9 +20,8 @@ public:
 		DOWN_LEFT,
 		DOWN_RIGHT
 	};
-	static const int MAX_DIRECTION = 8;
+	static const int MAX_DIRECTION = 8; // 方向最大数
 
-	// [ReverseInfo::MAX_DIRECTION]
 	// 裏返し情報
 	typedef struct {
 		reversi::ReversiConstant::POSITION position; // 打つ位置

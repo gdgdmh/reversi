@@ -9,6 +9,9 @@ namespace reversi {
 class ReversiGameLoop {
 public:
 
+	/**
+	 * コンストラクタ
+	 */
 	ReversiGameLoop();
 
 	/**
@@ -16,6 +19,9 @@ public:
 	 */
 	virtual ~ReversiGameLoop();
 
+	/**
+	 * 初期化
+	 */
 	void Initialize();
 
 	/**
@@ -25,7 +31,7 @@ public:
 
 private:
 	reversi::Reversi reversi;
-	
+
 };
 
 }

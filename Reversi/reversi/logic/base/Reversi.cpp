@@ -81,10 +81,20 @@ void reversi::Reversi::Task() {
 	}
 }
 
+/**
+ * 盤面をコピーする(デバッグ用途)
+ * @param source コピー元
+ */
 void reversi::Reversi::CopyBoard(const reversi::Board& source) {
 	board.Copy(source);
 }
 
+/**
+ * 最終結果の石や空白の数を取得する
+ * @param black 黒石
+ * @param white 白石
+ * @param none  空白
+ */
 void reversi::Reversi::GetResultStone(int& black, int& white, int& none) {
 	black = resultBlackCount;
 	white = resultWhiteCount;
@@ -135,7 +145,7 @@ void reversi::Reversi::TaskMoveSelectStart() {
 void reversi::Reversi::TaskMoveSelect() {
 	int playerIndex = TurnToPlayerIndex(turn);
 	reversi::MoveInfo move;
-	
+
 	bool isDecide = player[playerIndex]->SelectMove(board, move, turn);
 	if (isDecide) {
 		moveInfo = move;
@@ -249,6 +259,10 @@ int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTur
 	}
 }
 
+/**
+ * 手番の切り替え
+ * @param targetTurn 現在の手番
+ */
 void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& targetTurn) {
 	// 手番切り替え(黒->白, 白->黒)
 	if (targetTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
@@ -258,6 +272,10 @@ void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& targetTurn) {
 	}
 }
 
+/**
+ * 終局したか
+ * @return trueなら終局している
+ */
 bool reversi::Reversi::IsEnded() {
 	if (board.IsFull()) {
 		// 盤面が全て埋まっている
@@ -266,6 +284,11 @@ bool reversi::Reversi::IsEnded() {
 	return false;
 }
 
+/**
+ * 打つ場所がなくてパスかどうかチェック
+ * @param  targetTurn 現在の手番
+ * @return            trueならパス(打つ場所がない)
+ */
 bool reversi::Reversi::CheckPass(reversi::ReversiConstant::TURN targetTurn) {
 
 	reversi::Move move;
@@ -278,11 +301,18 @@ bool reversi::Reversi::CheckPass(reversi::ReversiConstant::TURN targetTurn) {
 	return (!move.CheckSomewherePutEnableByCache());
 }
 
+/**
+ * パスのチェックフラグをリセットする
+ */
 void reversi::Reversi::ResetPassCheck() {
 	passCheck.passBlack = false;
 	passCheck.passWhite = false;
 }
 
+/**
+ * パスのチェックフラグをセットする
+ * @param targetTurn 現在の手番
+ */
 void reversi::Reversi::SetPassCheck(reversi::ReversiConstant::TURN targetTurn) {
 	if (targetTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		passCheck.passBlack = true;
@@ -291,6 +321,10 @@ void reversi::Reversi::SetPassCheck(reversi::ReversiConstant::TURN targetTurn) {
 	}
 }
 
+/**
+ * プレイヤー2人ともパスしているか
+ * @return trueなら2人ともパスしている
+ */
 bool reversi::Reversi::IsEveryonePass() const {
 	if ((passCheck.passBlack) && (passCheck.passWhite)) {
 		return true;
@@ -298,6 +332,13 @@ bool reversi::Reversi::IsEveryonePass() const {
 	return false;
 }
 
+/**
+ * 結果の石をセットする(空白を勝者の石とする)
+ * @param black  現在の黒石の数
+ * @param white  現在の白石の数
+ * @param none   現在の空白の数
+ * @param result 勝敗結果
+ */
 void reversi::Reversi::SetResultStone(int& black, int& white, int& none, reversi::Reversi::RESULT result) {
 	// 日本オセロ連盟競技ルール No.13
 	// 終局（対局者双方が石を置けなくなった状態）時に盤面に空きマスが発生した場合、その空きマスは勝者の獲得石に加算される。
