@@ -81,6 +81,12 @@ public:
 	int GetReversePositionCount(reversi::ReverseInfo::DIRECTION direction) const;
 
 	/**
+	 * 裏返る数のトータル取得
+	 * @return 裏返る数のトータル
+	 */
+	int GetReversePositionCountTotal() const;
+
+	/**
 	 * 手番情報の取得
 	 * @return 手番情報
 	 */

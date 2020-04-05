@@ -115,6 +115,24 @@ const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstan
 	return info;
 }
 
+/**
+ * 裏返し情報の取得(index)
+ * 予めキャッシュを作成しておくこと
+ * @param  index 裏返し情報のindex
+ * @return       [description]
+ */
+const reversi::ReverseInfo& reversi::Move::GetReverseInfoByIndex(int index) const {
+	reversi::Assert::AssertArrayRange(index, (int)moveCache.reverseInfo.size(), "Move::GetReverseInfoByIndex index over");
+	return moveCache.reverseInfo[index];
+}
+
+/**
+ * 裏返し情報のデータ数取得
+ * @return 裏返し情報データ数
+ */
+int reversi::Move::GetReverseInfoSize() const {
+	return (int)moveCache.reverseInfo.size();
+}
 
 /**
  * その場所に打つことができるか情報を取得する

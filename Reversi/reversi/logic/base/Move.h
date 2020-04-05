@@ -91,6 +91,20 @@ public:
 	 */
 	const reversi::ReverseInfo GetReverseInfo(reversi::ReversiConstant::POSITION position) const;
 
+	/**
+	 * 裏返し情報の取得(index)
+	 * 予めキャッシュを作成しておくこと
+	 * @param  index 裏返し情報のindex
+	 * @return       [description]
+	 */
+	const reversi::ReverseInfo& GetReverseInfoByIndex(int index) const;
+
+	/**
+	 * 裏返し情報のデータ数取得
+	 * @return 裏返し情報データ数
+	 */
+	int GetReverseInfoSize() const;
+
 public:
 
 	/**

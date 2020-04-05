@@ -23,7 +23,7 @@ reversi::ReverseInfo::ReverseInfo(reversi::ReversiConstant::POSITION position, r
 		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ReverseInfo index over count i");
 		info.reversePositionCount[i] = 0;
 	}
-	
+
 	info.turn = turn;
 }
 
@@ -86,6 +86,19 @@ reversi::ReversiConstant::POSITION reversi::ReverseInfo::GetReversePosition(reve
 int reversi::ReverseInfo::GetReversePositionCount(reversi::ReverseInfo::DIRECTION direction) const {
 	reversi::Assert::AssertArrayRange((int)direction, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::GetReversePositionCount index over");
 	return info.reversePositionCount[(int)direction];
+}
+
+/**
+ * 裏返る数のトータル取得
+ * @return 裏返る数のトータル
+ */
+int reversi::ReverseInfo::GetReversePositionCountTotal() const {
+	int total = 0;
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::GetReversePositionCountTotal index over");
+		total += info.reversePositionCount[i];
+	}
+	return total;
 }
 
 /**
