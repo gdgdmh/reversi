@@ -2,6 +2,7 @@
 #define REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
 
 #include "IPlayer.h"
+#include "IMoveThinking.h"
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 
@@ -15,10 +16,16 @@ namespace reversi {
 // プレイヤー(CPU)クラス
 class PlayerCpu : public IPlayer {
 public:
+	enum class LEVEL {
+		LEVEL1,
+		LEVEL2,
+		LEVEL3
+	};
+public:
 	/**
 	 * コンストラクタ
 	 */
-	PlayerCpu();
+	PlayerCpu(reversi::PlayerCpu::LEVEL level);
 
 	/**
 	 * デストラクタ
@@ -51,6 +58,8 @@ public:
 	 */
 	void EventMoveAfter();
 
+private:
+	IMoveThinking* moveThinking;
 };
 
 }

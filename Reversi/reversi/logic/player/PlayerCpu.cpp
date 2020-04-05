@@ -1,17 +1,29 @@
 ﻿#include "PLayerCpu.h"
+#include "MoveThinkingCpu1.h"
 #include "../../util/IOutputConsole.h"
 #include "../../util/Assert.h"
 
 /**
  * コンストラクタ
  */
-reversi::PlayerCpu::PlayerCpu() {
+reversi::PlayerCpu::PlayerCpu(reversi::PlayerCpu::LEVEL level) : moveThinking(NULL) {
+	switch (level) {
+	case reversi::PlayerCpu::LEVEL::LEVEL1:
+		moveThinking = new MoveThinkingCpu1();
+		break;
+	default:
+		break;
+	}
 }
 
 /**
  * デストラクタ
  */
 reversi::PlayerCpu::~PlayerCpu() {
+	if (moveThinking) {
+		delete moveThinking;
+		moveThinking = NULL;
+	}
 }
 
 /**
@@ -26,6 +38,7 @@ void reversi::PlayerCpu::Initialize() {
  * @param turn  手番
  */
 void reversi::PlayerCpu::EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
+	moveThinking->InitializeMoveThinking(board, turn);
 }
 
 /**
@@ -36,7 +49,7 @@ void reversi::PlayerCpu::EventTurnStart(const reversi::Board& board, reversi::Re
  * @return       trueなら着手済み(moveに情報が入っている)
  */
 bool reversi::PlayerCpu::SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-	return false;
+	return moveThinking->MoveThinking(board, move, turn);
 }
 
 /**
