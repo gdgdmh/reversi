@@ -31,9 +31,11 @@ void reversi::Reversi::Initialize() {
 	board.InitializeGame();
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::INITIALIZE);
-	// 暫定として人間vs人間としておく
+	// プレイヤーの初期化
+	player[0] = new PlayerMan();
+	player[1] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		player[i] = new PlayerMan();
+		//player[i] = new PlayerMan();
 		player[i]->Initialize();
 	}
 	if (console == NULL) {
