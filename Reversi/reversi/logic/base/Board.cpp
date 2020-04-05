@@ -173,6 +173,16 @@ reversi::Board reversi::Board::Clone() const {
 	return dest;
 }
 
+void reversi::Board::Copy(const reversi::Board& source) {
+	for (int i = 0; i < ReversiConstant::BOARD_SIZE; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::BOARD_SIZE, "Board::Clone() index over");
+		SetBoardInfo((reversi::ReversiConstant::BOARD_INFO)source.board.boardData[i], (reversi::ReversiConstant::POSITION)i);
+	}
+	board.boardSizeX = source.board.boardSizeX;
+	board.boardSizeY = source.board.boardSizeY;
+	// renderBoardはコピーしない
+}
+
 /**
  * 盤が埋まっているか
  * @return trueなら埋まっている
@@ -216,6 +226,38 @@ void reversi::Board::ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo) {
 			SetBoardInfo(setInfo, position);
 		}
 	}
+}
+
+void reversi::Board::SetDebugPass() {
+	// 空の盤面
+	Clear();
+	SetEmpty();
+
+	using namespace reversi;
+	// パスしかできないような盤面を作る
+	const int BLACK_COUNT = 29;
+	ReversiConstant::POSITION blackPositions[BLACK_COUNT] = {
+		ReversiConstant::POSITION::B1, ReversiConstant::POSITION::F1,
+		ReversiConstant::POSITION::C2, ReversiConstant::POSITION::F2,
+		ReversiConstant::POSITION::D3, ReversiConstant::POSITION::F3,
+		ReversiConstant::POSITION::D4, ReversiConstant::POSITION::E4,
+		ReversiConstant::POSITION::F4, ReversiConstant::POSITION::G4,
+		ReversiConstant::POSITION::A5, ReversiConstant::POSITION::B5,
+		ReversiConstant::POSITION::C5, ReversiConstant::POSITION::D5,
+		ReversiConstant::POSITION::E5, ReversiConstant::POSITION::F5,
+		ReversiConstant::POSITION::G5, ReversiConstant::POSITION::H5,
+		ReversiConstant::POSITION::C6, ReversiConstant::POSITION::D6,
+		ReversiConstant::POSITION::E6, ReversiConstant::POSITION::C7,
+		ReversiConstant::POSITION::D7, ReversiConstant::POSITION::E7,
+		ReversiConstant::POSITION::C8, ReversiConstant::POSITION::D8,
+		ReversiConstant::POSITION::E8, ReversiConstant::POSITION::F8,
+		ReversiConstant::POSITION::G8,
+	};
+	for (int i = 0; i < BLACK_COUNT; ++i) {
+		reversi::Assert::AssertArrayRange(i, BLACK_COUNT, "Board::SetDebugPass index over");
+		SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::BLACK, blackPositions[i]);
+	}
+	SetBoardInfo(reversi::ReversiConstant::BOARD_INFO::WHITE, ReversiConstant::POSITION::H3);
 }
 
 /**

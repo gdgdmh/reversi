@@ -166,6 +166,7 @@
     <ClCompile Include="reversi\test\code\TestDevelop.cpp" />
     <ClCompile Include="reversi\test\code\TestMove.cpp" />
     <ClCompile Include="reversi\test\code\TestReverseInfo.cpp" />
+    <ClCompile Include="reversi\test\code\TestReversi.cpp" />
     <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
     <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="reversi\test\code\TestDevelop.h" />
     <ClInclude Include="reversi\test\code\TestMove.h" />
     <ClInclude Include="reversi\test\code\TestReverseInfo.h" />
+    <ClInclude Include="reversi\test\code\TestReversi.h" />
     <ClInclude Include="reversi\util\Assert.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />

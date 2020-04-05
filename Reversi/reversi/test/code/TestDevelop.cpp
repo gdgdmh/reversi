@@ -10,6 +10,7 @@
 #include "../code/TestBoard.h"
 #include "../code/TestMove.h"
 #include "../code/TestReverseInfo.h"
+#include "../code/TestReversi.h"
 
 
 /**
@@ -53,6 +54,11 @@ bool reversi::TestDevelop::Execute() {
 		{
 			reversi::TestReverseInfo info(console);
 			info.Execute();
+		}
+		// TestReversi
+		{
+			reversi::TestReversi r(console);
+			r.Execute();
 		}
 	}
 

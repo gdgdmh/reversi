@@ -90,6 +90,8 @@ public:
 	 */
 	Board Clone() const;
 
+	void Copy(const reversi::Board& source);
+
 	/**
 	 * 盤が埋まっているか
 	 * @return trueなら埋まっている
@@ -98,6 +100,8 @@ public:
 
 	// 盤を埋める
 	void ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo);
+
+	void SetDebugPass();
 
 private:
 

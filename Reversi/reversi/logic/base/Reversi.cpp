@@ -8,7 +8,7 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), result(reversi::Reversi::RESULT::NONE), resultBlackCount(0), resultWhiteCount(0) {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), result(reversi::Reversi::RESULT::NONE), resultBlackCount(0), resultWhiteCount(0), resultNoneCount(0) {
 	ResetPlayer();
 	ResetPassCheck();
 }
@@ -43,6 +43,7 @@ void reversi::Reversi::Initialize() {
 	ResetPassCheck();
 	resultBlackCount = 0;
 	resultWhiteCount = 0;
+	resultNoneCount = 0;
 }
 
 /**
@@ -56,6 +57,7 @@ void reversi::Reversi::InitializeGame() {
 	ResetPassCheck();
 	resultBlackCount = 0;
 	resultWhiteCount = 0;
+	resultNoneCount = 0;
 }
 
 /**
@@ -77,6 +79,16 @@ void reversi::Reversi::Task() {
 	} else if (scene == reversi::Reversi::SCENE::END) {
 		TaskEnd();
 	}
+}
+
+void reversi::Reversi::CopyBoard(const reversi::Board& source) {
+	board.Copy(source);
+}
+
+void reversi::Reversi::GetResultStone(int& black, int& white, int& none) {
+	black = resultBlackCount;
+	white = resultWhiteCount;
+	none = resultNoneCount;
 }
 
 /**
@@ -178,9 +190,12 @@ void reversi::Reversi::TaskResult() {
 	} else if (black < white) {
 		result = reversi::Reversi::RESULT::WHITE;
 	}
-	// 石の数
+	// 空白の数
 	resultBlackCount = black;
 	resultWhiteCount = white;
+	resultNoneCount = none;
+	// 公式ルールで空白は勝者の石になる
+	SetResultStone(resultBlackCount, resultWhiteCount, resultNoneCount, result);
 
 	// 終了
 	SetScene(reversi::Reversi::SCENE::END);
@@ -272,7 +287,7 @@ void reversi::Reversi::SetPassCheck(reversi::ReversiConstant::TURN targetTurn) {
 	if (targetTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		passCheck.passBlack = true;
 	} else {
-		passCheck.passWhite = false;
+		passCheck.passWhite = true;
 	}
 }
 
@@ -281,4 +296,14 @@ bool reversi::Reversi::IsEveryonePass() const {
 		return true;
 	}
 	return false;
+}
+
+void reversi::Reversi::SetResultStone(int& black, int& white, int& none, reversi::Reversi::RESULT result) {
+	// 日本オセロ連盟競技ルール No.13
+	// 終局（対局者双方が石を置けなくなった状態）時に盤面に空きマスが発生した場合、その空きマスは勝者の獲得石に加算される。
+	if (result == reversi::Reversi::RESULT::BLACK) {
+		black += none;
+	} else if (result == reversi::Reversi::RESULT::WHITE) {
+		white += none;
+	}
 }

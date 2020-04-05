@@ -60,6 +60,14 @@ public:
 	 */
 	void Task();
 
+	void CopyBoard(const reversi::Board& source);
+
+	reversi::Reversi::SCENE GetScene() const { return scene; }
+
+	reversi::Reversi::RESULT GetResult() const { return result; }
+
+	void GetResultStone(int& black, int& white, int& none);
+
 private:
 
 	/**
@@ -131,6 +139,8 @@ private:
 	void SetPassCheck(reversi::ReversiConstant::TURN targetTurn);
 	bool IsEveryonePass() const;
 
+	void SetResultStone(int& black, int& white, int& none, reversi::Reversi::RESULT result);
+
 private:
 	reversi::Board board;
 	reversi::ReversiConstant::TURN turn;
@@ -142,6 +152,7 @@ private:
 	reversi::Reversi::PASS_CHECK passCheck; // パス確認用(どっちもパスしかできなかったら終局)
 	int resultBlackCount;
 	int resultWhiteCount;
+	int resultNoneCount;
 };
 
 }
