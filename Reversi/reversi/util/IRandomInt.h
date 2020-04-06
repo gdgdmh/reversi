@@ -1,8 +1,6 @@
 ﻿#ifndef REVERSI_UTIL_IRANDOMINT_H_
 #define REVERSI_UTIL_IRANDOMINT_H_
 
-#include <string>
-
 namespace reversi {
 
 // 乱数生成クラス
@@ -19,7 +17,12 @@ public:
 	 * 乱数の種設定
 	 * @param seed 乱数の種
 	 */
-	virtual void SetSeed(int seed) = 0;
+	virtual void SetSeed(unsigned int seed) = 0;
+
+	/**
+	 * 乱数の種を時間から設定
+	 */
+	virtual void SetSeedByTime() = 0;
 
 	/**
 	 * 乱数の取得

@@ -11,6 +11,7 @@
 #include "../code/TestMove.h"
 #include "../code/TestReverseInfo.h"
 #include "../code/TestReversi.h"
+#include "../code/TestStdRandomInt.h"
 
 
 /**
@@ -59,6 +60,11 @@ bool reversi::TestDevelop::Execute() {
 		{
 			reversi::TestReversi r(console);
 			r.Execute();
+		}
+		// TestStdRandomInt
+		{
+			reversi::TestStdRandomInt s(console);
+			s.Execute();
 		}
 	}
 

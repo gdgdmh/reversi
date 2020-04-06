@@ -120,6 +120,12 @@
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu1.cpp">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\util\StdRandomInt.cpp">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\test\code\TestStdRandomInt.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -214,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="reversi\util\IRandomInt.h">
       <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\StdRandomInt.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestStdRandomInt.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

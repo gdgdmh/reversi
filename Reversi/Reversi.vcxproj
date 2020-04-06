@@ -168,9 +168,11 @@
     <ClCompile Include="reversi\test\code\TestMove.cpp" />
     <ClCompile Include="reversi\test\code\TestReverseInfo.cpp" />
     <ClCompile Include="reversi\test\code\TestReversi.cpp" />
+    <ClCompile Include="reversi\test\code\TestStdRandomInt.cpp" />
     <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
     <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp" />
+    <ClCompile Include="reversi\util\StdRandomInt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\game\ReversiGameLoop.h" />
@@ -197,12 +199,14 @@
     <ClInclude Include="reversi\test\code\TestMove.h" />
     <ClInclude Include="reversi\test\code\TestReverseInfo.h" />
     <ClInclude Include="reversi\test\code\TestReversi.h" />
+    <ClInclude Include="reversi\test\code\TestStdRandomInt.h" />
     <ClInclude Include="reversi\util\Assert.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
     <ClInclude Include="reversi\util\IRandomInt.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
     <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
+    <ClInclude Include="reversi\util\StdRandomInt.h" />
     <ClInclude Include="reversi\util\StdStringFormatter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
