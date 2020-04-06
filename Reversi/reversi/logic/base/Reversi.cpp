@@ -9,9 +9,10 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), result(reversi::Reversi::RESULT::NONE), resultBlackCount(0), resultWhiteCount(0), resultNoneCount(0) {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL) {
 	ResetPlayer();
 	ResetPassCheck();
+	ResetResultData();
 }
 
 /**
@@ -42,11 +43,8 @@ void reversi::Reversi::Initialize() {
 	if (console == NULL) {
 		console = new OutputConsole();
 	}
-	result = reversi::Reversi::RESULT::NONE;
 	ResetPassCheck();
-	resultBlackCount = 0;
-	resultWhiteCount = 0;
-	resultNoneCount = 0;
+	ResetResultData();
 }
 
 /**
@@ -55,12 +53,9 @@ void reversi::Reversi::Initialize() {
 void reversi::Reversi::InitializeGame() {
 	board.InitializeGame();
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
-	result = reversi::Reversi::RESULT::NONE;
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 	ResetPassCheck();
-	resultBlackCount = 0;
-	resultWhiteCount = 0;
-	resultNoneCount = 0;
+	ResetResultData();
 }
 
 /**
@@ -99,9 +94,9 @@ void reversi::Reversi::CopyBoard(const reversi::Board& source) {
  * @param none  空白
  */
 void reversi::Reversi::GetResultStone(int& black, int& white, int& none) {
-	black = resultBlackCount;
-	white = resultWhiteCount;
-	none = resultNoneCount;
+	black = resultData.blackResultCount;
+	white = resultData.whiteResultCount;
+	none = resultData.noneResultCount;
 }
 
 /**
@@ -208,28 +203,33 @@ void reversi::Reversi::TaskResult() {
 
 	// 結果
 	if (black == white) {
-		result = reversi::Reversi::RESULT::DRAW;
+		resultData.result = reversi::Reversi::RESULT::DRAW;
 	} else if (black > white) {
-		result = reversi::Reversi::RESULT::BLACK;
+		resultData.result = reversi::Reversi::RESULT::BLACK;
 	} else if (black < white) {
-		result = reversi::Reversi::RESULT::WHITE;
+		resultData.result = reversi::Reversi::RESULT::WHITE;
 	}
-	// 空白の数
-	resultBlackCount = black;
-	resultWhiteCount = white;
-	resultNoneCount = none;
-	// 公式ルールで空白は勝者の石になる
-	SetResultStone(resultBlackCount, resultWhiteCount, resultNoneCount, result);
-	//console->PrintLine();
+	// 純粋な数
+	resultData.blackRawCount = black;
+	resultData.whiteRawCount = white;
+	resultData.noneRawCount = none;
 
-	console->PrintLine(reversi::StdStringFormatter::Format("黒石:%d 白石:%d", resultBlackCount, resultWhiteCount));
-	if (result == reversi::Reversi::RESULT::DRAW) {
+	// 最終結果
+	// 公式ルールで空白は勝者の石になる
+	resultData.blackResultCount = black;
+	resultData.whiteResultCount = white;
+	resultData.noneResultCount = none;
+	SetResultStone(resultData.blackResultCount, resultData.whiteResultCount, resultData.noneResultCount, resultData.result);
+
+	console->PrintLine(reversi::StdStringFormatter::Format("黒石:%d 白石:%d 空白:%d", resultData.blackRawCount, resultData.whiteRawCount, resultData.noneRawCount));
+	if (resultData.result == reversi::Reversi::RESULT::DRAW) {
 		console->PrintLine("結果は引き分けです");
-	} else if (result == reversi::Reversi::RESULT::BLACK) {
+	} else if (resultData.result == reversi::Reversi::RESULT::BLACK) {
 		console->PrintLine("結果は黒の勝ちです");
-	} else if (result == reversi::Reversi::RESULT::WHITE) {
+	} else if (resultData.result == reversi::Reversi::RESULT::WHITE) {
 		console->PrintLine("結果は白の勝ちです");
 	}
+	console->PrintLine(reversi::StdStringFormatter::Format("最終結果 黒石:%d 白石:%d", resultData.blackResultCount, resultData.whiteResultCount));
 
 	// 終了
 	SetScene(reversi::Reversi::SCENE::END);
@@ -354,6 +354,19 @@ bool reversi::Reversi::IsEveryonePass() const {
 		return true;
 	}
 	return false;
+}
+
+/**
+ * 結果データをリセットする
+ */
+void reversi::Reversi::ResetResultData() {
+	resultData.result = reversi::Reversi::RESULT::NONE;
+	resultData.blackRawCount = 0;
+	resultData.whiteRawCount = 0;
+	resultData.noneRawCount = 0;
+	resultData.blackResultCount = 0;
+	resultData.whiteResultCount = 0;
+	resultData.noneResultCount = 0;
 }
 
 /**

@@ -33,6 +33,16 @@ public:
 		bool passBlack;
 		bool passWhite;
 	} PASS_CHECK;
+	// 結果データ
+	typedef struct {
+		RESULT result;
+		int blackRawCount;      // 純粋な黒石の数
+		int whiteRawCount;      // 純粋な白石の数
+		int noneRawCount;       // 純粋な空白の数
+		int blackResultCount;   // 結果を適用した黒石の数
+		int whiteResultCount;   // 結果を適用した黒石の数
+		int noneResultCount;    // 結果を適用した空白の数
+	} RESULT_DATA;
 public:
 
 	/**
@@ -79,7 +89,7 @@ public:
 	 * @return 結果
 	 */
 	reversi::Reversi::RESULT GetResult() const {
-		return result;
+		return resultData.result;
 	}
 
 	/**
@@ -187,6 +197,11 @@ private:
 	bool IsEveryonePass() const;
 
 	/**
+	 * 結果データをリセットする
+	 */
+	void ResetResultData();
+
+	/**
 	 * 結果の石をセットする(空白を勝者の石とする)
 	 * @param black  現在の黒石の数
 	 * @param white  現在の白石の数
@@ -202,11 +217,12 @@ private:
 	reversi::Reversi::SCENE scene;              // シーン
 	reversi::MoveInfo moveInfo;                 // 着手キャッシュ
 	reversi::IOutputConsole* console;           // コンソール出力クラス
-	reversi::Reversi::RESULT result;            // 対局の結果
+	//reversi::Reversi::RESULT result;            // 対局の結果
 	reversi::Reversi::PASS_CHECK passCheck;     // パス確認用(どっちもパスしかできなかったら終局)
-	int resultBlackCount;                       // 黒石最終結果
-	int resultWhiteCount;                       // 白石最終結果
-	int resultNoneCount;                        // 空白最終結果(あくまで盤の空きマスの数)
+	reversi::Reversi::RESULT_DATA resultData;   // 結果データ
+	//int resultBlackCount;                       // 黒石最終結果
+	//int resultWhiteCount;                       // 白石最終結果
+	//int resultNoneCount;                        // 空白最終結果(あくまで盤の空きマスの数)
 };
 
 }
