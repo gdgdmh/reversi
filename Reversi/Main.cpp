@@ -18,10 +18,18 @@ int main(int argc, const char* argv[]) {
 		// 実装テスト
 		reversi::IOutputConsole* console = new reversi::OutputConsole();
 		reversi::TestDevelop* testDevelop = new reversi::TestDevelop(console);
-		testDevelop->Execute();
+		bool testResult = testDevelop->Execute();
 		if (testDevelop) {
 			delete testDevelop;
 			testDevelop = NULL;
+		}
+		if (!testResult) {
+			console->PrintLine("test failure abort!");
+			if (console) {
+				delete console;
+				console = NULL;
+			}
+			return 1;
 		}
 	}
 

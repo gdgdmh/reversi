@@ -32,7 +32,6 @@ namespace reversi {
 	private:
 		IOutputConsole* console;
 	};
-
 }
 
 #endif  // REVERSI_TEST_TESTDEVELOP_H_

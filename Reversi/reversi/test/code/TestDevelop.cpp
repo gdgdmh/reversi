@@ -44,57 +44,41 @@ bool reversi::TestDevelop::Execute() {
 		// TestBoard
 		{
 			reversi::TestBoard t(console);
-			t.Execute();
+			if (!t.Execute()) {
+				return false;
+			}
 		}
 		// TestMove
 		{
 			reversi::TestMove m(console);
-			m.Execute();
+			if (!m.Execute()) {
+				return false;
+			}
 		}
 		// TestReverseInfo
 		{
 			reversi::TestReverseInfo info(console);
-			info.Execute();
+			if (!info.Execute()) {
+				return false;
+			}
 		}
 		// TestReversi
 		{
 			reversi::TestReversi r(console);
-			r.Execute();
+			if (!r.Execute()) {
+				return false;
+			}
 		}
 		// TestStdRandomInt
 		{
 			reversi::TestStdRandomInt s(console);
-			s.Execute();
+			if (!s.Execute()) {
+				return false;
+			}
 		}
 	}
 
-	Board board;
-	board.InitializeGame();
-
-	// 出力
-	board.Render();
-
-	{
-		IOutputConsole* console = new OutputConsole();
-
-		Move move;
-		reversi::EMPTY_POSITION emptyPosition;
-		// 空いているマスを確認
-		move.FindEmptyPosition(board, emptyPosition);
-
-		// その方向に打てるか
-		int count = 0;
-		reversi::ReverseInfo info(reversi::ReversiConstant::POSITION::D3, reversi::ReversiConstant::TURN::TURN_BLACK);
-		bool result = move.CheckMoveInfoDirection(board, info, (int)reversi::ReversiConstant::POSITION::D3, reversi::Move::DIRECTION::DOWN, reversi::ReversiConstant::TURN::TURN_BLACK);
-
-		// そのマスに打てるか
-		//result = move.GetEnableMoveInfo(board, (int)reversi::ReversiConstant::POSITION::F4, reversi::ReversiConstant::TURN::TURN_WHITE);
-		//if (result) {
-		//	console->PrintLine("put enable");
-		//} else {
-		//	console->PrintLine("put disable");
-		//}
-	}
+	// test code here
 
 	console->PrintLine("--- TestDevelop end -------------------");
 	return true;
