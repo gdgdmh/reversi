@@ -212,5 +212,8 @@
     <ClInclude Include="reversi\util\StdStringFormatter.h">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
+    <ClInclude Include="reversi\util\IRandomInt.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -199,6 +199,7 @@
     <ClInclude Include="reversi\test\code\TestReversi.h" />
     <ClInclude Include="reversi\util\Assert.h" />
     <ClInclude Include="reversi\util\IOutputConsole.h" />
+    <ClInclude Include="reversi\util\IRandomInt.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
     <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
