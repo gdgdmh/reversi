@@ -16,6 +16,8 @@ namespace reversi {
 // プレイヤー(CPU)思考クラス LEVEL2
 class MoveThinkingCpu2 : public IMoveThinking {
 public:
+	static const int MAX_COUNT_DEFAULT = 0; // 取れる石をチェックするときのデフォルト値
+public:
 	/**
 	 * コンストラクタ
 	 */
@@ -47,6 +49,21 @@ public:
 private:
 
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
+
+	/**
+	 * ひっくり返せる最大数の候補indexを取得する
+	 * @param candidate 候補
+	 * @param move      着手キャッシュ
+	 */
+	void GetMaxReverseCountCandidateIndex(std::vector<int>& candidate, const reversi::Move& move);
+
+	/**
+	 * 取れる角があるかチェック
+	 * @param  cornerIndex 角のindex(ReverseInfo)
+	 * @param  move        着手キャッシュ
+	 * @return             trueなら見つかった
+	 */
+	bool CheckPutEnableCornerIndex(int& cornerIndex, const reversi::Move& move);
 
 private:
 	reversi::Move reversiMove;
