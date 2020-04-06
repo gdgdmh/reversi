@@ -156,6 +156,7 @@
     <ClCompile Include="reversi\logic\base\Reversi.cpp" />
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu1.cpp" />
+    <ClCompile Include="reversi\logic\player\MoveThinkingCpu2.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingMan.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerCpu.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerMan.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="reversi\logic\player\IPlayer.h" />
     <ClInclude Include="reversi\logic\player\IMoveThinking.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu1.h" />
+    <ClInclude Include="reversi\logic\player\MoveThinkingCpu2.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingMan.h" />
     <ClInclude Include="reversi\logic\player\PlayerCpu.h" />
     <ClInclude Include="reversi\logic\player\PlayerMan.h" />
