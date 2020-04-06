@@ -1,6 +1,7 @@
 ﻿#include "Reversi.h"
 #include "../../util/Assert.h"
 #include "../../util/OutputConsole.h"
+#include "../../util/StdStringFormatter.h"
 #include "../player/PlayerMan.h"
 #include "../player/PlayerCpu.h"
 #include "Move.h"
@@ -32,7 +33,7 @@ void reversi::Reversi::Initialize() {
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::INITIALIZE);
 	// プレイヤーの初期化
-	player[0] = new PlayerMan();
+	player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
 	player[1] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
 		//player[i] = new PlayerMan();
@@ -118,6 +119,7 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	if (IsEveryonePass()) {
 		// 両者パスしたので終局
 		SetScene(reversi::Reversi::SCENE::RESULT);
+		console->PrintLine("2人ともパスしたため、対局を終了します");
 		return;
 	}
 
@@ -125,6 +127,12 @@ void reversi::Reversi::TaskMoveSelectStart() {
 		// 打つことができないのでパス
 		SetPassCheck(turn);
 		SetScene(reversi::Reversi::SCENE::PASS);
+		if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+			console->PrintLine("黒が打つことができないのでパスします");
+		} else {
+			console->PrintLine("白が打つことができないのでパスします");
+		}
+
 		return;
 	}
 	// パスフラグリセット
@@ -190,6 +198,10 @@ void reversi::Reversi::TaskMoveAfter() {
  */
 void reversi::Reversi::TaskResult() {
 
+	console->PrintLine("終局しました -----------------------");
+	board.Render();
+
+
 	// 石の数を取得
 	int black, white, none;
 	board.GetCount(black, white, none);
@@ -208,6 +220,16 @@ void reversi::Reversi::TaskResult() {
 	resultNoneCount = none;
 	// 公式ルールで空白は勝者の石になる
 	SetResultStone(resultBlackCount, resultWhiteCount, resultNoneCount, result);
+	//console->PrintLine();
+
+	console->PrintLine(reversi::StdStringFormatter::Format("黒石:%d 白石:%d", resultBlackCount, resultWhiteCount));
+	if (result == reversi::Reversi::RESULT::DRAW) {
+		console->PrintLine("結果は引き分けです");
+	} else if (result == reversi::Reversi::RESULT::BLACK) {
+		console->PrintLine("結果は黒の勝ちです");
+	} else if (result == reversi::Reversi::RESULT::WHITE) {
+		console->PrintLine("結果は白の勝ちです");
+	}
 
 	// 終了
 	SetScene(reversi::Reversi::SCENE::END);

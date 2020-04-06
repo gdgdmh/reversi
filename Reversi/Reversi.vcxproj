@@ -202,6 +202,7 @@
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
     <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
+    <ClInclude Include="reversi\util\StdStringFormatter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

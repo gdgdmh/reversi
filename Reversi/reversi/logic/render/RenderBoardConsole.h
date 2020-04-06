@@ -56,20 +56,6 @@ private:
 	void RenderBoardBottom(IOutputConsole* const console);
 
 	/**
-	 * 擬似的なsprintf
-	 * @param  fmt  [description]
-	 * @param  args [description]
-	 * @return      [description]
-	 */
-	template <typename ... Args>
-	std::string FormatString(const std::string& fmt, Args... args) {
-		size_t len = std::snprintf(nullptr, 0, fmt.c_str(), args ...);
-		std::vector<char> buf(len + 1);
-		std::snprintf(&buf[0], len + 1, fmt.c_str(), args ...);
-		return std::string(&buf[0], &buf[0] + len);
-	}
-
-	/**
 	 * 全角数字1桁を取得する
 	 * @param  number 0～9までの数字
 	 * @return        全角数字
