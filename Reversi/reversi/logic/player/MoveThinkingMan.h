@@ -1,5 +1,5 @@
-﻿#ifndef REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
-#define REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
+﻿#ifndef REVERSI_LOGIC_PLAYER_MOVETHINKINGMAN_H_
+#define REVERSI_LOGIC_PLAYER_MOVETHINKINGMAN_H_
 
 #include "IMoveThinking.h"
 #include "../base/ReversiConstant.h"
@@ -57,4 +57,4 @@ private:
 
 }
 
-#endif  // REVERSI_LOGIC_PLAYER_PLAYERCPU_H_
+#endif  // REVERSI_LOGIC_PLAYER_MOVETHINKINGMAN_H_

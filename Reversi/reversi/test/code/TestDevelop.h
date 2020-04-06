@@ -1,5 +1,5 @@
-﻿#ifndef REVERSI_TEST_TESTDEVELOP_H_
-#define REVERSI_TEST_TESTDEVELOP_H_
+﻿#ifndef REVERSI_TEST_CODE_TESTDEVELOP_H_
+#define REVERSI_TEST_CODE_TESTDEVELOP_H_
 
 #include "../base/UnitTestBase.h"
 
@@ -34,4 +34,4 @@ namespace reversi {
 	};
 }
 
-#endif  // REVERSI_TEST_TESTDEVELOP_H_
+#endif  // REVERSI_TEST_CODE_TESTDEVELOP_H_

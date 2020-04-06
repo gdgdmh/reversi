@@ -1,23 +1,23 @@
-#ifndef REVERSI_TEST_UNITTEST_H_
+ï»¿#ifndef REVERSI_TEST_UNITTEST_H_
 #define REVERSI_TEST_UNITTEST_H_
 
 namespace reversi {
 
-	// ’P‘ÌƒeƒXƒgƒNƒ‰ƒX
+	// ãƒ¦ãƒ‹ãƒƒãƒˆãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹
 	class UnitTest {
 	public:
 		/**
-		 * ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		UnitTest();
 
 		/**
-		 * ƒfƒXƒgƒ‰ƒNƒ^
+		 * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		 */
 		virtual ~UnitTest();
 
 		/**
-		 * ’P‘ÌƒeƒXƒg‚ğÀs‚·‚é
+		 * å®Ÿè¡Œ
 		 */
 		void Execute();
 	};
