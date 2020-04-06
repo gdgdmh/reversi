@@ -1,5 +1,5 @@
-﻿#ifndef REVERSI_SCENE_TESTSCENE_H_
-#define REVERSI_SCENE_TESTSCENE_H_
+﻿#ifndef REVERSI_UTIL_ASSERT_H_
+#define REVERSI_UTIL_ASSERT_H_
 
 #include <string>
 
@@ -54,4 +54,4 @@ private:
 
 }
 
-#endif  // REVERSI_SCENE_TESTSCENE_H_
+#endif  // REVERSI_UTIL_ASSERT_H_
