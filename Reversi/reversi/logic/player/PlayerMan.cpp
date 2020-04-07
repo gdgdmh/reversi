@@ -1,12 +1,12 @@
 ﻿#include "PLayerMan.h"
 #include "MoveThinkingMan.h"
-#include "../../util/IOutputConsole.h"
+#include "../../util/OutputConsole.h"
 #include "../../util/Assert.h"
 
 /**
  * コンストラクタ
  */
-reversi::PlayerMan::PlayerMan() : moveThinking(NULL) {
+reversi::PlayerMan::PlayerMan() : moveThinking(NULL), console(NULL) {
 }
 
 /**
@@ -17,6 +17,10 @@ reversi::PlayerMan::~PlayerMan() {
 		delete moveThinking;
 		moveThinking = NULL;
 	}
+    if (console) {
+        delete console;
+        console = NULL;
+    }
 }
 
 /**
@@ -26,6 +30,9 @@ void reversi::PlayerMan::Initialize() {
 	if (moveThinking == NULL) {
 		moveThinking = new MoveThinkingMan();
 	}
+    if (console == NULL) {
+        console = new OutputConsole();
+    }
 }
 
 /**
@@ -35,6 +42,7 @@ void reversi::PlayerMan::Initialize() {
  */
 void reversi::PlayerMan::EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	moveThinking->InitializeMoveThinking(board, turn);
+    console->PrintLine("石を打つ場所を入力してください");
 }
 
 /**
@@ -45,7 +53,11 @@ void reversi::PlayerMan::EventTurnStart(const reversi::Board& board, reversi::Re
  * @return       trueなら着手済み(moveに情報が入っている)
  */
 bool reversi::PlayerMan::SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-	return moveThinking->MoveThinking(board, move, turn);
+    bool result = moveThinking->MoveThinking(board, move, turn);
+    if (!result) {
+        console->PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
+    }
+	return result;
 }
 
 /**
