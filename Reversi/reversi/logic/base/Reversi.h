@@ -29,6 +29,12 @@ public:
 		WHITE,  // 白の勝ち
 		DRAW    // 引き分け
 	};
+	enum class PLAYER {
+		MAN,
+		CPU1,
+		CPU2,
+		CPU3
+	};
 	typedef struct {
 		bool passBlack;
 		bool passWhite;
@@ -43,6 +49,10 @@ public:
 		int whiteResultCount;   // 結果を適用した黒石の数
 		int noneResultCount;    // 結果を適用した空白の数
 	} RESULT_DATA;
+	typedef struct {
+		PLAYER playerType[PLAYER_COUNT];
+		reversi::IPlayer* player[PLAYER_COUNT];
+	} PLAYER_DATA;
 public:
 
 	/**
@@ -142,6 +152,11 @@ private:
 	 */
 	void ResetPlayer();
 
+	// pureiya-sakusei
+	reversi::IPlayer* CreatePlayer(int playerIndex, reversi::Reversi::PLAYER playerType);
+
+	void CreatePlayers();
+
 	/**
 	 * プレイヤーを削除する(DELETE)
 	 */
@@ -213,7 +228,8 @@ private:
 private:
 	reversi::Board board;                       // 盤
 	reversi::ReversiConstant::TURN turn;        // 現在の手番
-	reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
+	reversi::Reversi::PLAYER_DATA playerData;	// プレイヤーデータ
+	//reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
 	reversi::Reversi::SCENE scene;              // シーン
 	reversi::MoveInfo moveInfo;                 // 着手キャッシュ
 	reversi::IOutputConsole* console;           // コンソール出力クラス

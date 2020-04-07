@@ -4,6 +4,7 @@
 #include "../../util/StdStringFormatter.h"
 #include "../player/PlayerMan.h"
 #include "../player/PlayerCpu.h"
+#include "../player/PlayerFactory.h"
 #include "Move.h"
 
 /**
@@ -34,13 +35,18 @@ void reversi::Reversi::Initialize() {
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::INITIALIZE);
 	// プレイヤーの初期化
-	//player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
-	player[0] = new PlayerMan();
-	player[1] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
+	CreatePlayers();
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		//player[i] = new PlayerMan();
-		player[i]->Initialize();
+		playerData.player[i]->Initialize();
 	}
+
+	//player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
+	//player[0] = new PlayerMan();
+	//player[1] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
+	//for (int i = 0; i < PLAYER_COUNT; ++i) {
+	//	//player[i] = new PlayerMan();
+	//	player[i]->Initialize();
+	//}
 	if (console == NULL) {
 		console = new OutputConsole();
 	}
@@ -135,7 +141,7 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	ResetPassCheck();
 
 	int playerIndex = TurnToPlayerIndex(turn);
-	player[playerIndex]->EventTurnStart(board, turn);
+	playerData.player[playerIndex]->EventTurnStart(board, turn);
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		console->PrintLine("黒のターン");
@@ -152,7 +158,7 @@ void reversi::Reversi::TaskMoveSelect() {
 	int playerIndex = TurnToPlayerIndex(turn);
 	reversi::MoveInfo move;
 
-	bool isDecide = player[playerIndex]->SelectMove(board, move, turn);
+	bool isDecide = playerData.player[playerIndex]->SelectMove(board, move, turn);
 	if (isDecide) {
 		moveInfo = move;
 		bool isMove = board.Move(moveInfo);
@@ -176,7 +182,7 @@ void reversi::Reversi::TaskPass() {
 void reversi::Reversi::TaskMoveAfter() {
 
 	int playerIndex = TurnToPlayerIndex(turn);
-	player[playerIndex]->EventMoveAfter();
+	playerData.player[playerIndex]->EventMoveAfter();
 
 	// ターン切り替え
 	ChangeTurn(turn);
@@ -246,8 +252,42 @@ void reversi::Reversi::TaskEnd() {
  * プレイヤーをリセットする(NULLクリア)
  */
 void reversi::Reversi::ResetPlayer() {
+	playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::MAN;
+	playerData.playerType[PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU1;
+
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		player[i] = NULL;
+		playerData.player[i] = NULL;
+	}
+}
+
+/**
+ * プレイヤーを作成する
+ */
+reversi::IPlayer* reversi::Reversi::CreatePlayer(int playerIndex, reversi::Reversi::PLAYER playerType) {
+	reversi::PlayerFactory factory;
+	reversi::PlayerFactory::TYPE type = reversi::PlayerFactory::TYPE::PLAYER_MAN;
+	switch (playerType) {
+	case reversi::Reversi::PLAYER::MAN:
+		type = reversi::PlayerFactory::TYPE::PLAYER_MAN;
+		break;
+	case reversi::Reversi::PLAYER::CPU1:
+		type = reversi::PlayerFactory::TYPE::PLAYER_CPU1;
+		break;
+	case reversi::Reversi::PLAYER::CPU2:
+		type = reversi::PlayerFactory::TYPE::PLAYER_CPU2;
+		break;
+	case reversi::Reversi::PLAYER::CPU3:
+		type = reversi::PlayerFactory::TYPE::PLAYER_CPU3;
+		break;
+	default:
+		break;
+	}
+	return factory.Create(type);
+}
+
+void reversi::Reversi::CreatePlayers() {
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		playerData.player[i] = CreatePlayer(i, playerData.playerType[i]);
 	}
 }
 
@@ -256,9 +296,9 @@ void reversi::Reversi::ResetPlayer() {
  */
 void reversi::Reversi::ReleasePlayer() {
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		if (player[i] != NULL) {
-			delete player[i];
-			player[i] = NULL;
+		if (playerData.player[i] != NULL) {
+			delete playerData.player[i];
+			playerData.player[i] = NULL;
 		}
 	}
 }
