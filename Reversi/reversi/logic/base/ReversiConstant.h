@@ -39,9 +39,9 @@ public:
 
 	// 着手情報
 	typedef struct {
-		POSITION position;	// 位置
-		BOARD_INFO info;	// 着手する石
-		TURN turn;			// 手番
+		POSITION position;  // 位置
+		BOARD_INFO info;    // 着手する石
+		TURN turn;          // 手番
 	} MOVE_INFO;
 
 	// 石が置かれていない場所データ
@@ -140,7 +140,21 @@ public:
 		return position + BOARD_DATA_SIZE_X + 1;
 	}
 
+	/**
+	 * 文字列から位置へ変換する
+	 * @param  positionString 変換する文字列
+	 * @param  position       変換された位置
+	 * @return                trueなら変換できた
+	 */
 	static bool GetStringToPosition(const std::string& positionString, reversi::ReversiConstant::POSITION& position);
+
+	/**
+	 * 位置から文字列へ変換する
+	 * @param  position       変換する位置
+	 * @param  positionString 変換された文字列
+	 * @return                trueなら変換できた
+	 */
+	static bool GetPositionToString(const reversi::ReversiConstant::POSITION& position, std::string& positionString);
 };
 
 }

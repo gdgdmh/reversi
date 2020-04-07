@@ -36,6 +36,12 @@ const std::string reversi::ReversiConstant::POSITION_STRINGS[ReversiConstant::PO
 	"A8", "B8", "C8", "D8", "E8", "F8", "G8", "H8"
 };
 
+/**
+ * 文字列から位置へ変換する
+ * @param  positionString 変換する文字列
+ * @param  position       変換された位置
+ * @return                trueなら変換できた
+ */
 bool reversi::ReversiConstant::GetStringToPosition(const std::string& positionString, reversi::ReversiConstant::POSITION& position) {
 
 	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
@@ -43,6 +49,25 @@ bool reversi::ReversiConstant::GetStringToPosition(const std::string& positionSt
 		if (positionString == POSITION_STRINGS[i]) {
 			reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "ReversiConstant::GetStringToPosition index over POSITIONS");
 			position = POSITIONS[i];
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * 位置から文字列へ変換する
+ * @param  position       変換する位置
+ * @param  positionString 変換された文字列
+ * @return                trueなら変換できた
+ */
+bool reversi::ReversiConstant::GetPositionToString(const reversi::ReversiConstant::POSITION& position, std::string& positionString) {
+
+	// POSITONSとPOSITION_STRINGSのindexは対応している
+	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "ReversiConstant::GetPositionToString index over");
+		if (position == POSITIONS[i]) {
+			positionString = POSITION_STRINGS[i];
 			return true;
 		}
 	}

@@ -165,9 +165,19 @@ void reversi::Reversi::TaskMoveSelect() {
 		moveInfo = move;
 		bool isMove = board.Move(moveInfo);
 		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
+
+		if (!IsCurrentPlayerTurnMan(turn)) {
+			// CPUなら着手を出力する
+			std::string positionString;
+			if (reversi::ReversiConstant::GetPositionToString(moveInfo.GetMoveInfo().position, positionString)) {
+				console->PrintLine(positionString);
+			}
+		}
+
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
 	} else {
 		if (IsCurrentPlayerTurnMan(turn)) {
+			board.Render();
 			console->PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
 		}
 	}
