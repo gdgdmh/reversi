@@ -76,7 +76,7 @@ private:
 
 private:
 	reversi::Move reversiMove;
-	reversi::EMPTY_POSITION emptyPosition;
+	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 
 };
 

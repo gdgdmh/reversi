@@ -61,7 +61,7 @@ bool reversi::TestBoard::Execute() {
 		board.InitializeGame();
 
 		reversi::Move move;
-		reversi::EMPTY_POSITION emptyPosition;
+		reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 		// 空マスの取得
 		move.FindEmptyPosition(board, emptyPosition);
 		// 黒のおける位置の取得

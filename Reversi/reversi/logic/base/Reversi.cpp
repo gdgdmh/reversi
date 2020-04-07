@@ -317,7 +317,7 @@ bool reversi::Reversi::IsEnded() {
 bool reversi::Reversi::CheckPass(reversi::ReversiConstant::TURN targetTurn) {
 
 	reversi::Move move;
-	reversi::EMPTY_POSITION emptyPosition;
+	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 	move.FindEmptyPosition(board, emptyPosition);
 
 	// キャッシュを作成する

@@ -26,7 +26,7 @@ reversi::MoveThinkingCpu2::~MoveThinkingCpu2() {
  */
 void reversi::MoveThinkingCpu2::InitializeMoveThinking(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	// 空の位置を探す
-	reversi::EMPTY_POSITION emptyPosition;
+	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 	reversiMove.FindEmptyPosition(board, emptyPosition);
 	// 打てる位置を探す
 	reversiMove.FindPutEnablePosition(board, emptyPosition, turn);

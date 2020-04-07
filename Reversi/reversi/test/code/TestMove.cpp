@@ -26,7 +26,7 @@ bool reversi::TestMove::Execute() {
 
 	// 初期化した盤に対して空の位置を取得する(初期位置の石には置けない)
     reversi::Move move;
-	reversi::EMPTY_POSITION emptyPosition;
+	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
     move.FindEmptyPosition(board, emptyPosition);
 
 	{
@@ -102,7 +102,7 @@ bool reversi::TestMove::Execute() {
 
 		// 初期化した盤に対して空の位置を取得する(初期位置の石には置けない)
 		reversi::Move move;
-		reversi::EMPTY_POSITION emptyPosition;
+		reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 		move.FindEmptyPosition(board, emptyPosition);
 
 		{

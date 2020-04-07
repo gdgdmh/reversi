@@ -13,9 +13,9 @@ class Board;
 namespace reversi {
 
 // 石が置かれていない場所データ
-typedef struct {
-	std::vector<reversi::ReversiConstant::POSITION> position;
-} EMPTY_POSITION;
+//typedef struct {
+//	std::vector<reversi::ReversiConstant::POSITION> position;
+//} EMPTY_POSITION;
 
 // 着手クラス
 class Move {
@@ -62,7 +62,7 @@ public:
 	 * @param board          盤データ
 	 * @param emptyPositions 結果をいれるための参照渡しオブジェクト
 	 */
-	void FindEmptyPosition(const reversi::Board& board, EMPTY_POSITION& emptyPosition);
+	void FindEmptyPosition(const reversi::Board& board, reversi::ReversiConstant::EMPTY_POSITION& emptyPosition);
 
 	/**
 	 * 打てる場所を探す
@@ -71,7 +71,7 @@ public:
 	 * @param emptyPositions 石の置かれてない場所が入ったデータ
 	 * @param turn           手番(黒,白)
 	 */
-	void FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn);
+	void FindPutEnablePosition(const reversi::Board& board, const reversi::ReversiConstant::EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * 打つことができるか

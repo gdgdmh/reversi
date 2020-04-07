@@ -2,6 +2,7 @@
 #define REVERSI_LOGIC_BASE_REVERSICONSTANT_H_
 
 #include <string>
+#include <vector>
 
 namespace reversi {
 
@@ -42,6 +43,11 @@ public:
 		BOARD_INFO info;	// 着手する石
 		TURN turn;			// 手番
 	} MOVE_INFO;
+
+	// 石が置かれていない場所データ
+	typedef struct {
+		std::vector<reversi::ReversiConstant::POSITION> position;
+	} EMPTY_POSITION;
 
 	static const int BOARD_DATA_SIZE_X = 10; // 盤のデータサイズX
 	static const int BOARD_DATA_SIZE_Y = 10; // 盤のデータサイズY

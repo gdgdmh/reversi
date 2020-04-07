@@ -19,7 +19,7 @@ reversi::Move::~Move() {
  * @param board          盤データ
  * @param emptyPositions 結果をいれるための参照渡しオブジェクト
  */
-void reversi::Move::FindEmptyPosition(const reversi::Board& board, EMPTY_POSITION& emptyPosition) {
+void reversi::Move::FindEmptyPosition(const reversi::Board& board, reversi::ReversiConstant::EMPTY_POSITION& emptyPosition) {
 
 	// データをクリアしておく
 	emptyPosition.position.clear();
@@ -47,7 +47,7 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, EMPTY_POSITIO
  * @param emptyPositions 石の置かれてない場所が入ったデータ
  * @param turn           手番(黒,白)
  */
-void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn) {
+void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const reversi::ReversiConstant::EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn) {
 
 	// キャッシュをクリアする
 	moveCache.reverseInfo.clear();
