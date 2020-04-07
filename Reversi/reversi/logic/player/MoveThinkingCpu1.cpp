@@ -137,14 +137,15 @@ bool reversi::MoveThinkingCpu1::MoveThinkingMinRandom(const reversi::Board& boar
 		IRandomInt* random = new StdRandomInt();
 		random->SetSeedByTime();
 		// 使うindexをランダムで取得
-		useIndex = random->Get(0, (int)minCandidateIndex.size() - 1);
+		int randomIndex = random->Get(0, (int)minCandidateIndex.size() - 1);
 		if (random) {
 			delete random;
 			random = NULL;
 		}
 
-		reversi::Assert::AssertArrayRange(useIndex, reversiMove.GetReverseInfoSize(), "MoveThinkingCpu1::MoveThinkingMinRandom");
-
+		reversi::Assert::AssertArrayRange(randomIndex, (int)minCandidateIndex.size(), "MoveThinkingCpu1::MoveThinkingMinRandom index over minCandidateIndex");
+		useIndex = minCandidateIndex[randomIndex];
+		reversi::Assert::AssertArrayRange(useIndex, reversiMove.GetReverseInfoSize(), "MoveThinkingCpu1::MoveThinkingMinRandom index over reversiMove reverseInfo");
 		const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(useIndex);
 		// 着手情報を確定
 		reversi::MoveInfo::MOVE_INFO moveInfoData;

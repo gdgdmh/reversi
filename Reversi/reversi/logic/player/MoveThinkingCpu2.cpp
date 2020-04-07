@@ -57,13 +57,14 @@ bool reversi::MoveThinkingCpu2::MoveThinking(const reversi::Board& board, revers
 			IRandomInt* random = new StdRandomInt();
 			random->SetSeedByTime();
 			// 使うindexをランダムで取得
-			index = random->Get(0, (int)candidate.size() - 1);
+			int randomIndex = random->Get(0, (int)candidate.size() - 1);
 			if (random) {
 				delete random;
 				random = NULL;
 			}
-
-			reversi::Assert::AssertArrayRange(index, reversiMove.GetReverseInfoSize(), "MoveThinkingCpu2::MoveThinking");
+			reversi::Assert::AssertArrayRange(randomIndex, (int)candidate.size(), "MoveThinkingCpu2::MoveThinking index over candidate");
+			index = candidate[randomIndex];
+			reversi::Assert::AssertArrayRange(index, reversiMove.GetReverseInfoSize(), "MoveThinkingCpu2::MoveThinking index over reverseInfo");
 		}
 	}
 	const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(index);

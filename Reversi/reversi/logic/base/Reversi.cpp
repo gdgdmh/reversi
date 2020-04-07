@@ -34,7 +34,8 @@ void reversi::Reversi::Initialize() {
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::INITIALIZE);
 	// プレイヤーの初期化
-	player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
+	//player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
+	player[0] = new PlayerMan();
 	player[1] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
 		//player[i] = new PlayerMan();
