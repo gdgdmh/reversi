@@ -46,9 +46,25 @@ public:
 
 private:
 
+	/**
+	 * 入力から位置を取得する
+	 * @param  position 入力された位置
+	 * @return          trueなら入力された
+	 */
 	bool GetPositionByInput(reversi::ReversiConstant::POSITION& position);
 
+	/**
+	 * 手番から対応した石情報を取得する
+	 * @param  turn 手番
+	 * @return      対応した石
+	 */
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
+
+	/**
+	 * 大文字に変換する
+	 * @param targetString 変換対象の文字列
+	 */
+	void TransformStringUpper(std::string& targetString);
 
 private:
 	reversi::Move reversiMove;
