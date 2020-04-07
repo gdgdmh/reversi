@@ -1,6 +1,7 @@
 ﻿#ifndef REVERSI_GAME_REVERSIGAMELOOP_H_
 #define REVERSI_GAME_REVERSIGAMELOOP_H_
 
+#include "../scene/ReversiGameScene.h"
 #include "../logic/base/Reversi.h"
 
 namespace reversi {
@@ -31,6 +32,7 @@ public:
 
 private:
 	reversi::Reversi reversi;
+	reversi::ReversiGameScene reversiGameScene;
 
 };
 

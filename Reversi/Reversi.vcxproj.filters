@@ -132,6 +132,9 @@
     <ClCompile Include="reversi\logic\player\PlayerFactory.cpp">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\scene\ReversiGameScene.cpp">
+      <Filter>ソース ファイル\reversi\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\player\PlayerFactory.h">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\scene\ReversiGameScene.h">
+      <Filter>ソース ファイル\reversi\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
