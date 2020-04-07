@@ -175,6 +175,8 @@ private:
 	 */
 	int TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTurn);
 
+	bool IsCurrentPlayerTurnMan(reversi::ReversiConstant::TURN targetTurn);
+
 	/**
 	 * 手番の切り替え
 	 * @param targetTurn 現在の手番

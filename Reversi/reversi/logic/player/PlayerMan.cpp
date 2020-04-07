@@ -42,7 +42,6 @@ void reversi::PlayerMan::Initialize() {
  */
 void reversi::PlayerMan::EventTurnStart(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	moveThinking->InitializeMoveThinking(board, turn);
-    console->PrintLine("石を打つ場所を入力してください");
 }
 
 /**
@@ -53,11 +52,7 @@ void reversi::PlayerMan::EventTurnStart(const reversi::Board& board, reversi::Re
  * @return       trueなら着手済み(moveに情報が入っている)
  */
 bool reversi::PlayerMan::SelectMove(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-    bool result = moveThinking->MoveThinking(board, move, turn);
-    if (!result) {
-        console->PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
-    }
-	return result;
+    return moveThinking->MoveThinking(board, move, turn);
 }
 
 /**

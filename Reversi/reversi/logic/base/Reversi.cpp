@@ -148,7 +148,9 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	} else {
 		console->PrintLine("白のターン");
 	}
-
+	if (IsCurrentPlayerTurnMan(turn)) {
+		console->PrintLine("石を打つ場所を入力してください(入力例 D3)");
+	}
 }
 
 /**
@@ -164,6 +166,10 @@ void reversi::Reversi::TaskMoveSelect() {
 		bool isMove = board.Move(moveInfo);
 		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
+	} else {
+		if (IsCurrentPlayerTurnMan(turn)) {
+			console->PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
+		}
 	}
 }
 
@@ -322,6 +328,14 @@ int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTur
 	} else {
 		return PLAYER_WHITE;
 	}
+}
+
+bool reversi::Reversi::IsCurrentPlayerTurnMan(reversi::ReversiConstant::TURN targetTurn) {
+	int playerIndex = TurnToPlayerIndex(targetTurn);
+	if (playerData.playerType[playerIndex] == reversi::Reversi::PLAYER::MAN) {
+		return true;
+	}
+	return false;
 }
 
 /**
