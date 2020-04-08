@@ -8,6 +8,13 @@ namespace reversi {
 // リバーシゲームシーン
 class ReversiGameScene {
 public:
+	enum class SCENE {
+		INITIALIZE,
+		REVERSI_START,
+		REVERSI_TASK,
+		REVERSI_ASK_CONTINUE,
+	};
+public:
 
 	/**
 	 * コンストラクタ
@@ -31,6 +38,34 @@ public:
 	bool Task();
 
 private:
+	/**
+	 * 初期化シーン
+	 */
+	void TaskInitialize();
+
+	/**
+	 * リバーシ開始シーン
+	 */
+	void TaskReversiStart();
+
+	/**
+	 * リバーシメインシーン
+	 */
+	void TaskReversiTask();
+
+	/**
+	 * リバーシ再対局確認シーン
+	 */
+	void TaskReversiAskContinue();
+
+	/**
+	 * シーンの設定
+	 * @param nextScene 次のシーン
+	 */
+	void SetScene(reversi::ReversiGameScene::SCENE nextScene);
+
+private:
+	SCENE scene;
 	reversi::Reversi reversi;
 };
 
