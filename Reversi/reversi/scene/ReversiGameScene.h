@@ -15,6 +15,7 @@ public:
 		REVERSI_START,
 		REVERSI_TASK,
 		REVERSI_ASK_CONTINUE,
+		END
 	};
 public:
 
@@ -59,6 +60,11 @@ private:
 	 * リバーシ再対局確認シーン
 	 */
 	void TaskReversiAskContinue();
+
+	/**
+	 * 終了シーン
+	 */
+	void TaskEnd();
 
 	/**
 	 * シーンの設定

@@ -48,6 +48,9 @@ bool reversi::ReversiGameScene::Task() {
 	case reversi::ReversiGameScene::SCENE::REVERSI_ASK_CONTINUE:
 		TaskReversiAskContinue();
 		break;
+	case reversi::ReversiGameScene::SCENE::END:
+		TaskEnd();
+		return false;
 	}
 	return true;
 }
@@ -95,8 +98,17 @@ void reversi::ReversiGameScene::TaskReversiAskContinue() {
 		if (selectYesNo->IsSelectYes()) {
 			SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
 			return;
+		} else {
+			SetScene(reversi::ReversiGameScene::SCENE::END);
+			return;
 		}
 	}
+}
+
+/**
+ * 終了シーン
+ */
+void reversi::ReversiGameScene::TaskEnd() {
 }
 
 /**

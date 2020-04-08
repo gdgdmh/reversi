@@ -25,7 +25,10 @@ void reversi::ReversiGameLoop::Initialize() {
  * メイン処理
  */
 void reversi::ReversiGameLoop::Task() {
-    while (true) {
-        reversiGameScene.Task();
-    }
+	while (true) {
+		if (!reversiGameScene.Task()) {
+			// 終了
+			break;
+		}
+	}
 }
