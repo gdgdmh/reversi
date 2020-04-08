@@ -135,6 +135,9 @@
     <ClCompile Include="reversi\scene\ReversiGameScene.cpp">
       <Filter>ソース ファイル\reversi\scene</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\util\ConsoleInputKeyboard.cpp">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -244,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="reversi\scene\ReversiGameScene.h">
       <Filter>ソース ファイル\reversi\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\IInputKeyboard.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\ConsoleInputKeyboard.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

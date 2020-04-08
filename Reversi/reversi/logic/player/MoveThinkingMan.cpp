@@ -3,6 +3,8 @@
 #include "MoveThinkingMan.h"
 #include "../../util/IOutputConsole.h"
 #include "../../util/Assert.h"
+#include "../../util/IInputKeyboard.h"
+#include "../../util/ConsoleInputKeyboard.h"
 
 /**
  * コンストラクタ
@@ -67,12 +69,17 @@ bool reversi::MoveThinkingMan::MoveThinking(const reversi::Board& board, reversi
  */
 bool reversi::MoveThinkingMan::GetPositionByInput(reversi::ReversiConstant::POSITION& position) {
 
+	reversi::IInputKeyboard* inputKeyboard = new ConsoleInputKeyboard();
 	std::string positionName = "";
-	std::getline(std::cin, positionName);
-
+	// キーボードから位置の文字列を取得する
+	positionName = inputKeyboard->GetStringLine();
+	if (inputKeyboard) {
+		delete inputKeyboard;
+		inputKeyboard = NULL;
+	}
 	// 小文字で入力したときのために大文字に変換する
 	TransformStringUpper(positionName);
-
+	// 文字列から座標へ変換
 	if (reversi::ReversiConstant::GetStringToPosition(positionName, position)) {
 		return true;
 	}
