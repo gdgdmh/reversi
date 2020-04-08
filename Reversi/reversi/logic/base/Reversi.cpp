@@ -268,7 +268,8 @@ void reversi::Reversi::TaskEnd() {
  * プレイヤーをリセットする(NULLクリア)
  */
 void reversi::Reversi::ResetPlayer() {
-	playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::MAN;
+	playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU2;
+	//playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::MAN;
 	playerData.playerType[PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU1;
 
 	for (int i = 0; i < PLAYER_COUNT; ++i) {

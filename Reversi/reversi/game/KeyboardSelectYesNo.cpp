@@ -144,4 +144,5 @@ bool reversi::KeyboardSelectYesNo::IsStringYes(const std::string& checkString) {
  * @return trueなら間違った入力をした
  */
 bool reversi::KeyboardSelectYesNo::IsWrongInput() {
+	return isWrongInput;
 }

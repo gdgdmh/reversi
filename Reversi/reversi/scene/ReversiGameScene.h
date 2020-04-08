@@ -1,7 +1,9 @@
 ﻿#ifndef REVERSI_SCENE_REVERSIGAMESCENE_H_
 #define REVERSI_SCENE_REVERSIGAMESCENE_H_
 
+#include "../util/IOutputConsole.h"
 #include "../logic/base/Reversi.h"
+#include "../game/ISelectYesNo.h"
 
 namespace reversi {
 
@@ -65,8 +67,10 @@ private:
 	void SetScene(reversi::ReversiGameScene::SCENE nextScene);
 
 private:
+	reversi::IOutputConsole* console;
 	SCENE scene;
 	reversi::Reversi reversi;
+	reversi::ISelectYesNo* selectYesNo;
 };
 
 }

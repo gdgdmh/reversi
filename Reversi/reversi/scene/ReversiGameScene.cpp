@@ -1,21 +1,33 @@
 ﻿#include "ReversiGameScene.h"
+#include "../util/OutputConsole.h"
+#include "../game/KeyboardSelectYesNo.h"
 
 /**
  * コンストラクタ
  */
-reversi::ReversiGameScene::ReversiGameScene() : scene(reversi::ReversiGameScene::SCENE::INITIALIZE) {
+reversi::ReversiGameScene::ReversiGameScene() : console(NULL), scene(reversi::ReversiGameScene::SCENE::INITIALIZE), selectYesNo(NULL) {
 }
 
 /**
  * デストラクタ
  */
 reversi::ReversiGameScene::~ReversiGameScene() {
+	if (selectYesNo) {
+		delete selectYesNo;
+		selectYesNo = NULL;
+	}
+	if (console) {
+		delete console;
+		console = NULL;
+	}
 }
 
 /**
  * 初期化
  */
 void reversi::ReversiGameScene::Initialize() {
+	console = new OutputConsole();
+	selectYesNo = new KeyboardSelectYesNo();
 }
 
 /**
@@ -61,13 +73,30 @@ void reversi::ReversiGameScene::TaskReversiStart() {
  */
 void reversi::ReversiGameScene::TaskReversiTask() {
 	reversi.Task();
+	if (reversi.GetScene() == reversi::Reversi::SCENE::END) {
+		// 再対局確認
+		console->PrintLine("再対局しますか？(入力例 Yes または No)");
+		selectYesNo->Initialize();
+		SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_CONTINUE);
+	}
 }
 
 /**
  * リバーシ再対局確認シーン
  */
 void reversi::ReversiGameScene::TaskReversiAskContinue() {
-	SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+	selectYesNo->Task();
+	if (selectYesNo->IsWrongInput()) {
+		// 正しくない入力
+		console->PrintLine("入力が間違っています、もう一度入力してください");
+		return;
+	}
+	if (selectYesNo->IsSelected()) {
+		if (selectYesNo->IsSelectYes()) {
+			SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+			return;
+		}
+	}
 }
 
 /**
