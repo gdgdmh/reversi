@@ -138,6 +138,9 @@
     <ClCompile Include="reversi\util\ConsoleInputKeyboard.cpp">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\logic\player\PlayerKeyboardSelectPosition.cpp">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -253,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="reversi\util\ConsoleInputKeyboard.h">
       <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\IPlayerSelectPosition.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\PlayerKeyboardSelectPosition.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

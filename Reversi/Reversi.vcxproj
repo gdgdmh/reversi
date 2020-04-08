@@ -160,6 +160,7 @@
     <ClCompile Include="reversi\logic\player\MoveThinkingMan.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerCpu.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerFactory.cpp" />
+    <ClCompile Include="reversi\logic\player\PlayerKeyboardSelectPosition.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerMan.cpp" />
     <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp" />
     <ClCompile Include="reversi\scene\ReversiGameScene.cpp" />
@@ -188,11 +189,13 @@
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
     <ClInclude Include="reversi\logic\player\IPlayer.h" />
     <ClInclude Include="reversi\logic\player\IMoveThinking.h" />
+    <ClInclude Include="reversi\logic\player\IPlayerSelectPosition.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu1.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu2.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingMan.h" />
     <ClInclude Include="reversi\logic\player\PlayerCpu.h" />
     <ClInclude Include="reversi\logic\player\PlayerFactory.h" />
+    <ClInclude Include="reversi\logic\player\PlayerKeyboardSelectPosition.h" />
     <ClInclude Include="reversi\logic\player\PlayerMan.h" />
     <ClInclude Include="reversi\logic\render\IRenderBoard.h" />
     <ClInclude Include="reversi\logic\render\RenderBoardConsole.h" />

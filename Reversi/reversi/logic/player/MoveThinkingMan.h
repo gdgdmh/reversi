@@ -2,6 +2,7 @@
 #define REVERSI_LOGIC_PLAYER_MOVETHINKINGMAN_H_
 
 #include "IMoveThinking.h"
+#include "IPlayerSelectPosition.h"
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 #include "../base/Move.h"
@@ -60,14 +61,9 @@ private:
 	 */
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
 
-	/**
-	 * 大文字に変換する
-	 * @param targetString 変換対象の文字列
-	 */
-	void TransformStringUpper(std::string& targetString);
-
 private:
 	reversi::Move reversiMove;
+	reversi::IPlayerSelectPosition* playerSelectPosition;
 
 };
 
