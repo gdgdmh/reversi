@@ -39,6 +39,15 @@ bool reversi::ReversiGameScene::Task() {
 	case reversi::ReversiGameScene::SCENE::INITIALIZE:
 		TaskInitialize();
 		break;
+	case reversi::ReversiGameScene::SCENE::REVERSI_ASK_PLAYER_SETTING:
+		TaskAskPlayerSetting();
+		break;
+	case reversi::ReversiGameScene::SCENE::REVERSI_ASK_CPU_SETTING:
+		TaskAskCpuSetting();
+		break;
+	case reversi::ReversiGameScene::SCENE::REVERSI_ASK_CPU2_SETTING:
+		TaskAskCpu2Setting();
+		break;
 	case reversi::ReversiGameScene::SCENE::REVERSI_START:
 		TaskReversiStart();
 		break;
@@ -60,6 +69,24 @@ bool reversi::ReversiGameScene::Task() {
  */
 void reversi::ReversiGameScene::TaskInitialize() {
 	SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+}
+
+/**
+ * プレイヤー設定確認シーン
+ */
+void reversi::ReversiGameScene::TaskAskPlayerSetting() {
+}
+
+/**
+ * CPU設定確認シーン
+ */
+void reversi::ReversiGameScene::TaskAskCpuSetting() {
+}
+
+/**
+ * CPU2人目瀬底確認シーン
+ */
+void reversi::ReversiGameScene::TaskAskCpu2Setting() {
 }
 
 /**

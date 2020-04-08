@@ -12,6 +12,9 @@ class ReversiGameScene {
 public:
 	enum class SCENE {
 		INITIALIZE,
+		REVERSI_ASK_PLAYER_SETTING,
+		REVERSI_ASK_CPU_SETTING,
+		REVERSI_ASK_CPU2_SETTING,
 		REVERSI_START,
 		REVERSI_TASK,
 		REVERSI_ASK_CONTINUE,
@@ -45,6 +48,21 @@ private:
 	 * 初期化シーン
 	 */
 	void TaskInitialize();
+
+	/**
+	 * プレイヤー設定確認シーン
+	 */
+	void TaskAskPlayerSetting();
+
+	/**
+	 * CPU設定確認シーン
+	 */
+	void TaskAskCpuSetting();
+
+	/**
+	 * CPU2人目瀬底確認シーン
+	 */
+	void TaskAskCpu2Setting();
 
 	/**
 	 * リバーシ開始シーン

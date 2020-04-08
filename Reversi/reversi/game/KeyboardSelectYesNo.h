@@ -47,6 +47,12 @@ public:
 	 */
 	bool IsSelectYes();
 
+	/**
+	 * 間違った入力をしたか
+	 * @return trueなら間違った入力をした
+	 */
+	bool IsWrongInput();
+
 private:
 
 	/**
@@ -68,12 +74,6 @@ private:
 	 * @return             trueならYesと解釈できる文字列
 	 */
 	bool IsStringYes(const std::string& checkString);
-
-	/**
-	 * 間違った入力をしたか
-	 * @return trueなら間違った入力をした
-	 */
-	virtual bool IsWrongInput();
 
 private:
 	reversi::IInputKeyboard* inputKeyboard; // キーボード入力クラス

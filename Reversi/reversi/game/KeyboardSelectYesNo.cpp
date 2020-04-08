@@ -89,6 +89,14 @@ bool reversi::KeyboardSelectYesNo::IsSelectYes() {
 }
 
 /**
+ * 間違った入力をしたか
+ * @return trueなら間違った入力をした
+ */
+bool reversi::KeyboardSelectYesNo::IsWrongInput() {
+	return isWrongInput;
+}
+
+/**
  * YesかNoと解釈できる文字列が指定されたかチェックスル
  * @param  checkString チェックする文字列
  * @return             trueなら正しい文字列が指定された
@@ -137,12 +145,4 @@ bool reversi::KeyboardSelectYesNo::IsStringYes(const std::string& checkString) {
 		}
 	}
 	return false;
-}
-
-/**
- * 間違った入力をしたか
- * @return trueなら間違った入力をした
- */
-bool reversi::KeyboardSelectYesNo::IsWrongInput() {
-	return isWrongInput;
 }
