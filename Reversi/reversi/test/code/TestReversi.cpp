@@ -24,9 +24,12 @@ reversi::TestReversi::~TestReversi() {
 bool reversi::TestReversi::Execute() {
 
 	reversi::Reversi reversi;
+	reversi::Reversi::PLAYER_SETTING setting;
+	setting.playerType[reversi::Reversi::PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU1;
+	setting.playerType[reversi::Reversi::PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU1;
 
 	reversi.Initialize();
-	reversi.InitializeGame();
+	reversi.InitializeGame(setting);
 	{
 		reversi::Board board;
 		board.SetDebugPass();

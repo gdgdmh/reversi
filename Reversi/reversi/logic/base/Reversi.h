@@ -49,10 +49,16 @@ public:
 		int whiteResultCount;   // 結果を適用した黒石の数
 		int noneResultCount;    // 結果を適用した空白の数
 	} RESULT_DATA;
+	// プレイヤーデータ
 	typedef struct {
 		PLAYER playerType[PLAYER_COUNT];
 		reversi::IPlayer* player[PLAYER_COUNT];
 	} PLAYER_DATA;
+	// プレイヤー設定
+	typedef struct {
+		PLAYER playerType[PLAYER_COUNT];
+	} PLAYER_SETTING;
+
 public:
 
 	/**
@@ -72,8 +78,9 @@ public:
 
 	/**
 	 * ゲーム開始のための初期化
+	 * @param playerSetting プレイヤー設定
 	 */
-	void InitializeGame();
+	void InitializeGame(const reversi::Reversi::PLAYER_SETTING& playerSetting);
 
 	/**
 	 * 更新処理
@@ -155,7 +162,16 @@ private:
 	// pureiya-sakusei
 	reversi::IPlayer* CreatePlayer(int playerIndex, reversi::Reversi::PLAYER playerType);
 
+	/**
+	 * プレイヤーのインスタンスを作成する
+	 */
 	void CreatePlayers();
+
+	/**
+	 * プレイヤー設定を適用する
+	 * @param playerSetting プレイヤー設定
+	 */
+	void ApplyPlayerSetting(reversi::Reversi::PLAYER_SETTING playerSetting);
 
 	/**
 	 * プレイヤーを削除する(DELETE)
@@ -230,7 +246,7 @@ private:
 private:
 	reversi::Board board;                       // 盤
 	reversi::ReversiConstant::TURN turn;        // 現在の手番
-	reversi::Reversi::PLAYER_DATA playerData;	// プレイヤーデータ
+	reversi::Reversi::PLAYER_DATA playerData;   // プレイヤーデータ
 	//reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
 	reversi::Reversi::SCENE scene;              // シーン
 	reversi::MoveInfo moveInfo;                 // 着手キャッシュ

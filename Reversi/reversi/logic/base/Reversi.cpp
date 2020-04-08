@@ -35,10 +35,10 @@ void reversi::Reversi::Initialize() {
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::INITIALIZE);
 	// プレイヤーの初期化
-	CreatePlayers();
-	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		playerData.player[i]->Initialize();
-	}
+	//CreatePlayers();
+	//for (int i = 0; i < PLAYER_COUNT; ++i) {
+	//	playerData.player[i]->Initialize();
+	//}
 
 	//player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
 	//player[0] = new PlayerMan();
@@ -56,9 +56,20 @@ void reversi::Reversi::Initialize() {
 
 /**
  * ゲーム開始のための初期化
+ * @param playerSetting プレイヤー設定
  */
-void reversi::Reversi::InitializeGame() {
+void reversi::Reversi::InitializeGame(const reversi::Reversi::PLAYER_SETTING& playerSetting) {
 	board.InitializeGame();
+	// プレイヤーインスタンスを開放する
+	ReleasePlayer();
+	// プレイヤー設定の取り込み
+	ApplyPlayerSetting(playerSetting);
+	// プレイヤーを作成,初期化
+	CreatePlayers();
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		playerData.player[i]->Initialize();
+	}
+
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 	ResetPassCheck();
@@ -302,9 +313,24 @@ reversi::IPlayer* reversi::Reversi::CreatePlayer(int playerIndex, reversi::Rever
 	return factory.Create(type);
 }
 
+/**
+ * プレイヤーのインスタンスを作成する
+ */
 void reversi::Reversi::CreatePlayers() {
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		reversi::Assert::AssertArrayRange(i, PLAYER_COUNT, "Reversi::CreatePlayers index over");
 		playerData.player[i] = CreatePlayer(i, playerData.playerType[i]);
+	}
+}
+
+/**
+ * プレイヤー設定を適用する
+ * @param playerSetting プレイヤー設定
+ */
+void reversi::Reversi::ApplyPlayerSetting(reversi::Reversi::PLAYER_SETTING playerSetting) {
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		reversi::Assert::AssertArrayRange(i, PLAYER_COUNT, "Reversi::ApplyPlayerSetting index over");
+		playerData.playerType[i] = playerSetting.playerType[i];
 	}
 }
 
