@@ -14,6 +14,7 @@ class Board;
 namespace reversi {
 
 // プレイヤー(CPU)思考クラス1
+// 取れる位置が最も少ない場所にランダムで置く
 class MoveThinkingCpu1 : public IMoveThinking {
 public:
 	static const int MIN_COUNT_DEFAULT = 999; // 取れる石をチェックするときのデフォルト最小値(18以上にすれば安全)

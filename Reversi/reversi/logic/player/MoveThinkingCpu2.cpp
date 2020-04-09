@@ -43,7 +43,7 @@ bool reversi::MoveThinkingCpu2::MoveThinking(const reversi::Board& board, revers
 
 	int index = 0;
 	if (CheckPutEnableCornerIndex(index, reversiMove)) {
-		// 角における
+		// 角における(indexを設定)
 	} else {
 		index = 0;
 		// 着手候補indexを取得する

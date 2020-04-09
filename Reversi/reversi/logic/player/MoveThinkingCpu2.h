@@ -14,6 +14,7 @@ class Board;
 namespace reversi {
 
 // プレイヤー(CPU)思考クラス LEVEL2
+// 角に優先して置く、取れる位置が最も多い場所にランダムで置く
 class MoveThinkingCpu2 : public IMoveThinking {
 public:
 	static const int MAX_COUNT_DEFAULT = 0; // 取れる石をチェックするときのデフォルト値
