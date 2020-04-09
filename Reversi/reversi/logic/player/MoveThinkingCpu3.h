@@ -19,9 +19,10 @@ class MoveThinkingCpu3 : public IMoveThinking {
 private:
 	// 静的評価位置
 	// 石が置いてある場所によって評価をつける(ここの位置はいい、悪いなど)
-	static const int STATIC_EVALUATION_POSITIONS[reversi::ReversiConstant::POSITION_SIZE];
+	static const int STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE];
 	// 参考元
-	static const int DEFAULT_STATIC_EVALUATION_POSITIONS[reversi::ReversiConstant::POSITION_SIZE];
+	static const int DEFAULT_STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE];
+	static const int DEFAULT_POINTS = -99999;
 public:
 	/**
 	 * コンストラクタ

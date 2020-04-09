@@ -155,6 +155,14 @@ public:
 	 * @return                trueなら変換できた
 	 */
 	static bool GetPositionToString(const reversi::ReversiConstant::POSITION& position, std::string& positionString);
+
+	/**
+	 * POSITIONからindexへ変換する
+	 * @param  position 変換するposition
+	 * @return          変換されたindex(不正なindexのときは-1を返す)
+	 */
+	static int GetPositionToIndex(const reversi::ReversiConstant::POSITION& position);
+
 };
 
 }

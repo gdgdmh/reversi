@@ -73,3 +73,20 @@ bool reversi::ReversiConstant::GetPositionToString(const reversi::ReversiConstan
 	}
 	return false;
 }
+
+/**
+ * POSITIONからindexへ変換する
+ * @param  position 変換するposition
+ * @return          変換されたindex(不正なindexのときは-1を返す)
+ */
+int reversi::ReversiConstant::GetPositionToIndex(const reversi::ReversiConstant::POSITION& position) {
+	// POSITONSからindexを探す
+	for (int i = 0; i < reversi::ReversiConstant::POSITION_SIZE; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReversiConstant::POSITION_SIZE, "ReversiConstant::GetPositionToIndex index over");
+		if (position == POSITIONS[i]) {
+			return i;
+		}
+	}
+	// 見つからなかった
+	return -1;
+}

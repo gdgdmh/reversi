@@ -1,6 +1,7 @@
 ﻿#include "PLayerCpu.h"
 #include "MoveThinkingCpu1.h"
 #include "MoveThinkingCpu2.h"
+#include "MoveThinkingCpu3.h"
 #include "../../util/IOutputConsole.h"
 #include "../../util/Assert.h"
 
@@ -15,7 +16,10 @@ reversi::PlayerCpu::PlayerCpu(reversi::PlayerCpu::LEVEL level) : moveThinking(NU
     case reversi::PlayerCpu::LEVEL::LEVEL2:
         moveThinking = new MoveThinkingCpu2();
         break;
-	default:
+    case reversi::PlayerCpu::LEVEL::LEVEL3:
+        moveThinking = new MoveThinkingCpu3();
+        break;
+    default:
 		break;
 	}
 }
