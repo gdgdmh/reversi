@@ -6,6 +6,7 @@
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 #include "../base/Move.h"
+#include "../../util/IOutputConsole.h"
 
 // 前方宣言
 namespace reversi {
@@ -17,10 +18,13 @@ namespace reversi {
 // プレイヤー(MAN)思考クラス
 class MoveThinkingMan : public IMoveThinking {
 public:
+	static const int HINT_GET_STONE_COUNT = 5; // ヒントが表示される石獲得数
+public:
 	/**
 	 * コンストラクタ
+	 * @param useHint ヒントを使用するか
 	 */
-	MoveThinkingMan();
+	MoveThinkingMan(bool useHint);
 
 	/**
 	 * デストラクタ
@@ -61,9 +65,37 @@ private:
 	 */
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
 
+	/**
+	 * 角に置くことができるか
+	 * @param  move 着手キャッシュ
+	 * @return      trueなら置くことができる
+	 */
+	bool CheckPutEnableCorner(const reversi::Move& move);
+
+	/**
+	 * 角に置けるヒントメッセージ表示
+	 */
+	void OutputHintMessageCorner();
+
+	/**
+	 * 多くの石が獲得できるか
+	 * @param  move       着手キャッシュ
+	 * @param  stoneCount いくつの石を取得できるならチャンスとみなすか
+	 * @return            trueなら多くの石の獲得チャンスがある
+	 */
+	bool CheckGetManyStoneChance(const reversi::Move& move, int stoneCount);
+
+	/**
+	 * 多くの石が置けるヒントメッセージ表示
+	 */
+	void OutputHintMessageManyStoneChance();
+
+
 private:
-	reversi::Move reversiMove;
-	reversi::IPlayerSelectPosition* playerSelectPosition;
+	reversi::Move reversiMove;                              // 着手情報
+	reversi::IPlayerSelectPosition* playerSelectPosition;   // 位置選択インターフェース
+	reversi::IOutputConsole* console;						// コンソール出力
+	bool useHint;                                           // ヒントを使うか
 
 };
 

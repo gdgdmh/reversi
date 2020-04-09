@@ -28,7 +28,7 @@ reversi::PlayerMan::~PlayerMan() {
  */
 void reversi::PlayerMan::Initialize() {
 	if (moveThinking == NULL) {
-		moveThinking = new MoveThinkingMan();
+		moveThinking = new MoveThinkingMan(true);
 	}
 	if (console == NULL) {
 		console = new OutputConsole();
