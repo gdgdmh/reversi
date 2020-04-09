@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="reversi\game\KeyboardSelectCpuLevel.cpp" />
     <ClCompile Include="reversi\game\KeyboardSelectYesNo.cpp" />
     <ClCompile Include="reversi\game\KeyboardSelectYesNoWatching.cpp" />
     <ClCompile Include="reversi\game\ReversiGameLoop.cpp" />
@@ -182,8 +183,10 @@
     <ClCompile Include="reversi\util\StdRandomInt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="reversi\game\ISelectCpuLevel.h" />
     <ClInclude Include="reversi\game\ISelectYesNo.h" />
     <ClInclude Include="reversi\game\ISelectYesNoWatching.h" />
+    <ClInclude Include="reversi\game\KeyboardSelectCpuLevel.h" />
     <ClInclude Include="reversi\game\KeyboardSelectYesNo.h" />
     <ClInclude Include="reversi\game\KeyboardSelectYesNoWatching.h" />
     <ClInclude Include="reversi\game\ReversiGameLoop.h" />
