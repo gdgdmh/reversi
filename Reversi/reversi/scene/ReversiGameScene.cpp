@@ -8,7 +8,7 @@
 /**
  * コンストラクタ
  */
-reversi::ReversiGameScene::ReversiGameScene() : console(NULL), scene(reversi::ReversiGameScene::SCENE::INITIALIZE), selectYesNo(NULL) {
+reversi::ReversiGameScene::ReversiGameScene() : console(NULL), scene(reversi::ReversiGameScene::SCENE::INITIALIZE), selectYesNoWatching(NULL),  selectCpuLevel(NULL), selectCpuLevel2(NULL), selectYesNo(NULL) {
 }
 
 /**
