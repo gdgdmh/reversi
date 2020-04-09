@@ -16,7 +16,7 @@ const std::string reversi::KeyboardSelectCpuLevel::LEVEL_STRINGS[LEVEL_PATTERN_C
 /**
  * コンストラクタ
  */
-reversi::KeyboardSelectCpuLevel::KeyboardSelectCpuLevel() : inputKeyboard(NULL), isWrongInput(false) {
+reversi::KeyboardSelectCpuLevel::KeyboardSelectCpuLevel() : inputKeyboard(NULL), isSelected(false), isWrongInput(false), cpuLevel(DEFAULT_CPU_LEVEL) {
 }
 
 /**
