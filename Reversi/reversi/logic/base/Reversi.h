@@ -3,6 +3,7 @@
 
 #include "ReversiConstant.h"
 #include "Board.h"
+#include "Move.h"
 #include "../player/IPlayer.h"
 #include "../../util/IOutputConsole.h"
 
@@ -206,6 +207,18 @@ private:
 	void ChangeTurn(reversi::ReversiConstant::TURN& targetTurn);
 
 	/**
+	 * 着手キャッシュを作成する
+	 */
+	void CreateMoveCache();
+
+	/**
+	 * 着手できるかどうかをチェック
+	 * @param  position 着手位置
+	 * @return          trueなら着手できる
+	 */
+	bool CheckEnableMove(const reversi::ReversiConstant::POSITION& position);
+
+	/**
 	 * 終局したか
 	 * @return trueなら終局している
 	 */
@@ -255,7 +268,8 @@ private:
 	reversi::Reversi::PLAYER_DATA playerData;   // プレイヤーデータ
 	//reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
 	reversi::Reversi::SCENE scene;              // シーン
-	reversi::MoveInfo moveInfo;                 // 着手キャッシュ
+	reversi::Move moveCache;                    // 着手キャッシュ
+	//reversi::MoveInfo moveCache;                 // 着手キャッシュ
 	reversi::IOutputConsole* console;           // コンソール出力クラス
 	//reversi::Reversi::RESULT result;            // 対局の結果
 	reversi::Reversi::PASS_CHECK passCheck;     // パス確認用(どっちもパスしかできなかったら終局)

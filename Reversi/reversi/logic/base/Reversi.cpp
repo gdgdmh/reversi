@@ -174,6 +174,8 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	if (IsCurrentPlayerTurnMan(turn)) {
 		console->PrintLine("石を打つ場所を入力してください(入力例 D3)");
 	}
+	// 着手キャッシュ作成
+	CreateMoveCache();
 }
 
 /**
@@ -185,14 +187,16 @@ void reversi::Reversi::TaskMoveSelect() {
 
 	bool isDecide = playerData.player[playerIndex]->SelectMove(board, move, turn);
 	if (isDecide) {
-		moveInfo = move;
-		bool isMove = board.Move(moveInfo);
-		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move invalid");
+		// 正常な着手かチェック
+		reversi::Assert::AssertEquals(CheckEnableMove(move.GetMoveInfo().position), "Reversi::TaskMoveSelect invalid move");
+		// 着手処理
+		bool isMove = board.Move(move);
+		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move task failure");
 
 		if (!IsCurrentPlayerTurnMan(turn)) {
 			// CPUなら着手を出力する
 			std::string positionString;
-			if (reversi::ReversiConstant::GetPositionToString(moveInfo.GetMoveInfo().position, positionString)) {
+			if (reversi::ReversiConstant::GetPositionToString(move.GetMoveInfo().position, positionString)) {
 				console->PrintLine(positionString);
 			}
 		}
@@ -398,6 +402,26 @@ void reversi::Reversi::ChangeTurn(reversi::ReversiConstant::TURN& targetTurn) {
 	} else {
 		targetTurn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	}
+}
+
+/**
+ * 着手キャッシュを作成する
+ */
+void reversi::Reversi::CreateMoveCache() {
+	// 空の位置を探す
+	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
+	moveCache.FindEmptyPosition(board, emptyPosition);
+	// 打てる位置を探す
+	moveCache.FindPutEnablePosition(board, emptyPosition, turn);
+}
+
+/**
+ * 着手できるかどうかをチェック
+ * @param  position 着手位置
+ * @return          trueなら着手できる
+ */
+bool reversi::Reversi::CheckEnableMove(const reversi::ReversiConstant::POSITION& position) {
+	return moveCache.CheckEnableMoveByCache(position);
 }
 
 /**
