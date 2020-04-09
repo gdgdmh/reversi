@@ -117,6 +117,12 @@ public:
 	 */
 	void GetResultStone(int& black, int& white, int& none);
 
+	/**
+	 * プレイヤー設定情報を取得する
+	 * @return プレイヤー設定情報
+	 */
+	reversi::Reversi::PLAYER_SETTING GetPlayerSetting() const;
+
 private:
 
 	/**

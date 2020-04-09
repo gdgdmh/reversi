@@ -105,6 +105,17 @@ private:
 	 */
 	reversi::Reversi::PLAYER NumberToCpuLevel(int cpuLevel);
 
+	/**
+	 * プレイヤーが勝ったか
+	 * @return trueならプレイヤーの勝ち
+	 */
+	bool IsPlayerWin();
+
+	/**
+	 * プレイヤーの勝利メッセージを表示
+	 */
+	void OutputPlayerWinMessage();
+
 private:
 	reversi::IOutputConsole* console;
 	SCENE scene;

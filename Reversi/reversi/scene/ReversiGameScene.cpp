@@ -1,5 +1,6 @@
 ﻿#include "ReversiGameScene.h"
 #include "../util/OutputConsole.h"
+#include "../util/Assert.h"
 #include "../game/KeyboardSelectYesNoWatching.h"
 #include "../game/KeyboardSelectCpuLevel.h"
 #include "../game/KeyboardSelectYesNo.h"
@@ -163,6 +164,9 @@ void reversi::ReversiGameScene::TaskReversiStart() {
 void reversi::ReversiGameScene::TaskReversiTask() {
 	reversi.Task();
 	if (reversi.GetScene() == reversi::Reversi::SCENE::END) {
+		if (IsPlayerWin()) {
+			OutputPlayerWinMessage();
+		}
 		// 再対局確認
 		console->PrintLine("再対局しますか？(入力例 Yes または No)");
 		selectYesNo->Initialize();
@@ -255,4 +259,33 @@ reversi::Reversi::PLAYER reversi::ReversiGameScene::NumberToCpuLevel(int cpuLeve
 	}
 }
 
+/**
+ * プレイヤーが勝ったか
+ * @return trueならプレイヤーの勝ち
+ */
+bool reversi::ReversiGameScene::IsPlayerWin() {
+	// 終了していないときに呼び出してはいけない
+	reversi::Assert::AssertEquals(reversi.GetScene() == reversi::Reversi::SCENE::END, "ReversiGameScene::IsPlayerWin invalid scene called");
+	reversi::Reversi::RESULT result = reversi.GetResult();
+	reversi::Reversi::PLAYER_SETTING playerSetting = reversi.GetPlayerSetting();
+	if (playerSetting.playerType[reversi::Reversi::PLAYER_BLACK] == reversi::Reversi::PLAYER::MAN) {
+		if (result == reversi::Reversi::RESULT::BLACK) {
+			// プレイヤーが黒で黒の勝ち
+			return true;
+		}
+	}
+	if (playerSetting.playerType[reversi::Reversi::PLAYER_WHITE] == reversi::Reversi::PLAYER::MAN) {
+		if (result == reversi::Reversi::RESULT::WHITE) {
+			// プレイヤーが白で白の勝ち
+			return true;
+		}
+	}
+	return false;
+}
 
+/**
+ * プレイヤーの勝利メッセージを表示
+ */
+void reversi::ReversiGameScene::OutputPlayerWinMessage() {
+	console->PrintLine("あなたの勝ちです!おめでとうございます!");
+}

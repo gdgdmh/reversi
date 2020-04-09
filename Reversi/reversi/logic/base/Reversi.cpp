@@ -118,6 +118,18 @@ void reversi::Reversi::GetResultStone(int& black, int& white, int& none) {
 }
 
 /**
+ * プレイヤー設定情報を取得する
+ * @return プレイヤー設定情報
+ */
+reversi::Reversi::PLAYER_SETTING reversi::Reversi::GetPlayerSetting() const {
+	reversi::Reversi::PLAYER_SETTING setting;
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		setting.playerType[i] = playerData.playerType[i];
+	}
+	return setting;
+}
+
+/**
  * 初期化
  */
 void reversi::Reversi::TaskInitialize() {
