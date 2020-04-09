@@ -3,6 +3,8 @@
 
 #include "../util/IOutputConsole.h"
 #include "../logic/base/Reversi.h"
+#include "../game/ISelectYesNoWatching.h"
+#include "../game/ISelectCpuLevel.h"
 #include "../game/ISelectYesNo.h"
 
 namespace reversi {
@@ -90,10 +92,26 @@ private:
 	 */
 	void SetScene(reversi::ReversiGameScene::SCENE nextScene);
 
+	/**
+	 * ゲームの初期化に必要なインスタンスの生成
+	 * ゲームを開始するたびに初期化される
+	 */
+	void CreateInitializeGameInstance();
+
+	/**
+	 * int数値からCPUプレイヤーを取得する
+	 * @param  cpuLevel CPUレベル数値
+	 * @return          レベルに対応したCPUプレイヤー
+	 */
+	reversi::Reversi::PLAYER NumberToCpuLevel(int cpuLevel);
+
 private:
 	reversi::IOutputConsole* console;
 	SCENE scene;
 	reversi::Reversi reversi;
+	reversi::ISelectYesNoWatching* selectYesNoWatching;
+	reversi::ISelectCpuLevel* selectCpuLevel;
+	reversi::ISelectCpuLevel* selectCpuLevel2;
 	reversi::ISelectYesNo* selectYesNo;
 };
 

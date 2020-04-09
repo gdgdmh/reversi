@@ -1,5 +1,7 @@
 ﻿#include "ReversiGameScene.h"
 #include "../util/OutputConsole.h"
+#include "../game/KeyboardSelectYesNoWatching.h"
+#include "../game/KeyboardSelectCpuLevel.h"
 #include "../game/KeyboardSelectYesNo.h"
 
 /**
@@ -26,8 +28,11 @@ reversi::ReversiGameScene::~ReversiGameScene() {
  * 初期化
  */
 void reversi::ReversiGameScene::Initialize() {
-	console = new OutputConsole();
-	selectYesNo = new KeyboardSelectYesNo();
+	// 一度しか初期化しない
+	if (console == NULL) {
+		console = new OutputConsole();
+	}
+	SetScene(reversi::ReversiGameScene::SCENE::INITIALIZE);
 }
 
 /**
@@ -68,34 +73,85 @@ bool reversi::ReversiGameScene::Task() {
  * 初期化シーン
  */
 void reversi::ReversiGameScene::TaskInitialize() {
-	SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+	// ゲームの初期化に必要なインスタンス作成(再対局する際にも呼ばれる)
+	CreateInitializeGameInstance();
+	// 初期化
+	selectYesNoWatching->Initialize();
+	selectCpuLevel->Initialize();
+	selectCpuLevel2->Initialize();
+	selectYesNo->Initialize();
+	console->PrintLine("黒石でプレイする場合はYes 白石でプレイする場合はNo CPU対局観戦する場合はWatching を入力してください");
+	SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_PLAYER_SETTING);
 }
 
 /**
  * プレイヤー設定確認シーン
  */
 void reversi::ReversiGameScene::TaskAskPlayerSetting() {
+	selectYesNoWatching->Task();
+	if (selectYesNoWatching->IsWrongInput()) {
+		console->PrintLine("入力が間違っています、もう一度入力してください");
+	}
+	if (selectYesNoWatching->IsSelected()) {
+		console->PrintLine("CPUの強さを数字で選択してください、数値が高いほど強いです 1 or 2 or 3");
+		SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_CPU_SETTING);
+	}
 }
 
 /**
  * CPU設定確認シーン
  */
 void reversi::ReversiGameScene::TaskAskCpuSetting() {
+	selectCpuLevel->Task();
+	if (selectCpuLevel->IsWrongInput()) {
+		console->PrintLine("入力が間違っています、もう一度入力してください");
+	}
+	if (selectCpuLevel->IsSelected()) {
+		// 観戦を選択したときのみ2人目のCPU選択をする
+		if (selectYesNoWatching->IsSelectWatching()) {
+			console->PrintLine("2人目のCPUの強さを数字で選択してください、数値が高いほど強いです 1 or 2 or 3");
+			SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_CPU2_SETTING);
+			return;
+		}
+		// 対局開始
+		SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+	}
 }
 
 /**
  * CPU2人目瀬底確認シーン
  */
 void reversi::ReversiGameScene::TaskAskCpu2Setting() {
+	selectCpuLevel2->Task();
+	if (selectCpuLevel2->IsWrongInput()) {
+		console->PrintLine("入力が間違っています、もう一度入力してください");
+	}
+	if (selectCpuLevel2->IsSelected()) {
+		// 対局開始
+		SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+	}
 }
 
 /**
  * リバーシ開始シーン
  */
 void reversi::ReversiGameScene::TaskReversiStart() {
+	// プレイヤー設定
 	reversi::Reversi::PLAYER_SETTING setting;
-	setting.playerType[reversi::Reversi::PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU1;
-	setting.playerType[reversi::Reversi::PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU1;
+	if (selectYesNoWatching->IsSelectYes()) {
+		// プレイヤーが黒
+		setting.playerType[reversi::Reversi::PLAYER_BLACK] = reversi::Reversi::PLAYER::MAN;
+		setting.playerType[reversi::Reversi::PLAYER_WHITE] = NumberToCpuLevel(selectCpuLevel->GetCpuLevel());
+	} else if (selectYesNoWatching->IsSelectNo()) {
+		// プレイヤーが白
+		setting.playerType[reversi::Reversi::PLAYER_BLACK] = NumberToCpuLevel(selectCpuLevel->GetCpuLevel());
+		setting.playerType[reversi::Reversi::PLAYER_WHITE] = reversi::Reversi::PLAYER::MAN;
+	} else if (selectYesNoWatching->IsSelectWatching()) {
+		// CPU vs CPU
+		setting.playerType[reversi::Reversi::PLAYER_BLACK] = NumberToCpuLevel(selectCpuLevel->GetCpuLevel());
+		setting.playerType[reversi::Reversi::PLAYER_WHITE] = NumberToCpuLevel(selectCpuLevel2->GetCpuLevel());
+	}
+	// リバーシロジックの初期化
 	reversi.Initialize();
 	reversi.InitializeGame(setting);
 	SetScene(reversi::ReversiGameScene::SCENE::REVERSI_TASK);
@@ -126,7 +182,7 @@ void reversi::ReversiGameScene::TaskReversiAskContinue() {
 	}
 	if (selectYesNo->IsSelected()) {
 		if (selectYesNo->IsSelectYes()) {
-			SetScene(reversi::ReversiGameScene::SCENE::REVERSI_START);
+			SetScene(reversi::ReversiGameScene::SCENE::INITIALIZE);
 			return;
 		} else {
 			SetScene(reversi::ReversiGameScene::SCENE::END);
@@ -148,3 +204,55 @@ void reversi::ReversiGameScene::TaskEnd() {
 void reversi::ReversiGameScene::SetScene(reversi::ReversiGameScene::SCENE nextScene) {
 	scene = nextScene;
 }
+
+/**
+ * ゲームの初期化に必要なインスタンスの生成
+ * ゲームを開始するたびに初期化される
+ */
+void reversi::ReversiGameScene::CreateInitializeGameInstance() {
+
+	// 既に作成されている可能性もあるので開放してから作成
+	if (selectYesNoWatching) {
+		delete selectYesNoWatching;
+		selectYesNoWatching = NULL;
+	}
+	selectYesNoWatching = new KeyboardSelectYesNoWatching();
+
+	if (selectCpuLevel) {
+		delete selectCpuLevel;
+		selectCpuLevel = NULL;
+	}
+	selectCpuLevel = new KeyboardSelectCpuLevel();
+
+	if (selectCpuLevel2) {
+		delete selectCpuLevel2;
+		selectCpuLevel2 = NULL;
+	}
+	selectCpuLevel2 = new KeyboardSelectCpuLevel();
+
+	if (selectYesNo) {
+		delete selectYesNo;
+		selectYesNo;
+	}
+	selectYesNo = new KeyboardSelectYesNo();
+}
+
+/**
+ * int数値からCPUプレイヤーを取得する
+ * @param  cpuLevel CPUレベル数値
+ * @return          レベルに対応したCPUプレイヤー
+ */
+reversi::Reversi::PLAYER reversi::ReversiGameScene::NumberToCpuLevel(int cpuLevel) {
+	switch (cpuLevel) {
+	case 1:
+		return reversi::Reversi::PLAYER::CPU1;
+	case 2:
+		return reversi::Reversi::PLAYER::CPU2;
+	case 3:
+		return reversi::Reversi::PLAYER::CPU3;
+	default:
+		return reversi::Reversi::PLAYER::CPU1;
+	}
+}
+
+
