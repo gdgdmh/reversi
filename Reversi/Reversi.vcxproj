@@ -176,6 +176,7 @@
     <ClCompile Include="reversi\test\code\TestMove.cpp" />
     <ClCompile Include="reversi\test\code\TestReverseInfo.cpp" />
     <ClCompile Include="reversi\test\code\TestReversi.cpp" />
+    <ClCompile Include="reversi\test\code\TestReversiCpu.cpp" />
     <ClCompile Include="reversi\test\code\TestStdRandomInt.cpp" />
     <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\ConsoleInputKeyboard.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="reversi\test\code\TestMove.h" />
     <ClInclude Include="reversi\test\code\TestReverseInfo.h" />
     <ClInclude Include="reversi\test\code\TestReversi.h" />
+    <ClInclude Include="reversi\test\code\TestReversiCpu.h" />
     <ClInclude Include="reversi\test\code\TestStdRandomInt.h" />
     <ClInclude Include="reversi\util\Assert.h" />
     <ClInclude Include="reversi\util\ConsoleInputKeyboard.h" />

@@ -12,6 +12,7 @@
 #include "../code/TestReverseInfo.h"
 #include "../code/TestReversi.h"
 #include "../code/TestStdRandomInt.h"
+#include "../code/TestReversiCpu.h"
 
 
 /**
@@ -73,6 +74,13 @@ bool reversi::TestDevelop::Execute() {
 		{
 			reversi::TestStdRandomInt s(console);
 			if (!s.Execute()) {
+				return false;
+			}
+		}
+		// TestReversiCpu
+		{
+			reversi::TestReversiCpu c(console);
+			if (!c.Execute()) {
 				return false;
 			}
 		}

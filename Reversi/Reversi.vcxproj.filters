@@ -153,6 +153,9 @@
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu3.cpp">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\test\code\TestReversiCpu.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu3.h">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestReversiCpu.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
