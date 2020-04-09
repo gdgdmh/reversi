@@ -150,6 +150,9 @@
     <ClCompile Include="reversi\game\KeyboardSelectCpuLevel.cpp">
       <Filter>ソース ファイル\reversi\game</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\logic\player\MoveThinkingCpu3.cpp">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="reversi\game\KeyboardSelectCpuLevel.h">
       <Filter>ソース ファイル\reversi\game</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\MoveThinkingCpu3.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
