@@ -79,6 +79,23 @@ reversi::ReversiConstant::POSITION reversi::ReverseInfo::GetReversePosition(reve
 }
 
 /**
+ * 全ての方向の裏返る位置の取得
+ */
+std::vector<reversi::ReversiConstant::POSITION> reversi::ReverseInfo::GetReversePositionAllDirection() const {
+	std::vector<reversi::ReversiConstant::POSITION> positions;
+
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		int size = GetReversePositionCount((reversi::ReverseInfo::DIRECTION)i);
+		for (int j = 0; j < size; ++j) {
+			reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::GetReversePositionAllDirection index over direction");
+			reversi::Assert::AssertArrayRange(j, size, "ReverseInfo::GetReversePositionAllDirection positions over direction");
+			positions.push_back(info.reversePositions[i][j]);
+		}
+	}
+	return positions;
+}
+
+/**
  * 裏返る位置の数の取得
  * @param  direction 方向
  * @return           裏返る位置のデータの数

@@ -74,6 +74,12 @@ public:
 	reversi::ReversiConstant::POSITION GetReversePosition(reversi::ReverseInfo::DIRECTION direction, int index) const;
 
 	/**
+	 * 全ての方向の裏返る位置の取得
+	 */
+	std::vector<reversi::ReversiConstant::POSITION> GetReversePositionAllDirection() const;
+
+
+	/**
 	 * 裏返る位置の数の取得
 	 * @param  direction 方向
 	 * @return           裏返る位置のデータの数
