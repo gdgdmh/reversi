@@ -25,11 +25,8 @@ reversi::MoveThinkingCpu2::~MoveThinkingCpu2() {
  * @return          trueなら思考が完了
  */
 void reversi::MoveThinkingCpu2::InitializeMoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
-	// 空の位置を探す
-	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
-	reversiMove.FindEmptyPosition(board, emptyPosition);
-	// 打てる位置を探す
-	reversiMove.FindPutEnablePosition(board, emptyPosition, turn);
+	// 計算済みのキャッシュをコピー
+	reversiMove = moveCache;
 }
 
 /**

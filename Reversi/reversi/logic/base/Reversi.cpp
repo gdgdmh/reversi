@@ -196,6 +196,9 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	// パスフラグリセット
 	ResetPassCheck();
 
+	// 着手キャッシュ作成
+	CreateMoveCache();
+
 	int playerIndex = TurnToPlayerIndex(turn);
 	if (playerData.player[playerIndex]) {
 		playerData.player[playerIndex]->EventTurnStart((*this), moveCache, board, turn);
@@ -209,8 +212,6 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	if (IsCurrentPlayerTurnMan(turn)) {
 		PrintLine("石を打つ場所を入力してください(入力例 D3)");
 	}
-	// 着手キャッシュ作成
-	CreateMoveCache();
 }
 
 /**
