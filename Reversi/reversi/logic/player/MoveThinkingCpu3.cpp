@@ -8,23 +8,23 @@
 // 定数定義
 // 静的評価位置
 const int reversi::MoveThinkingCpu3::STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE] = {
-	 60,  -30,  20,   5,   5,  20, -30,  60,
+	60,  -30,  20,   5,   5,  20, -30,  60,
 	-30,  -40,  -5,  -5,  -5,  -5, -40, -30,
-	 20,   -5,  20,   3,   3,  20,  -5,  20,
-	  5,   -5,   3,   3,   3,   3,  -5,   5,
-	  5,   -5,   3,   3,   3,   3,  -5,   5,
-	 20,   -5,  20,   3,   3,  20,  -5,  20,
+	20,   -5,  20,   3,   3,  20,  -5,  20,
+	5,   -5,   3,   3,   3,   3,  -5,   5,
+	5,   -5,   3,   3,   3,   3,  -5,   5,
+	20,   -5,  20,   3,   3,  20,  -5,  20,
 	-30,  -40,  -5,  -5,  -5,  -5, -40, -30,
-	 60,  -30,  20,   5,  20,  20, -30,  60,
+	60,  -30,  20,   5,  20,  20, -30,  60,
 };
 // 参考元
 const int reversi::MoveThinkingCpu3::DEFAULT_STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE] = {
 	120,  -20,  20,   5,   5,  20, -20, 120,
 	-20,  -40,  -5,  -5,  -5,  -5, -40, -20,
-	 20,   -5,  15,   3,   3,  15,  -5,  20,
-	  5,   -5,   3,   3,   3,   3,  -5,   5,
-	  5,   -5,   3,   3,   3,   3,  -5,   5,
-	 20,   -5,  15,   3,   3,  15,  -5,  20,
+	20,   -5,  15,   3,   3,  15,  -5,  20,
+	5,   -5,   3,   3,   3,   3,  -5,   5,
+	5,   -5,   3,   3,   3,   3,  -5,   5,
+	20,   -5,  15,   3,   3,  15,  -5,  20,
 	-20,  -40,  -5,  -5,  -5,  -5, -40, -20,
 	120,  -20,  20,   5,  20,  20, -20, 120,
 };
@@ -48,7 +48,7 @@ reversi::MoveThinkingCpu3::~MoveThinkingCpu3() {
  * @param  turn     手番
  * @return          trueなら思考が完了
  */
-void reversi::MoveThinkingCpu3::InitializeMoveThinking(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
+void reversi::MoveThinkingCpu3::InitializeMoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	// 空の位置を探す
 	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 	reversiMove.FindEmptyPosition(board, emptyPosition);
@@ -63,7 +63,7 @@ void reversi::MoveThinkingCpu3::InitializeMoveThinking(const reversi::Board& boa
  * @param  turn     手番
  * @return          trueなら思考が完了
  */
-bool reversi::MoveThinkingCpu3::MoveThinking(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
+bool reversi::MoveThinkingCpu3::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
 
 	reversi::ReversiConstant::POSITION maxPosition = reversi::ReversiConstant::POSITION::A1; // 仮
 	int currentPoint = DEFAULT_POINTS; // 現在の最高評価値

@@ -198,7 +198,7 @@ void reversi::Reversi::TaskMoveSelectStart() {
 
 	int playerIndex = TurnToPlayerIndex(turn);
 	if (playerData.player[playerIndex]) {
-		playerData.player[playerIndex]->EventTurnStart(board, turn);
+		playerData.player[playerIndex]->EventTurnStart((*this), moveCache, board, turn);
 	}
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
@@ -222,7 +222,7 @@ void reversi::Reversi::TaskMoveSelect() {
 
 	bool isDecide = false;
 	if (playerData.player[playerIndex]) {
-		isDecide = playerData.player[playerIndex]->SelectMove(board, move, turn);
+		isDecide = playerData.player[playerIndex]->SelectMove((*this), moveCache, board, move, turn);
 	}
 	if (isDecide) {
 		// 正常な着手かチェック

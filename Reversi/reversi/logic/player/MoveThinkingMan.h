@@ -34,20 +34,23 @@ public:
 	/**
 	 * 思考初期化
 	 * 手番が来たときに一度だけ呼ばれる
-	 * @param  board    盤情報
-	 * @param  turn     手番
-	 * @return          trueなら思考が完了
+	 * @param reversi   リバーシクラス
+	 * @param moveCache 着手キャッシュ
+	 * @param board     盤情報
+	 * @param turn      手番
 	 */
-	virtual void InitializeMoveThinking(const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+	virtual void InitializeMoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::ReversiConstant::TURN turn);
 
 	/**
 	 * 思考
-	 * @param  board    盤情報
-	 * @param  move     着手情報
-	 * @param  turn     手番
-	 * @return          trueなら思考が完了
+	 * @param  reversi   リバーシクラス
+	 * @param  moveCache 着手キャッシュ
+	 * @param  board     盤情報
+	 * @param  move      着手情報
+	 * @param  turn      手番
+	 * @return           trueなら思考が完了
 	 */
-	bool MoveThinking(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn);
+	virtual bool MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn);
 
 private:
 
@@ -94,7 +97,7 @@ private:
 private:
 	reversi::Move reversiMove;                              // 着手情報
 	reversi::IPlayerSelectPosition* playerSelectPosition;   // 位置選択インターフェース
-	reversi::IOutputConsole* console;						// コンソール出力
+	reversi::IOutputConsole* console;                       // コンソール出力
 	bool useHint;                                           // ヒントを使うか
 
 };

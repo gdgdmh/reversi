@@ -24,7 +24,7 @@ reversi::MoveThinkingCpu2::~MoveThinkingCpu2() {
  * @param  turn     手番
  * @return          trueなら思考が完了
  */
-void reversi::MoveThinkingCpu2::InitializeMoveThinking(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
+void reversi::MoveThinkingCpu2::InitializeMoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	// 空の位置を探す
 	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 	reversiMove.FindEmptyPosition(board, emptyPosition);
@@ -39,7 +39,7 @@ void reversi::MoveThinkingCpu2::InitializeMoveThinking(const reversi::Board& boa
  * @param  turn     手番
  * @return          trueなら思考が完了
  */
-bool reversi::MoveThinkingCpu2::MoveThinking(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
+bool reversi::MoveThinkingCpu2::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
 
 	int index = 0;
 	if (CheckPutEnableCornerIndex(index, reversiMove)) {
@@ -138,9 +138,9 @@ bool reversi::MoveThinkingCpu2::CheckPutEnableCornerIndex(int& cornerIndex, cons
 		}
 		// 角か
 		if ((position == reversi::ReversiConstant::POSITION::A1)
-		|| (position == reversi::ReversiConstant::POSITION::H1)
-		|| (position == reversi::ReversiConstant::POSITION::A8)
-		|| (position == reversi::ReversiConstant::POSITION::H8)) {
+		    || (position == reversi::ReversiConstant::POSITION::H1)
+		    || (position == reversi::ReversiConstant::POSITION::A8)
+		    || (position == reversi::ReversiConstant::POSITION::H8)) {
 			cornerIndex = i;
 			return true;
 		}
