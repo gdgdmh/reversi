@@ -79,13 +79,14 @@ bool reversi::MoveThinkingCpu3::MoveThinking(const reversi::Board& board, revers
 			// うてないならスキップ
 			continue;
 		}
+
 		int positionIndex = reversi::ReversiConstant::GetPositionToIndex(position);
 		reversi::Assert::AssertArrayRange(positionIndex, reversi::ReversiConstant::POSITION_SIZE, "MoveThinkingCpu3::MoveThinking index over position index");
-		if (currentPoint < STATIC_EVALUATION_POINTS[i]) {
+		if (currentPoint < STATIC_EVALUATION_POINTS[positionIndex]) {
 			// 現在の評価値より高いなら更新
 			maxPosition = position;
 			reverseInfoIndex = i;
-			currentPoint = STATIC_EVALUATION_POINTS[i];
+			currentPoint = STATIC_EVALUATION_POINTS[positionIndex];
 			isUpdate = true;
 		}
 	}
