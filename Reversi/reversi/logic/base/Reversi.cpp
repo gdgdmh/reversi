@@ -20,11 +20,7 @@ reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), 
  * デストラクタ
  */
 reversi::Reversi::~Reversi() {
-	ReleasePlayer();
-	if (console) {
-		delete console;
-		console = NULL;
-	}
+	Release();
 }
 
 /**
@@ -67,7 +63,9 @@ void reversi::Reversi::InitializeGame(const reversi::Reversi::PLAYER_SETTING& pl
 	// プレイヤーを作成,初期化
 	CreatePlayers();
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		playerData.player[i]->Initialize();
+		if (playerData.player[i]) {
+			playerData.player[i]->Initialize();
+		}
 	}
 
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
@@ -103,6 +101,29 @@ void reversi::Reversi::Task() {
  */
 void reversi::Reversi::CopyBoard(const reversi::Board& source) {
 	board.Copy(source);
+}
+
+/**
+ * 動的生成インスタンス以外をコピー
+ * @param source コピー元
+ */
+void reversi::Reversi::CopyWithoutDynamicInstance(const reversi::Reversi& source) {
+	// もしコピー先がメモリ確保していたら開放する
+	Release();
+
+	CopyBoard(source.board);
+	turn = source.turn;
+	for (int i = 0; i < PLAYER_COUNT; ++i) {
+		playerData.playerType[i] = source.playerData.playerType[i];
+	}
+	scene = source.scene;
+	moveCache = source.moveCache;
+	if (!console) {
+		console = new OutputConsole();
+	}
+	passCheck = source.passCheck;
+	resultData = source.resultData;
+	outputEnable = source.outputEnable;
 }
 
 /**
@@ -176,7 +197,9 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	ResetPassCheck();
 
 	int playerIndex = TurnToPlayerIndex(turn);
-	playerData.player[playerIndex]->EventTurnStart(board, turn);
+	if (playerData.player[playerIndex]) {
+		playerData.player[playerIndex]->EventTurnStart(board, turn);
+	}
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		PrintLine("黒のターン");
@@ -197,7 +220,10 @@ void reversi::Reversi::TaskMoveSelect() {
 	int playerIndex = TurnToPlayerIndex(turn);
 	reversi::MoveInfo move;
 
-	bool isDecide = playerData.player[playerIndex]->SelectMove(board, move, turn);
+	bool isDecide = false;
+	if (playerData.player[playerIndex]) {
+		isDecide = playerData.player[playerIndex]->SelectMove(board, move, turn);
+	}
 	if (isDecide) {
 		// 正常な着手かチェック
 		reversi::Assert::AssertEquals(CheckEnableMove(move.GetMoveInfo().position), "Reversi::TaskMoveSelect invalid move");
@@ -237,7 +263,9 @@ void reversi::Reversi::TaskPass() {
 void reversi::Reversi::TaskMoveAfter() {
 
 	int playerIndex = TurnToPlayerIndex(turn);
-	playerData.player[playerIndex]->EventMoveAfter();
+	if (playerData.player[playerIndex]) {
+		playerData.player[playerIndex]->EventMoveAfter();
+	}
 
 	// ターン切り替え
 	ChangeTurn(turn);
@@ -366,7 +394,7 @@ void reversi::Reversi::ApplyPlayerSetting(reversi::Reversi::PLAYER_SETTING playe
  */
 void reversi::Reversi::ReleasePlayer() {
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
-		if (playerData.player[i] != NULL) {
+		if (playerData.player[i]) {
 			delete playerData.player[i];
 			playerData.player[i] = NULL;
 		}
@@ -543,5 +571,16 @@ void reversi::Reversi::PrintLine(std::string outputStringLine) {
 void reversi::Reversi::RenderBoard() {
 	if (outputEnable) {
 		board.Render();
+	}
+}
+
+/**
+ * メモリを開放する
+ */
+void reversi::Reversi::Release() {
+	ReleasePlayer();
+	if (console) {
+		delete console;
+		console = NULL;
 	}
 }

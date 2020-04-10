@@ -95,6 +95,12 @@ public:
 	void CopyBoard(const reversi::Board& source);
 
 	/**
+	 * 動的生成インスタンス以外をコピー
+	 * @param source コピー元
+	 */
+	void CopyWithoutDynamicInstance(const reversi::Reversi& source);
+
+	/**
 	 * 出力フラグを設定する
 	 * @param isOutputEnable trueなら出力する
 	 */
@@ -280,6 +286,11 @@ private:
 	 * ただし、出力許可フラグがfalseのときは出力しない
 	 */
 	void RenderBoard();
+
+	/**
+	 * メモリを開放する
+	 */
+	void Release();
 
 private:
 	reversi::Board board;                       // 盤
