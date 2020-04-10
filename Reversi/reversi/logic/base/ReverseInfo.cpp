@@ -9,21 +9,8 @@
  * @param turn     手番
  */
 reversi::ReverseInfo::ReverseInfo(reversi::ReversiConstant::POSITION position, reversi::ReversiConstant::TURN turn) {
+	Clear();
 	info.position = position;
-	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
-		for (int j = 0; j < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++j) {
-			reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ReverseInfo index over i");
-			reversi::Assert::AssertArrayRange(j, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::ReverseInfo index over j");
-			info.reversePositions[i][j] = reversi::ReversiConstant::POSITION::A1;
-		}
-
-	}
-
-	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
-		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ReverseInfo index over count i");
-		info.reversePositionCount[i] = 0;
-	}
-
 	info.turn = turn;
 }
 
@@ -31,6 +18,26 @@ reversi::ReverseInfo::ReverseInfo(reversi::ReversiConstant::POSITION position, r
  * デストラクタ
  */
 reversi::ReverseInfo::~ReverseInfo() {
+}
+
+/**
+ * 情報をクリアする
+ */
+void reversi::ReverseInfo::Clear() {
+	info.position = reversi::ReversiConstant::POSITION::A1;
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		for (int j = 0; j < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++j) {
+			reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::Clear index over i");
+			reversi::Assert::AssertArrayRange(j, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::Clear index over j");
+			info.reversePositions[i][j] = reversi::ReversiConstant::POSITION::A1;
+		}
+	}
+
+	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
+		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::Clear index over count i");
+		info.reversePositionCount[i] = 0;
+	}
+	info.turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 }
 
 /**

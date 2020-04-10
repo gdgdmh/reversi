@@ -10,10 +10,11 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), outputEnable(true) {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), isSetSimulationMove(false), outputEnable(true) {
 	ResetPlayer();
 	ResetPassCheck();
 	ResetResultData();
+	simulationMove.Clear();
 }
 
 /**
@@ -30,24 +31,14 @@ void reversi::Reversi::Initialize() {
 	board.InitializeGame();
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::INITIALIZE);
-	// プレイヤーの初期化
-	//CreatePlayers();
-	//for (int i = 0; i < PLAYER_COUNT; ++i) {
-	//	playerData.player[i]->Initialize();
-	//}
-
-	//player[0] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
-	//player[0] = new PlayerMan();
-	//player[1] = new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL1);
-	//for (int i = 0; i < PLAYER_COUNT; ++i) {
-	//	//player[i] = new PlayerMan();
-	//	player[i]->Initialize();
-	//}
 	if (console == NULL) {
 		console = new OutputConsole();
 	}
 	ResetPassCheck();
 	ResetResultData();
+	simulationMove.Clear();
+	isSetSimulationMove = false;
+	outputEnable = true;
 }
 
 /**
@@ -72,6 +63,8 @@ void reversi::Reversi::InitializeGame(const reversi::Reversi::PLAYER_SETTING& pl
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 	ResetPassCheck();
 	ResetResultData();
+	simulationMove.Clear();
+	isSetSimulationMove = false;
 }
 
 /**
@@ -93,6 +86,15 @@ void reversi::Reversi::Task() {
 	} else if (scene == reversi::Reversi::SCENE::END) {
 		TaskEnd();
 	}
+}
+
+/**
+ * シミュレーションによる着手を設定する(思考用)
+ * @param setMoveInfo シミュレーション着手情報
+ */
+void reversi::Reversi::SetMoveSimulation(const reversi::MoveInfo& setMoveInfo) {
+	isSetSimulationMove = true;
+	simulationMove.Copy(setMoveInfo);
 }
 
 /**
@@ -123,6 +125,8 @@ void reversi::Reversi::CopyWithoutDynamicInstance(const reversi::Reversi& source
 	}
 	passCheck = source.passCheck;
 	resultData = source.resultData;
+	simulationMove.Copy(source.simulationMove);
+	isSetSimulationMove = source.isSetSimulationMove;
 	outputEnable = source.outputEnable;
 }
 
@@ -190,7 +194,6 @@ void reversi::Reversi::TaskMoveSelectStart() {
 				PrintLine("白が打つことができないのでパスします");
 			}
 		}
-
 		return;
 	}
 	// パスフラグリセット
@@ -221,9 +224,16 @@ void reversi::Reversi::TaskMoveSelect() {
 	int playerIndex = TurnToPlayerIndex(turn);
 	reversi::MoveInfo move;
 
+	// プレイヤーの着手 または シミュレーションの着手があるか
 	bool isDecide = false;
 	if (playerData.player[playerIndex]) {
+		// プレイヤーによる着手
 		isDecide = playerData.player[playerIndex]->SelectMove((*this), moveCache, board, move, turn);
+	}
+	if ((isSetSimulationMove) && (!isDecide)) {
+		// シミュレーションによる着手
+		move.Copy(simulationMove);
+		isDecide = true;
 	}
 	if (isDecide) {
 		// 正常な着手かチェック
@@ -232,6 +242,12 @@ void reversi::Reversi::TaskMoveSelect() {
 		bool isMove = board.Move(move);
 		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move task failure");
 
+		if (isSetSimulationMove) {
+			// 着手キャッシュを使用している場合は情報をクリア
+			simulationMove.Clear();
+			isSetSimulationMove = false;
+		}
+
 		if (!IsCurrentPlayerTurnMan(turn)) {
 			// CPUなら着手を出力する
 			std::string positionString;
@@ -239,7 +255,6 @@ void reversi::Reversi::TaskMoveSelect() {
 				PrintLine(positionString);
 			}
 		}
-
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
 	} else {
 		if (IsCurrentPlayerTurnMan(turn)) {

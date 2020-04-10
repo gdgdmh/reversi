@@ -89,6 +89,12 @@ public:
 	void Task();
 
 	/**
+	 * シミュレーションによる着手を設定する(思考用)
+	 * @param setMoveInfo シミュレーション着手情報
+	 */
+	void SetMoveSimulation(const reversi::MoveInfo& setMoveInfo);
+
+	/**
 	 * 盤面をコピーする(デバッグ用途)
 	 * @param source コピー元
 	 */
@@ -293,6 +299,7 @@ private:
 	void Release();
 
 private:
+	// コピーメソッドやゲーム初期化に注意すること
 	reversi::Board board;                       // 盤
 	reversi::ReversiConstant::TURN turn;        // 現在の手番
 	reversi::Reversi::PLAYER_DATA playerData;   // プレイヤーデータ
@@ -301,6 +308,8 @@ private:
 	reversi::IOutputConsole* console;           // コンソール出力クラス
 	reversi::Reversi::PASS_CHECK passCheck;     // パス確認用(どっちもパスしかできなかったら終局)
 	reversi::Reversi::RESULT_DATA resultData;   // 結果データ
+	reversi::MoveInfo simulationMove;           // シミュレーション着手情報(思考用)
+	bool isSetSimulationMove;                   // シミュレーション着手情報が設定されているか
 	bool outputEnable;                          // 出力許可フラグ
 };
 

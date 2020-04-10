@@ -36,7 +36,16 @@ public:
 	 */
 	virtual ~MoveInfo();
 
+	/**
+	 * コピーする
+	 * @param source コピー元
+	 */
 	void Copy(const MoveInfo& source);
+
+	/**
+	 * 情報をクリアする
+	 */
+	void Clear();
 
 	/**
 	 * 着手情報取得

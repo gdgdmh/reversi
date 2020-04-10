@@ -45,6 +45,11 @@ public:
 	virtual ~ReverseInfo();
 
 	/**
+	 * 情報をクリアする
+	 */
+	void Clear();
+
+	/**
 	 * 裏返る位置を追加登録する
 	 * @param direction       方向
 	 * @param reversePosition 登録するデータ
