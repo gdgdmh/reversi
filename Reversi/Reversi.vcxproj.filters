@@ -159,6 +159,9 @@
     <ClCompile Include="reversi\logic\base\ThinkingTree.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.cpp">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -307,6 +310,12 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\base\ThinkingTree.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\ICalcBoardEvaluationPoint.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.h">
+      <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -159,6 +159,7 @@
     <ClCompile Include="reversi\logic\base\Reversi.cpp" />
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
     <ClCompile Include="reversi\logic\base\ThinkingTree.cpp" />
+    <ClCompile Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu1.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu2.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu3.cpp" />
@@ -200,6 +201,8 @@
     <ClInclude Include="reversi\logic\base\Reversi.h" />
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
     <ClInclude Include="reversi\logic\base\ThinkingTree.h" />
+    <ClInclude Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.h" />
+    <ClInclude Include="reversi\logic\player\ICalcBoardEvaluationPoint.h" />
     <ClInclude Include="reversi\logic\player\IPlayer.h" />
     <ClInclude Include="reversi\logic\player\IMoveThinking.h" />
     <ClInclude Include="reversi\logic\player\IPlayerSelectPosition.h" />
