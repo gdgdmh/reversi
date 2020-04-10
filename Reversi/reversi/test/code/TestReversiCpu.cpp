@@ -32,7 +32,7 @@ bool reversi::TestReversiCpu::Execute() {
 	reversi.Initialize();
 	reversi.InitializeGame(setting);
 
-	const int TEST_COUNT = 5;
+	const int TEST_COUNT = 0;
 	int testCount = 0;
 	int blackWinCount = 0;
 	int whiteWinCount = 0;

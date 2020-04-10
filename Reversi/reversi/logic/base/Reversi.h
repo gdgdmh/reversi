@@ -95,6 +95,12 @@ public:
 	void CopyBoard(const reversi::Board& source);
 
 	/**
+	 * 出力フラグを設定する
+	 * @param isOutputEnable trueなら出力する
+	 */
+	void SetOutputEnable(bool isOutputEnable);
+
+	/**
 	 * 現在のシーンを取得する
 	 * @return シーン
 	 */
@@ -262,21 +268,29 @@ private:
 	 */
 	void SetResultStone(int& black, int& white, int& none, reversi::Reversi::RESULT result);
 
+	/**
+	 * 行単位の出力をする
+	 * ただし、出力許可フラグがfalseのときは出力しない
+	 * @param outputStringLine 出力をする文字列
+	 */
+	void PrintLine(std::string outputStringLine);
+
+	/**
+	 * 盤の出力をする
+	 * ただし、出力許可フラグがfalseのときは出力しない
+	 */
+	void RenderBoard();
+
 private:
 	reversi::Board board;                       // 盤
 	reversi::ReversiConstant::TURN turn;        // 現在の手番
 	reversi::Reversi::PLAYER_DATA playerData;   // プレイヤーデータ
-	//reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
 	reversi::Reversi::SCENE scene;              // シーン
 	reversi::Move moveCache;                    // 着手キャッシュ
-	//reversi::MoveInfo moveCache;                 // 着手キャッシュ
 	reversi::IOutputConsole* console;           // コンソール出力クラス
-	//reversi::Reversi::RESULT result;            // 対局の結果
 	reversi::Reversi::PASS_CHECK passCheck;     // パス確認用(どっちもパスしかできなかったら終局)
 	reversi::Reversi::RESULT_DATA resultData;   // 結果データ
-	//int resultBlackCount;                       // 黒石最終結果
-	//int resultWhiteCount;                       // 白石最終結果
-	//int resultNoneCount;                        // 空白最終結果(あくまで盤の空きマスの数)
+	bool outputEnable;                          // 出力許可フラグ
 };
 
 }

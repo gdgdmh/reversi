@@ -10,7 +10,7 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL) {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), outputEnable(true) {
 	ResetPlayer();
 	ResetPassCheck();
 	ResetResultData();
@@ -106,6 +106,14 @@ void reversi::Reversi::CopyBoard(const reversi::Board& source) {
 }
 
 /**
+ * 出力フラグを設定する
+ * @param isOutputEnable trueなら出力する
+ */
+void reversi::Reversi::SetOutputEnable(bool isOutputEnable) {
+	outputEnable = isOutputEnable;
+}
+
+/**
  * 最終結果の石や空白の数を取得する
  * @param black 黒石
  * @param white 白石
@@ -139,12 +147,14 @@ void reversi::Reversi::TaskInitialize() {
  * 着手選択開始
  */
 void reversi::Reversi::TaskMoveSelectStart() {
-	board.Render();
+	RenderBoard();
 
 	if (IsEveryonePass()) {
 		// 両者パスしたので終局
 		SetScene(reversi::Reversi::SCENE::RESULT);
-		console->PrintLine("2人ともパスしたため、対局を終了します");
+		if (outputEnable) {
+			PrintLine("2人ともパスしたため、対局を終了します");
+		}
 		return;
 	}
 
@@ -152,10 +162,12 @@ void reversi::Reversi::TaskMoveSelectStart() {
 		// 打つことができないのでパス
 		SetPassCheck(turn);
 		SetScene(reversi::Reversi::SCENE::PASS);
-		if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
-			console->PrintLine("黒が打つことができないのでパスします");
-		} else {
-			console->PrintLine("白が打つことができないのでパスします");
+		if (outputEnable) {
+			if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+				PrintLine("黒が打つことができないのでパスします");
+			} else {
+				PrintLine("白が打つことができないのでパスします");
+			}
 		}
 
 		return;
@@ -167,12 +179,12 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	playerData.player[playerIndex]->EventTurnStart(board, turn);
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
-		console->PrintLine("黒のターン");
+		PrintLine("黒のターン");
 	} else {
-		console->PrintLine("白のターン");
+		PrintLine("白のターン");
 	}
 	if (IsCurrentPlayerTurnMan(turn)) {
-		console->PrintLine("石を打つ場所を入力してください(入力例 D3)");
+		PrintLine("石を打つ場所を入力してください(入力例 D3)");
 	}
 	// 着手キャッシュ作成
 	CreateMoveCache();
@@ -197,15 +209,15 @@ void reversi::Reversi::TaskMoveSelect() {
 			// CPUなら着手を出力する
 			std::string positionString;
 			if (reversi::ReversiConstant::GetPositionToString(move.GetMoveInfo().position, positionString)) {
-				console->PrintLine(positionString);
+				PrintLine(positionString);
 			}
 		}
 
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
 	} else {
 		if (IsCurrentPlayerTurnMan(turn)) {
-			board.Render();
-			console->PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
+			RenderBoard();
+			PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
 		}
 	}
 }
@@ -243,9 +255,8 @@ void reversi::Reversi::TaskMoveAfter() {
  */
 void reversi::Reversi::TaskResult() {
 
-	console->PrintLine("終局しました -----------------------");
-	board.Render();
-
+	PrintLine("終局しました -----------------------");
+	RenderBoard();
 
 	// 石の数を取得
 	int black, white, none;
@@ -271,15 +282,15 @@ void reversi::Reversi::TaskResult() {
 	resultData.noneResultCount = none;
 	SetResultStone(resultData.blackResultCount, resultData.whiteResultCount, resultData.noneResultCount, resultData.result);
 
-	console->PrintLine(reversi::StdStringFormatter::Format("黒石:%d 白石:%d 空白:%d", resultData.blackRawCount, resultData.whiteRawCount, resultData.noneRawCount));
+	PrintLine(reversi::StdStringFormatter::Format("黒石:%d 白石:%d 空白:%d", resultData.blackRawCount, resultData.whiteRawCount, resultData.noneRawCount));
 	if (resultData.result == reversi::Reversi::RESULT::DRAW) {
-		console->PrintLine("結果は引き分けです");
+		PrintLine("結果は引き分けです");
 	} else if (resultData.result == reversi::Reversi::RESULT::BLACK) {
-		console->PrintLine("結果は黒の勝ちです");
+		PrintLine("結果は黒の勝ちです");
 	} else if (resultData.result == reversi::Reversi::RESULT::WHITE) {
-		console->PrintLine("結果は白の勝ちです");
+		PrintLine("結果は白の勝ちです");
 	}
-	console->PrintLine(reversi::StdStringFormatter::Format("最終結果 黒石:%d 白石:%d", resultData.blackResultCount, resultData.whiteResultCount));
+	PrintLine(reversi::StdStringFormatter::Format("最終結果 黒石:%d 白石:%d", resultData.blackResultCount, resultData.whiteResultCount));
 
 	// 終了
 	SetScene(reversi::Reversi::SCENE::END);
@@ -511,5 +522,26 @@ void reversi::Reversi::SetResultStone(int& black, int& white, int& none, reversi
 		black += none;
 	} else if (result == reversi::Reversi::RESULT::WHITE) {
 		white += none;
+	}
+}
+
+/**
+ * 行単位の出力をする
+ * ただし、出力許可フラグがfalseのときは出力しない
+ * @param outputStringLine 出力をする文字列
+ */
+void reversi::Reversi::PrintLine(std::string outputStringLine) {
+	if (outputEnable) {
+		console->PrintLine(outputStringLine);
+	}
+}
+
+/**
+ * 盤の出力をする
+ * ただし、出力許可フラグがfalseのときは出力しない
+ */
+void reversi::Reversi::RenderBoard() {
+	if (outputEnable) {
+		board.Render();
 	}
 }
