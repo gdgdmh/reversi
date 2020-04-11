@@ -128,8 +128,6 @@ bool reversi::TestThinkingNode::Execute() {
 		if (!AssertEqual(highNode->GetEvaluationPoint() == 13, "TestThinkingNode::Execute highNode value failure")) {
 			return false;
 		}
-
-
 	}
 	// 評価値検索(rootの1つ下のNodeの中で一番評価値が高いノードを探す)
 	{

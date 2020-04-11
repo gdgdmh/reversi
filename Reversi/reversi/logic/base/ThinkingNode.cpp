@@ -1,5 +1,6 @@
 ﻿#include "ThinkingNode.h"
 #include "../../util/Assert.h"
+#include "../../util/SimpleStack.h"
 
 /**
  * コンストラクタ
@@ -186,13 +187,13 @@ reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointNode(
 	reversi::ThinkingNode* highNode = NULL;
 
 	// 再帰を使わずにスタック方式でノードをチェックする
-	// スタックを自分で作るのが手間なので実装速度優先でvectorを使用する
-	std::vector<reversi::ThinkingNode*> nodeList;
-	nodeList.push_back(this);
+	reversi::SimpleStack<reversi::ThinkingNode*> nodeList(STACK_SIZE);
+	reversi::ThinkingNode* self = this;
+	nodeList.Push(self);
 
 	// ノードが空ではない
-	while (!nodeList.empty()) {
-		reversi::ThinkingNode* node = nodeList.back();
+	while (nodeList.GetSize() != 0) {
+		reversi::ThinkingNode* node = nodeList.Back();
 		if (!node->GetVisited()) {
 				// まだ訪れたことがない
 			// 訪れたフラグを立てる
@@ -211,13 +212,13 @@ reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointNode(
 			} else {
 				// 子ノードをスタックに積む
 				for (int i = 0; i < node->GetChildSize(); ++i) {
-					nodeList.push_back(node->GetChild(i));
+					reversi::ThinkingNode* childNode = node->GetChild(i);
+					nodeList.Push(childNode);
 				}
 			}
 		} else {
 			// 訪れたことがある
-			nodeList.pop_back();
-			// TODO
+			nodeList.Pop();
 		}
 	}
 	return highNode;

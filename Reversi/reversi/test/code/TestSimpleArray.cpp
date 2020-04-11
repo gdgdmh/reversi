@@ -32,7 +32,7 @@ bool reversi::TestSimpleArray::Execute() {
 		if (!AssertEqual(simpleArray.GetSize() == STACK_SIZE, "TestSimpleArray::Execute size invalid")) {
 			return false;
 		}
-		for (int i = 9; i >= 0; --i) {
+		for (int i = (STACK_SIZE - 1); i >= 0; --i) {
 			int data = simpleArray.At(i);
 			if (!AssertEqual(data == i, "TestSimpleArray::Execute At value invalid")) {
 				return false;

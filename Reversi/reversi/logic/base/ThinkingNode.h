@@ -13,6 +13,7 @@ class ThinkingNode {
 public:
 	static const int CHILDREN_SIZE = 32;
 	static const int FIND_DEFAULT_EVALUATION_POINT = -9999999; // 評価値検索のときのデフォルト値
+	static const int STACK_SIZE = 256;							// 再帰処理に使用するスタックサイズ
 public:
 
 	/**

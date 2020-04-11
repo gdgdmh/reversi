@@ -31,7 +31,11 @@ bool reversi::TestSimpleStack::Execute() {
 		if (!AssertEqual(stack.GetSize() == STACK_SIZE, "TestSimpleStack::Execute size invalid")) {
 			return false;
 		}
-		for (int i = 9; i >= 0; --i) {
+		// 最後尾データをチェック
+		if (!AssertEqual(stack.Back() == (STACK_SIZE - 1), "TestSimpleStack::Execute back invalid")) {
+			return false;
+		}
+		for (int i = (STACK_SIZE - 1); i >= 0; --i) {
 			int data = stack.Pop();
 			if (!AssertEqual(data == i, "TestSimpleStack::Execute pop value invalid")) {
 				return false;

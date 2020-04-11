@@ -52,6 +52,15 @@ public:
 	}
 
 	/**
+	 * データを取り出さずに参照する
+	 * @return データ
+	 */
+	T& Back() {
+		reversi::Assert::AssertArrayRange(index - 1, maxSize, "SimpleStack::Back index over");
+		return datas[index - 1];
+	}
+
+	/**
 	 * データサイズの取得
 	 * @return データサイズ
 	 */
