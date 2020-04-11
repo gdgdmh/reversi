@@ -156,14 +156,14 @@
     <ClCompile Include="reversi\test\code\TestReversiCpu.cpp">
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClCompile>
-    <ClCompile Include="reversi\logic\base\ThinkingTree.cpp">
-      <Filter>ソース ファイル\reversi\logic\base</Filter>
-    </ClCompile>
     <ClCompile Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.cpp">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClCompile>
     <ClCompile Include="reversi\test\code\TestCalcBoardEvaluationPointByPosition.cpp">
       <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\logic\base\ThinkingNode.cpp">
+      <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,9 +311,6 @@
     <ClInclude Include="reversi\test\code\TestReversiCpu.h">
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
-    <ClInclude Include="reversi\logic\base\ThinkingTree.h">
-      <Filter>ソース ファイル\reversi\logic\base</Filter>
-    </ClInclude>
     <ClInclude Include="reversi\logic\player\ICalcBoardEvaluationPoint.h">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClInclude>
@@ -322,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="reversi\test\code\TestCalcBoardEvaluationPointByPosition.h">
       <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\logic\base\ThinkingNode.h">
+      <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
