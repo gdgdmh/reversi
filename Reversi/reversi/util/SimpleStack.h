@@ -59,6 +59,11 @@ public:
 		return index;
 	}
 
+	// 代入演算子とコピーコンストラクタの禁止
+private:
+	void operator =(const SimpleStack<T>& source) {}
+	SimpleStack(const SimpleStack<T>& source) {}
+
 private:
 	T* datas;       // データ配列
 	int index;      // データのインデックス
