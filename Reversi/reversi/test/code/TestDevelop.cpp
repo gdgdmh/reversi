@@ -16,6 +16,7 @@
 #include "../code/TestCalcBoardEvaluationPointByPosition.h"
 #include "../code/TestThinkingNode.h"
 #include "../code/TestSimpleStack.h"
+#include "../code/TestSimpleArray.h"
 
 /**
  * コンストラクタ
@@ -103,6 +104,13 @@ bool reversi::TestDevelop::Execute() {
 		// TestSimpleStack
 		{
 			reversi::TestSimpleStack s(console);
+			if (!s.Execute()) {
+				return false;
+			}
+		}
+		// TestSimpleArray
+		{
+			reversi::TestSimpleArray s(console);
 			if (!s.Execute()) {
 				return false;
 			}

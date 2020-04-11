@@ -171,6 +171,9 @@
     <ClCompile Include="reversi\test\code\TestSimpleStack.cpp">
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\test\code\TestSimpleArray.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -336,6 +339,12 @@
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
     <ClInclude Include="reversi\test\code\TestSimpleStack.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\SimpleArray.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestSimpleArray.h">
       <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
