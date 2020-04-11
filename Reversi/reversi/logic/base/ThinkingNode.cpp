@@ -69,7 +69,7 @@ void reversi::ThinkingNode::AddChild(reversi::ThinkingNode* childNode) {
  * @return       子ノード
  */
 reversi::ThinkingNode* const reversi::ThinkingNode::GetChild(int index) const {
-	reversi::Assert::AssertArrayRange(index, GetChildSize(), "ThinkingNode::GetChild index over");
+	reversi::Assert::AssertArrayRange(index, childrenCount, "ThinkingNode::GetChild index over");
 	return children[index];
 }
 
@@ -79,6 +79,22 @@ reversi::ThinkingNode* const reversi::ThinkingNode::GetChild(int index) const {
  */
 int reversi::ThinkingNode::GetChildSize() const {
 	return childrenCount;
+}
+
+/**
+ * 着手位置の設定
+ * @param position 位置情報
+ */
+void reversi::ThinkingNode::SetMovePosition(reversi::ReversiConstant::POSITION position) {
+	movePosition = position;
+}
+
+/**
+ * 着手位置の取得
+ * @return 位置
+ */
+const reversi::ReversiConstant::POSITION& reversi::ThinkingNode::GetMovePosition() const {
+	return movePosition;
 }
 
 /**

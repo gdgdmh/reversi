@@ -39,17 +39,22 @@ bool reversi::TestThinkingNode::Execute() {
 	reversi::ThinkingNode root;
 	{
 		reversi::ThinkingNode* parent = NULL;
+		reversi::ReversiConstant::POSITION position = reversi::ReversiConstant::POSITION::A2;
 		reversi::ReversiConstant::TURN turn = reversi::ReversiConstant::TURN::TURN_WHITE;
 		int evalPoint = 10;
 		int thinkDepth = 0;
 
 		root.CopyReversi(reversi);
 		//root.SetParent(parent);
+		root.SetMovePosition(position);
 		root.SetTurn(turn);
 		root.SetEvaluationPoint(evalPoint);
 		root.SetThinkingDepth(thinkDepth);
 
 		if (!AssertEqual(parent == root.GetParent(), "TestThinkingNode::Execute invalid parent")) {
+			return false;
+		}
+		if (!AssertEqual(position == root.GetMovePosition(), "TestThinkingNode::Execute invalid movePositon")) {
 			return false;
 		}
 		if (!AssertEqual(turn == root.GetTurn(), "TestThinkingNode::Execute invalid turn")) {
@@ -67,7 +72,7 @@ bool reversi::TestThinkingNode::Execute() {
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
-		//child->SetParent(&root);
+		child->SetMovePosition(reversi::ReversiConstant::POSITION::B1);
 		child->SetTurn(reversi::ReversiConstant::TURN::TURN_BLACK);
 		child->SetEvaluationPoint(11);
 		child->SetThinkingDepth(1);
@@ -78,7 +83,7 @@ bool reversi::TestThinkingNode::Execute() {
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
-		//child->SetParent(&root);
+		child->SetMovePosition(reversi::ReversiConstant::POSITION::C1);
 		child->SetTurn(reversi::ReversiConstant::TURN::TURN_BLACK);
 		child->SetEvaluationPoint(12);
 		child->SetThinkingDepth(1);
@@ -92,13 +97,12 @@ bool reversi::TestThinkingNode::Execute() {
 		if (!AssertEqual(root.GetChildSize() == 2, "TestThinkingNode::Execute child size != 2")) {
 			return false;
 		}
-		//child->SetParent(root.GetChild(0));
+		child->SetMovePosition(reversi::ReversiConstant::POSITION::D1);
 		child->SetTurn(reversi::ReversiConstant::TURN::TURN_BLACK);
 		child->SetEvaluationPoint(13);
 		child->SetThinkingDepth(2);
 
 		root.GetChild(0)->AddChild(child);
-		//root.AddChild(child);
 	}
 
 	root.ReleaseChild();

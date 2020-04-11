@@ -62,6 +62,18 @@ public:
 	int GetChildSize() const;
 
 	/**
+	 * 着手位置の設定
+	 * @param position 位置情報
+	 */
+	void SetMovePosition(reversi::ReversiConstant::POSITION position);
+
+	/**
+	 * 着手位置の取得
+	 * @return 位置
+	 */
+	const reversi::ReversiConstant::POSITION& GetMovePosition() const;
+
+	/**
 	 * 手番の設定
 	 * @param setTurn 手番
 	 */
@@ -102,15 +114,20 @@ public:
 	 */
 	void ReleaseChild();
 
+	// 自分の子ノードから一番評価値が高くなるノードを見つける
+	//const reversi::ThinkingNode* const FindHighEvaluationPointNode();
+
 private:
 
-	reversi::Reversi reversi;               // リバーシクラス
-	ThinkingNode* parent;                   // 親(自分より上層のノード)
-	ThinkingNode* children[CHILDREN_SIZE];  // 子(下層のノード)
-	int childrenCount;                      // 子のノード数
-	reversi::ReversiConstant::TURN turn;    // 手番
-	int evaluationPoint;                    // 評価値
-	int thinkingDepth;                      // 読みの深さ
+	// やっぱboardだけでいいかも？
+	reversi::Reversi reversi;                           // リバーシクラス
+	ThinkingNode* parent;                               // 親(自分より上層のノード)
+	ThinkingNode* children[CHILDREN_SIZE];              // 子(下層のノード)
+	int childrenCount;                                  // 子のノード数
+	reversi::ReversiConstant::POSITION movePosition;    // 着手位置
+	reversi::ReversiConstant::TURN turn;                // 手番
+	int evaluationPoint;                                // 評価値
+	int thinkingDepth;                                  // 読みの深さ
 };
 
 }
