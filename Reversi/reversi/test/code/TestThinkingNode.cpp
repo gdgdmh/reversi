@@ -43,6 +43,7 @@ bool reversi::TestThinkingNode::Execute() {
 		reversi::ReversiConstant::TURN turn = reversi::ReversiConstant::TURN::TURN_WHITE;
 		int evalPoint = 10;
 		int thinkDepth = 0;
+		bool visited = true;
 
 		root.CopyReversi(reversi);
 		//root.SetParent(parent);
@@ -50,6 +51,7 @@ bool reversi::TestThinkingNode::Execute() {
 		root.SetTurn(turn);
 		root.SetEvaluationPoint(evalPoint);
 		root.SetThinkingDepth(thinkDepth);
+		root.SetVisited(visited);
 
 		if (!AssertEqual(parent == root.GetParent(), "TestThinkingNode::Execute invalid parent")) {
 			return false;
@@ -63,7 +65,10 @@ bool reversi::TestThinkingNode::Execute() {
 		if (!AssertEqual(evalPoint == root.GetEvaluationPoint(), "TestThinkingNode::Execute invalid eval point")) {
 			return false;
 		}
-		if (!AssertEqual(thinkDepth == root.GetThinkingDepth(), "TestThinkingNode::Execute invalid thnking depth")) {
+		if (!AssertEqual(thinkDepth == root.GetThinkingDepth(), "TestThinkingNode::Execute invalid thinking depth")) {
+			return false;
+		}
+		if (!AssertEqual(visited == root.GetVisited(), "TestThinkingNode::Execute invalid visited")) {
 			return false;
 		}
 	}

@@ -4,7 +4,7 @@
 /**
  * コンストラクタ
  */
-reversi::ThinkingNode::ThinkingNode() : parent(NULL), turn(reversi::ReversiConstant::TURN::TURN_BLACK), evaluationPoint(0), thinkingDepth(0) {
+reversi::ThinkingNode::ThinkingNode() : parent(NULL), turn(reversi::ReversiConstant::TURN::TURN_BLACK), evaluationPoint(0), thinkingDepth(0), isVisited(false) {
 	for (int i = 0; i < CHILDREN_SIZE; ++i) {
 		children[i] = NULL;
 	}
@@ -146,6 +146,22 @@ int reversi::ThinkingNode::GetThinkingDepth() const {
 }
 
 /**
+ * 訪れてたことがあるかのフラグを設定
+ * @param visited 訪れフラグ
+ */
+void reversi::ThinkingNode::SetVisited(bool visited) {
+	isVisited = visited;
+}
+
+/**
+ * 訪れたことがあるかのフラグを取得する
+ * @return trueなら訪れたことがある
+ */
+bool reversi::ThinkingNode::GetVisited() const {
+	return isVisited;
+}
+
+/**
  * 子ノードのメモリを開放する(rootのノードが実行すること)
  */
 void reversi::ThinkingNode::ReleaseChild() {
@@ -166,7 +182,7 @@ void reversi::ThinkingNode::ReleaseChild() {
  * @return 評価値が一番高いノード
  */
 reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointNode() {
-	return NULL;
+    return NULL;
 }
 
 /**

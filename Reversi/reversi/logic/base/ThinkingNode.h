@@ -111,6 +111,18 @@ public:
 	int GetThinkingDepth() const;
 
 	/**
+	 * 訪れてたことがあるかのフラグを設定
+	 * @param visited 訪れフラグ
+	 */
+	void SetVisited(bool visited);
+
+	/**
+	 * 訪れたことがあるかのフラグを取得する
+	 * @return trueなら訪れたことがある
+	 */
+	bool GetVisited() const;
+
+	/**
 	 * 子ノードのメモリを開放する(rootのノードが実行すること)
 	 */
 	void ReleaseChild();
@@ -129,7 +141,6 @@ public:
 
 private:
 
-	// やっぱboardだけでいいかも？
 	reversi::Reversi reversi;                           // リバーシクラス
 	ThinkingNode* parent;                               // 親(自分より上層のノード)
 	ThinkingNode* children[CHILDREN_SIZE];              // 子(下層のノード)
@@ -138,6 +149,7 @@ private:
 	reversi::ReversiConstant::TURN turn;                // 手番
 	int evaluationPoint;                                // 評価値
 	int thinkingDepth;                                  // 読みの深さ
+	bool isVisited;                                     // 訪れたか(再帰処理用)
 };
 
 }
