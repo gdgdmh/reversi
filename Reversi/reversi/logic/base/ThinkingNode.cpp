@@ -23,8 +23,8 @@ reversi::ThinkingNode::~ThinkingNode() {
  */
 void reversi::ThinkingNode::CopyReversi(const reversi::Reversi& source) {
 	reversi.CopyWithoutDynamicInstance(source);
-    // 出力機能は必要ないのでoff
-    reversi.SetOutputEnable(false);
+	// 出力機能は必要ないのでoff
+	reversi.SetOutputEnable(false);
 }
 
 /**
@@ -55,10 +55,10 @@ void reversi::ThinkingNode::AddChild(reversi::ThinkingNode* childNode) {
 	// size and index over check
 	reversi::Assert::AssertEquals(childrenCount < CHILDREN_SIZE, "ThinkingNode::AddChild size over");
 	reversi::Assert::AssertArrayRange(childrenCount, CHILDREN_SIZE, "ThinkingNode::AddChild index over");
-    if (childrenCount >= CHILDREN_SIZE) {
-        // バッファオーバーラン コンパイラ警告対応
-        return;
-    }
+	if (childrenCount >= CHILDREN_SIZE) {
+		// バッファオーバーラン コンパイラ警告対応
+		return;
+	}
 	children[childrenCount] = childNode;
 	++childrenCount;
 }
@@ -182,7 +182,45 @@ void reversi::ThinkingNode::ReleaseChild() {
  * @return 評価値が一番高いノード
  */
 reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointNode() {
-    return NULL;
+
+	reversi::ThinkingNode* highNode = NULL;
+
+	// 再帰を使わずにスタック方式でノードをチェックする
+	// スタックを自分で作るのが手間なので実装速度優先でvectorを使用する
+	std::vector<reversi::ThinkingNode*> nodeList;
+	nodeList.push_back(this);
+
+	// ノードが空ではない
+	while (!nodeList.empty()) {
+		reversi::ThinkingNode* node = nodeList.back();
+		if (!node->GetVisited()) {
+				// まだ訪れたことがない
+			// 訪れたフラグを立てる
+			node->SetVisited(true);
+			if (node->GetChildSize() == 0) {
+				// ノードのツリーの中で一番端のノード
+				if (highNode == NULL) {
+					// 初回
+					highNode = node; 
+				} else {
+					if (node->GetEvaluationPoint() > highNode->GetEvaluationPoint()) {
+						// より評価関数が大きいのでこのノードに更新
+						highNode = node;
+					}
+				}
+			} else {
+				// 子ノードをスタックに積む
+				for (int i = 0; i < node->GetChildSize(); ++i) {
+					nodeList.push_back(node->GetChild(i));
+				}
+			}
+		} else {
+			// 訪れたことがある
+			nodeList.pop_back();
+			// TODO
+		}
+	}
+	return highNode;
 }
 
 /**

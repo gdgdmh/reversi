@@ -113,6 +113,24 @@ bool reversi::TestThinkingNode::Execute() {
 			return false;
 		}
 	}
+	// 評価値検索
+	{
+		// テストのためにfalseにする
+		root.SetVisited(false);
+		reversi::ThinkingNode* highNode = root.FindHighEvaluationPointNode();
+		if (!AssertEqual(highNode != NULL, "TestThinkingNode::Execute highNode NULL failure")) {
+			return false;
+		}
+		if (highNode == NULL) {
+			// コンパイル警告対策
+			return false;
+		}
+		if (!AssertEqual(highNode->GetEvaluationPoint() == 13, "TestThinkingNode::Execute highNode value failure")) {
+			return false;
+		}
+
+
+	}
 	// 評価値検索(rootの1つ下のNodeの中で一番評価値が高いノードを探す)
 	{
 		reversi::ThinkingNode* highNode = root.FindHighEvaluationPointOneUnderNode();
