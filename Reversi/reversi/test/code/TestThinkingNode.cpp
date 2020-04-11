@@ -108,6 +108,15 @@ bool reversi::TestThinkingNode::Execute() {
 			return false;
 		}
 	}
+	// 評価値検索
+	{
+		reversi::ThinkingNode* highNode = root.FindHighEvaluationPointOneUnderNode();
+		// 2つめのchildが選ばれるはず
+		if (!AssertEqual(highNode == root.GetChild(1), "TestThinkingNode::Execute FindHighEvaluationPointOneUnderNode failure")) {
+			return false;
+		}
+	}
+
 	// ノードのメモリ解放(デバッガでは確認済みなのでハングアップしなければ良しとする)
 	root.ReleaseChild();
 

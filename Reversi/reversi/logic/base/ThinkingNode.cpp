@@ -151,11 +151,41 @@ int reversi::ThinkingNode::GetThinkingDepth() const {
 void reversi::ThinkingNode::ReleaseChild() {
 	for (int i = 0; i < childrenCount; ++i) {
 		reversi::Assert::AssertArrayRange(i, CHILDREN_SIZE, "ThinkingNode::ReleaseChild index over");
-		if (children[i]) {
-			// 子のノードも開放
-			children[i]->ReleaseChild();
-			delete children[i];
-			children[i] = NULL;
+		if (children[i] == NULL) {
+			continue;
+		}
+		// 子のノードも開放
+		children[i]->ReleaseChild();
+		delete children[i];
+		children[i] = NULL;
+	}
+}
+
+/**
+ * 自分の子ノードから一番評価値が高くなるノードを見つける
+ * @return 評価値が一番高いノード
+ */
+reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointNode() {
+	return NULL;
+}
+
+/**
+ * 自分の1つ下の子ノードから一番評価値が高くなるノードを見つける
+ * @return 評価値が一番高いノード
+ */
+reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointOneUnderNode() {
+	reversi::ThinkingNode* currentHighNode = NULL;
+	int currentHighPoint = FIND_DEFAULT_EVALUATION_POINT; // 可能な限り低い値にする
+	for (int i = 0; i < childrenCount; ++i) {
+		reversi::Assert::AssertArrayRange(i, CHILDREN_SIZE, "ThinkingNode::FindHighEvaluationPointOneUnderNode index over");
+		if (children[i] == NULL) {
+			continue;
+		}
+		if (children[i]->GetEvaluationPoint() > currentHighPoint) {
+			// 大きい評価値が来たので更新
+			currentHighNode = children[i];
+			currentHighPoint = children[i]->GetEvaluationPoint();
 		}
 	}
+	return currentHighNode;
 }

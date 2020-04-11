@@ -12,6 +12,7 @@ namespace reversi {
 class ThinkingNode {
 public:
 	static const int CHILDREN_SIZE = 32;
+	static const int FIND_DEFAULT_EVALUATION_POINT = -9999999; // 評価値検索のときのデフォルト値
 public:
 
 	/**
@@ -114,8 +115,17 @@ public:
 	 */
 	void ReleaseChild();
 
-	// 自分の子ノードから一番評価値が高くなるノードを見つける
-	//const reversi::ThinkingNode* const FindHighEvaluationPointNode();
+	/**
+	 * 自分の子ノードから一番評価値が高くなるノードを見つける
+	 * @return 評価値が一番高いノード
+	 */
+	reversi::ThinkingNode* const FindHighEvaluationPointNode();
+
+	/**
+	 * 自分の1つ下の子ノードから一番評価値が高くなるノードを見つける
+	 * @return 評価値が一番高いノード
+	 */
+	reversi::ThinkingNode* const FindHighEvaluationPointOneUnderNode();
 
 private:
 
