@@ -107,7 +107,7 @@ void reversi::RenderBoardConsole::RenderBoardHorizontalCells(IOutputConsole* con
 	}
 	std::string out = GetFullWidth1Number(y) + "｜";
 	int posY = y - 1;
-	const BOARD rawData = board.GetRawData();
+	const reversi::Board::BOARD rawData = board.GetRawData();
 	// 横一列の情報を取得して表示の文字列に変換
 	for (int i = 0; i < reversi::ReversiConstant::BOARD_SIZE_X; ++i) {
 		// POSITION_HORIZONTALSのindex overチェック

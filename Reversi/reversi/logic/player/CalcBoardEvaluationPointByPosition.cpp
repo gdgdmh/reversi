@@ -36,7 +36,7 @@ reversi::CalcBoardEvaluationPointByPosition::~CalcBoardEvaluationPointByPosition
 void reversi::CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint(const reversi::Board& board, int& blackPoint, int& whitePoint, reversi::ReversiConstant::TURN turn) {
 	blackPoint = 0;
 	whitePoint = 0;
-	reversi::BOARD rawBoard = board.GetRawData();
+	reversi::Board::BOARD rawBoard = board.GetRawData();
 	int size = reversi::ReversiConstant::BOARD_SIZE;
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, size, "CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint() index over");

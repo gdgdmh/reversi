@@ -25,7 +25,7 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, reversi::Reve
 	emptyPosition.position.clear();
 
 	int size = reversi::ReversiConstant::POSITION_SIZE;
-	const reversi::BOARD boardData = board.GetRawData();
+	const reversi::Board::BOARD boardData = board.GetRawData();
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, size, "Move::FindEmptyPosition() position index over");
 		// 位置を取得
@@ -181,7 +181,7 @@ reversi::ReverseInfo reversi::Move::GetEnableMoveInfo(const reversi::Board& boar
  */
 bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi::ReverseInfo& reverseInfo, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
 
-	const reversi::BOARD boardData = board.GetRawData();
+	const reversi::Board::BOARD boardData = board.GetRawData();
 
 	// 盤のオフセットを取得
 	int offset = ToDirectionOffset(direction);

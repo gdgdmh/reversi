@@ -27,7 +27,7 @@ bool reversi::TestBoard::Execute() {
 
 		// 盤が初期位置になっているかチェック
 		int size = reversi::ReversiConstant::POSITION_SIZE;
-		const reversi::BOARD boardData = board.GetRawData();
+		const reversi::Board::BOARD boardData = board.GetRawData();
 		for (int i = 0; i < size; ++i) {
 			reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
 			
@@ -84,7 +84,7 @@ bool reversi::TestBoard::Execute() {
 		// 盤の状態のチェック(裏返しがちゃんとできているか)
 		{
 			int size = reversi::ReversiConstant::POSITION_SIZE;
-			const reversi::BOARD boardData = board.GetRawData();
+			const reversi::Board::BOARD boardData = board.GetRawData();
 			for (int i = 0; i < size; ++i) {
 				reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
 				reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
@@ -125,7 +125,7 @@ bool reversi::TestBoard::Execute() {
 		//board.Render();
 
 		int size = reversi::ReversiConstant::POSITION_SIZE;
-		const reversi::BOARD boardData = board.GetRawData();
+		const reversi::Board::BOARD boardData = board.GetRawData();
 		for (int i = 0; i < size; ++i) {
 			reversi::Assert::AssertArrayRange(i, size, "TestBoard::Execute() position index over");
 			reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];

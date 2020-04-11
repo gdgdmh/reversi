@@ -15,15 +15,6 @@ class IOutputConsole;
 
 namespace reversi {
 
-typedef struct {
-	// 盤
-	int boardData[ReversiConstant::BOARD_SIZE];
-	// 盤のXサイズ
-	int boardSizeX;
-	// 盤のYサイズ
-	int boardSizeY;
-} BOARD;
-
 //  8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている(Xが無効マス)
 // XXXXXXXXXX
 // X--------X
@@ -37,6 +28,15 @@ typedef struct {
 // XXXXXXXXXX
 // リバーシ盤クラス
 class Board {
+public:
+	typedef struct {
+		// 盤
+		int boardData[ReversiConstant::BOARD_SIZE];
+		// 盤のXサイズ
+		int boardSizeX;
+		// 盤のYサイズ
+		int boardSizeY;
+	} BOARD;
 public:
 	/**
 	 * コンストラクタ

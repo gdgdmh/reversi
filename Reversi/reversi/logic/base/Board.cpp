@@ -153,7 +153,7 @@ void reversi::Board::Render() {
  * 盤の生データを取得する
  * @return 盤の生データ
  */
-const reversi::BOARD& reversi::Board::GetRawData() const {
+const reversi::Board::BOARD& reversi::Board::GetRawData() const {
 	return board;
 }
 
