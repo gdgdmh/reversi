@@ -68,7 +68,7 @@ bool reversi::TestThinkingNode::Execute() {
 		}
 	}
 
-	// child(rootの一つ下)
+	// child(rootの一つ下)を登録
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
@@ -79,7 +79,7 @@ bool reversi::TestThinkingNode::Execute() {
 
 		root.AddChild(child);
 	}
-	// child(rootの一つ下 2つ目)
+	// child(rootの一つ下 2つ目)を登録
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
@@ -90,7 +90,7 @@ bool reversi::TestThinkingNode::Execute() {
 
 		root.AddChild(child);
 	}
-	// 最初のchildの下のchild
+	// 最初のchildの下にchildを登録
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
@@ -108,7 +108,7 @@ bool reversi::TestThinkingNode::Execute() {
 			return false;
 		}
 	}
-	// 評価値検索
+	// 評価値検索(rootの1つ下のNodeの中で一番評価値が高いノードを探す)
 	{
 		reversi::ThinkingNode* highNode = root.FindHighEvaluationPointOneUnderNode();
 		// 2つめのchildが選ばれるはず
