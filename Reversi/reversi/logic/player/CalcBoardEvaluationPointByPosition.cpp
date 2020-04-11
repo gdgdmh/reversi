@@ -34,7 +34,6 @@ reversi::CalcBoardEvaluationPointByPosition::~CalcBoardEvaluationPointByPosition
  * @param  turn       どの手番を評価するか
  */
 void reversi::CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint(const reversi::Board& board, int& blackPoint, int& whitePoint, reversi::ReversiConstant::TURN turn) {
-
 	blackPoint = 0;
 	whitePoint = 0;
 	reversi::BOARD rawBoard = board.GetRawData();

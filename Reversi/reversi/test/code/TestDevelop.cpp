@@ -13,6 +13,7 @@
 #include "../code/TestReversi.h"
 #include "../code/TestStdRandomInt.h"
 #include "../code/TestReversiCpu.h"
+#include "../code/TestCalcBoardEvaluationPointByPosition.h"
 
 
 /**
@@ -81,6 +82,13 @@ bool reversi::TestDevelop::Execute() {
 		{
 			reversi::TestReversiCpu c(console);
 			if (!c.Execute()) {
+				return false;
+			}
+		}
+		// Test
+		{
+			reversi::TestCalcBoardEvaluationPointByPosition calc(console);
+			if (!calc.Execute()) {
 				return false;
 			}
 		}
