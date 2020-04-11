@@ -1,5 +1,5 @@
-﻿#ifndef REVERSI_LOGIC_BASE_THINKINGTREE_H_
-#define REVERSI_LOGIC_BASE_THINKINGTREE_H_
+﻿#ifndef REVERSI_LOGIC_BASE_THINKINGNODE_H_
+#define REVERSI_LOGIC_BASE_THINKINGNODE_H_
 
 #include "ReversiConstant.h"
 #include "Reversi.h"
@@ -154,4 +154,4 @@ private:
 
 }
 
-#endif  // REVERSI_LOGIC_BASE_THINKINGTREE_H_
+#endif  // REVERSI_LOGIC_BASE_THINKINGNODE_H_

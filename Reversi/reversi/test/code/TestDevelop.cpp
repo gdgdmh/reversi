@@ -15,6 +15,7 @@
 #include "../code/TestReversiCpu.h"
 #include "../code/TestCalcBoardEvaluationPointByPosition.h"
 #include "../code/TestThinkingNode.h"
+#include "../code/TestSimpleStack.h"
 
 /**
  * コンストラクタ
@@ -96,6 +97,13 @@ bool reversi::TestDevelop::Execute() {
 		{
 			reversi::TestThinkingNode n(console);
 			if (!n.Execute()) {
+				return false;
+			}
+		}
+		// TestSimpleStack
+		{
+			reversi::TestSimpleStack s(console);
+			if (!s.Execute()) {
 				return false;
 			}
 		}

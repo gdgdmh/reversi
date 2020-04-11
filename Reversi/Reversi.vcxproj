@@ -180,6 +180,7 @@
     <ClCompile Include="reversi\test\code\TestReverseInfo.cpp" />
     <ClCompile Include="reversi\test\code\TestReversi.cpp" />
     <ClCompile Include="reversi\test\code\TestReversiCpu.cpp" />
+    <ClCompile Include="reversi\test\code\TestSimpleStack.cpp" />
     <ClCompile Include="reversi\test\code\TestStdRandomInt.cpp" />
     <ClCompile Include="reversi\test\code\TestThinkingNode.cpp" />
     <ClCompile Include="reversi\util\Assert.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="reversi\test\code\TestReverseInfo.h" />
     <ClInclude Include="reversi\test\code\TestReversi.h" />
     <ClInclude Include="reversi\test\code\TestReversiCpu.h" />
+    <ClInclude Include="reversi\test\code\TestSimpleStack.h" />
     <ClInclude Include="reversi\test\code\TestStdRandomInt.h" />
     <ClInclude Include="reversi\test\code\TestThinkingNode.h" />
     <ClInclude Include="reversi\util\Assert.h" />
@@ -240,6 +242,7 @@
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
     <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
+    <ClInclude Include="reversi\util\SimpleStack.h" />
     <ClInclude Include="reversi\util\StdRandomInt.h" />
     <ClInclude Include="reversi\util\StdStringFormatter.h" />
   </ItemGroup>
