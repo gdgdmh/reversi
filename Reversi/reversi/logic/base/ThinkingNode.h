@@ -1,7 +1,6 @@
 ﻿#ifndef REVERSI_LOGIC_BASE_THINKINGTREE_H_
 #define REVERSI_LOGIC_BASE_THINKINGTREE_H_
 
-#include <vector>
 #include "ReversiConstant.h"
 #include "Reversi.h"
 
@@ -11,6 +10,8 @@ namespace reversi {
 
 // 思考ノードクラス
 class ThinkingNode {
+public:
+	static const int CHILDREN_SIZE = 32;
 public:
 
 	/**
@@ -24,16 +25,22 @@ public:
 	virtual ~ThinkingNode();
 
 	/**
+	 * リバーシのコピー
+	 * @param source コピー元
+	 */
+	void CopyReversi(const reversi::Reversi& source);
+
+	/**
 	 * 親ノードの設定
 	 * @param parentNode 親ノード
 	 */
-	void SetParent(ThinkingNode* parentNode);
+	//void SetParent(ThinkingNode* parentNode);
 
 	/**
 	 * 親ノードを取得する
 	 * @return 親ノード
 	 */
-	const ThinkingNode* const GetParent() const;
+	ThinkingNode* const GetParent() const;
 
 	/**
 	 * 子ノードを追加する
@@ -46,7 +53,7 @@ public:
 	 * @param  index 子ノードのindex
 	 * @return       子ノード
 	 */
-	const ThinkingNode* const GetChild(int index) const;
+	ThinkingNode* const GetChild(int index) const;
 
 	/**
 	 * 子ノードの数を取得する
@@ -55,10 +62,22 @@ public:
 	int GetChildSize() const;
 
 	/**
+	 * 手番の設定
+	 * @param setTurn 手番
+	 */
+	void SetTurn(reversi::ReversiConstant::TURN setTurn);
+
+	/**
 	 * 手番の取得
 	 * @return 手番
 	 */
 	const reversi::ReversiConstant::TURN& GetTurn() const;
+
+	/**
+	 * 評価値の設定
+	 * @param evalPoint 評価値
+	 */
+	void SetEvaluationPoint(int evalPoint);
 
 	/**
 	 * 評価値の取得
@@ -67,16 +86,28 @@ public:
 	int GetEvaluationPoint() const;
 
 	/**
+	 * 読みの深さの設定
+	 * @param depth 読みの深さ
+	 */
+	void SetThinkingDepth(int depth);
+
+	/**
 	 * 読みの深さの取得
 	 * @return 読みの深さ
 	 */
 	int GetThinkingDepth() const;
 
+	/**
+	 * 子ノードのメモリを開放する(rootのノードが実行すること)
+	 */
+	void ReleaseChild();
+
 private:
 
 	reversi::Reversi reversi;               // リバーシクラス
 	ThinkingNode* parent;                   // 親(自分より上層のノード)
-	std::vector<ThinkingNode*> child;       // 子(下層のノード)
+	ThinkingNode* children[CHILDREN_SIZE];  // 子(下層のノード)
+	int childrenCount;                      // 子のノード数
 	reversi::ReversiConstant::TURN turn;    // 手番
 	int evaluationPoint;                    // 評価値
 	int thinkingDepth;                      // 読みの深さ

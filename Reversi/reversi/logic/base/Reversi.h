@@ -121,6 +121,14 @@ public:
 	}
 
 	/**
+	 * 盤を取得する
+	 * @return 盤クラス
+	 */
+	const reversi::Board& GetBoard() const {
+		return board;
+	}
+
+	/**
 	 * 結果を取得する
 	 * @return 結果
 	 */

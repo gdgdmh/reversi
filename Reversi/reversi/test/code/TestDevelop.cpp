@@ -14,7 +14,7 @@
 #include "../code/TestStdRandomInt.h"
 #include "../code/TestReversiCpu.h"
 #include "../code/TestCalcBoardEvaluationPointByPosition.h"
-
+#include "../code/TestThinkingNode.h"
 
 /**
  * コンストラクタ
@@ -85,10 +85,17 @@ bool reversi::TestDevelop::Execute() {
 				return false;
 			}
 		}
-		// Test
+		// TestCalcBoardEvaluationPointByPosition
 		{
 			reversi::TestCalcBoardEvaluationPointByPosition calc(console);
 			if (!calc.Execute()) {
+				return false;
+			}
+		}
+		// TestThinkingNode
+		{
+			reversi::TestThinkingNode n(console);
+			if (!n.Execute()) {
 				return false;
 			}
 		}

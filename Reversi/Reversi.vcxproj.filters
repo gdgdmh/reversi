@@ -165,6 +165,9 @@
     <ClCompile Include="reversi\logic\base\ThinkingNode.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\test\code\TestThinkingNode.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\base\ThinkingNode.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestThinkingNode.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
