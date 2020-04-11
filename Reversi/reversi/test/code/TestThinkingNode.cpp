@@ -68,7 +68,7 @@ bool reversi::TestThinkingNode::Execute() {
 		}
 	}
 
-	// child
+	// child(rootの一つ下)
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
@@ -79,7 +79,7 @@ bool reversi::TestThinkingNode::Execute() {
 
 		root.AddChild(child);
 	}
-
+	// child(rootの一つ下 2つ目)
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
@@ -90,10 +90,11 @@ bool reversi::TestThinkingNode::Execute() {
 
 		root.AddChild(child);
 	}
-
+	// 最初のchildの下のchild
 	{
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		child->CopyReversi(reversi);
+		// rootの下にchildが2つ登録している
 		if (!AssertEqual(root.GetChildSize() == 2, "TestThinkingNode::Execute child size != 2")) {
 			return false;
 		}
@@ -101,13 +102,14 @@ bool reversi::TestThinkingNode::Execute() {
 		child->SetTurn(reversi::ReversiConstant::TURN::TURN_BLACK);
 		child->SetEvaluationPoint(13);
 		child->SetThinkingDepth(2);
-
+		// 追加
 		root.GetChild(0)->AddChild(child);
+		if (!AssertEqual(root.GetChild(0)->GetChildSize() == 1, "TestThinkingNode::Execute root under child size failure")) {
+			return false;
+		}
 	}
-
+	// ノードのメモリ解放(デバッガでは確認済みなのでハングアップしなければ良しとする)
 	root.ReleaseChild();
-
-
 
 	return true;
 }
