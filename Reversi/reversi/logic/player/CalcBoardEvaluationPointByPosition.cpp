@@ -28,8 +28,24 @@ reversi::CalcBoardEvaluationPointByPosition::~CalcBoardEvaluationPointByPosition
 
 /**
  * 盤評価値を計算する
- * @param board 盤
- * @param turn  どの手番を評価するか
+ * @param  board      盤
+ * @param  blackPoint 黒の評価値
+ * @param  whitePoint 白の評価値
+ * @param  turn       どの手番を評価するか
  */
-void reversi::CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint(const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
+void reversi::CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint(const reversi::Board& board, int& blackPoint, int& whitePoint, reversi::ReversiConstant::TURN turn) {
+
+	blackPoint = 0;
+	whitePoint = 0;
+	reversi::BOARD rawBoard = board.GetRawData();
+	int size = reversi::ReversiConstant::BOARD_SIZE;
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, size, "CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint() index over");
+		// 石の置いてある位置に対して評価値を加算
+		if (rawBoard.boardData[i] == (int)reversi::ReversiConstant::BOARD_INFO::BLACK) {
+			blackPoint += PositionToPoint((reversi::ReversiConstant::POSITION)i);
+		} else if (rawBoard.boardData[i] == (int)reversi::ReversiConstant::BOARD_INFO::WHITE) {
+			whitePoint += PositionToPoint((reversi::ReversiConstant::POSITION)i);
+		}
+	}
 }

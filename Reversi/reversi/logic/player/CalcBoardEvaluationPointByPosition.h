@@ -25,10 +25,12 @@ public:
 
 	/**
 	 * 盤評価値を計算する
-	 * @param board 盤
-	 * @param turn  どの手番を評価するか
+	 * @param  board      盤
+	 * @param  blackPoint 黒の評価値
+	 * @param  whitePoint 白の評価値
+	 * @param  turn       どの手番を評価するか
 	 */
-	virtual void CalcBoardEvaluationPoint(const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+	virtual void CalcBoardEvaluationPoint(const reversi::Board& board, int& blackPoint, int& whitePoint, reversi::ReversiConstant::TURN turn);
 
 private:
 
