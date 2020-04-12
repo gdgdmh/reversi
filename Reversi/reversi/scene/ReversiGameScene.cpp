@@ -122,7 +122,7 @@ void reversi::ReversiGameScene::TaskAskCpuSetting() {
 	if (selectCpuLevel->IsSelected()) {
 		// 観戦を選択したときのみ2人目のCPU選択をする
 		if (selectYesNoWatching->IsSelectWatching()) {
-			console->PrintLine("2人目のCPUの強さを数字で選択してください、数値が高いほど強いです 1 or 2 or 3");
+			console->PrintLine("2人目のCPUの強さを数字で選択してください、数値が高いほど強いです 1 or 2 or 3 or 4");
 			SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_CPU2_SETTING);
 			return;
 		}
