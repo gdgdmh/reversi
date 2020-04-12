@@ -32,7 +32,7 @@ public:
 	 * 差分取得(ミリ秒)
 	 * @return StartとEndの時間差分
 	 */
-	double GetDiff();
+	double GetDiff() const;
 
 private:
 	LARGE_INTEGER frequency;    // 周波数

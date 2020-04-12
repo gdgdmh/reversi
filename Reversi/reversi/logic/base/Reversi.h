@@ -155,6 +155,9 @@ public:
 	 */
 	reversi::Reversi::PLAYER_SETTING GetPlayerSetting() const;
 
+
+	void SetCheckEnableMove(bool isCheckEnableMove);
+
 private:
 
 	/**
@@ -324,6 +327,7 @@ private:
 	reversi::MoveInfo simulationMove;           // シミュレーション着手情報(思考用)
 	bool isSetSimulationMove;                   // シミュレーション着手情報が設定されているか
 	bool outputEnable;                          // 出力許可フラグ
+	bool checkEnableMove;						// 着手できるかチェック(思考のときは遅くなるのでフラグで管理)
 };
 
 }

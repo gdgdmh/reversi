@@ -7,6 +7,7 @@
 #include "../base/Move.h"
 #include "../base/ThinkingNode.h"
 #include "../../util/IOutputConsole.h"
+#include "../../util/PerformanceCounter.h"
 
 // 前方宣言
 namespace reversi {
@@ -63,6 +64,8 @@ private:
 
 	// 着手可能情報を取得する
 	void GetMoveEnableData(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, reversi::ReverseInfo* reverseInfos, int& reverseInfoCount, const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+
+	void PrintTimeDiff(std::string prefix, const reversi::PerformanceCounter& counter);
 
 private:
 	reversi::IOutputConsole* console;

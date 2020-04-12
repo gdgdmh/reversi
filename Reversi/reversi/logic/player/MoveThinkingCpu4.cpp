@@ -2,7 +2,6 @@
 #include "MoveThinkingCpu4.h"
 #include "../../util/OutputConsole.h"
 #include "../../util/Assert.h"
-#include "../../util/PerformanceCounter.h"
 #include "../../util/StdStringFormatter.h"
 #include "ICalcBoardEvaluationPoint.h"
 #include "CalcBoardEvaluationPointByPosition.h"
@@ -72,7 +71,7 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	}
 
 	c.Start();
-	// rootの子ノードを作成
+	// rootの子ノードを作成(1手読み)
 	SetThinkingChildNode(&root, reversi, board, turn);
 	c.End();
 	console->PrintLine(formatter.Format("root child node %lf", c.GetDiff()));
@@ -81,18 +80,18 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	int size = node->GetChildSize();
 	for (int i = 0; i < size; ++i) {
 		reversi::ThinkingNode* child = node->GetChild(i);
-		// 1手読み
+		// 2手読み
 		SetThinkingChildNode(child, child->GetReversi(), child->GetReversi().GetBoard(), turn);
-		// 2手読み以上は全幅検索の都合上非常に重たくなるので現段階では使わない
+		// 3手読み以上は全幅検索の都合上非常に重たくなるので現段階では使わない
 		//for (int j = 0; j < child->GetChildSize(); ++j) {
 		//	reversi::ThinkingNode* child2 = child->GetChild(j);
-		//	// 2手読み
+		//	// 3手読み
 		//	SetThinkingChildNode(child2, child2->GetReversi(), child2->GetReversi().GetBoard(), turn);
-			//for (int k = 0; k < child2->GetChildSize(); ++k) {
-			//	reversi::ThinkingNode* child3 = child2->GetChild(k);
-			//	// 3手読み
-			//	SetThinkingChildNode(child3, child3->GetReversi(), child3->GetReversi().GetBoard(), turn);
-			//}
+		//	for (int k = 0; k < child2->GetChildSize(); ++k) {
+		//		reversi::ThinkingNode* child3 = child2->GetChild(k);
+		//		// 4手読み
+		//		SetThinkingChildNode(child3, child3->GetReversi(), child3->GetReversi().GetBoard(), turn);
+		//	}
 		//}
 	}
 
@@ -186,7 +185,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		childReversi.CopyWithoutDynamicInstance(reversi);
 		childReversi.SetOutputEnable(false); // 出力はoffにする
 		c.End();
-		console->PrintLine(formatter.Format("SetThinkingChildNode CopyReversi %lf", c.GetDiff()));
+		PrintTimeDiff("SetThinkingChildNode CopyReversi", c);
 
 		// 着手を作成
 		reversi::MoveInfo::MOVE_INFO moveInfoData;
@@ -200,8 +199,9 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		childReversi.SetMoveSimulation(moveInfo);
 		childReversi.Task();
 		c.End();
-		console->PrintLine(formatter.Format("SetThinkingChildNode Move %lf", c.GetDiff()));
+		PrintTimeDiff("SetThinkingChildNode Move", c);
 
+		// 深読み用にシーン設定していたが、ここでやたらパフォーマンスを落としてしまう
 		c.Start();
 		// リバーシを次の着手シーンまで進める
 		bool taskLoop = true;
@@ -220,7 +220,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 			}
 		}
 		c.End();
-		console->PrintLine(formatter.Format("SetThinkingChildNode Scene %lf", c.GetDiff()));
+		PrintTimeDiff("SetThinkingChildNode Scene", c);
 
 		c.Start();
 		child->CopyReversi(childReversi);
@@ -228,7 +228,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		child->SetTurn(moveInfoData.turn);
 		child->SetThinkingDepth(node->GetThinkingDepth() + 1);
 		c.End();
-		console->PrintLine(formatter.Format("SetThinkingChildNode Set %lf", c.GetDiff()));
+		PrintTimeDiff("SetThinkingChildNode Set", c);
 
 
 		c.Start();
@@ -249,7 +249,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		}
 		child->SetEvaluationPoint(eval);
 		c.End();
-		console->PrintLine(formatter.Format("SetThinkingChildNode CalcEval %lf", c.GetDiff()));
+		PrintTimeDiff("SetThinkingChildNode CalcEval", c);
 
 		// 親のノードにつなげる
 		node->AddChild(child);
@@ -287,4 +287,9 @@ void reversi::MoveThinkingCpu4::GetMoveEnableData(reversi::ReversiConstant::POSI
 			++reverseInfoCount;
 		}
 	}
+}
+
+void reversi::MoveThinkingCpu4::PrintTimeDiff(std::string prefix, const reversi::PerformanceCounter& counter) {
+	reversi::StdStringFormatter formatter;
+	console->PrintLine(prefix + formatter.Format(" %lf", counter.GetDiff()));
 }

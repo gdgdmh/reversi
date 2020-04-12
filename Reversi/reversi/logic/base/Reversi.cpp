@@ -2,6 +2,7 @@
 #include "../../util/Assert.h"
 #include "../../util/OutputConsole.h"
 #include "../../util/StdStringFormatter.h"
+#include "../../util/PerformanceCounter.h"
 #include "../player/PlayerMan.h"
 #include "../player/PlayerCpu.h"
 #include "../player/PlayerFactory.h"
@@ -10,7 +11,7 @@
 /**
  * コンストラクタ
  */
-reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), isSetSimulationMove(false), outputEnable(true) {
+reversi::Reversi::Reversi() : turn(reversi::ReversiConstant::TURN::TURN_BLACK), scene(reversi::Reversi::SCENE::INITIALIZE), console(NULL), isSetSimulationMove(false), outputEnable(true), checkEnableMove(true) {
 	ResetPlayer();
 	ResetPassCheck();
 	ResetResultData();
@@ -39,6 +40,7 @@ void reversi::Reversi::Initialize() {
 	simulationMove.Clear();
 	isSetSimulationMove = false;
 	outputEnable = true;
+	checkEnableMove = true;
 }
 
 /**
@@ -128,6 +130,7 @@ void reversi::Reversi::CopyWithoutDynamicInstance(const reversi::Reversi& source
 	simulationMove.Copy(source.simulationMove);
 	isSetSimulationMove = source.isSetSimulationMove;
 	outputEnable = source.outputEnable;
+	checkEnableMove = source.checkEnableMove;
 }
 
 /**
@@ -160,6 +163,11 @@ reversi::Reversi::PLAYER_SETTING reversi::Reversi::GetPlayerSetting() const {
 		setting.playerType[i] = playerData.playerType[i];
 	}
 	return setting;
+}
+
+
+void reversi::Reversi::SetCheckEnableMove(bool isCheckEnableMove) {
+	checkEnableMove = isCheckEnableMove;
 }
 
 /**
@@ -200,7 +208,9 @@ void reversi::Reversi::TaskMoveSelectStart() {
 	ResetPassCheck();
 
 	// 着手キャッシュ作成
-	CreateMoveCache();
+	if (checkEnableMove) {
+		CreateMoveCache();
+	}
 
 	int playerIndex = TurnToPlayerIndex(turn);
 	if (playerData.player[playerIndex]) {
@@ -230,6 +240,7 @@ void reversi::Reversi::TaskMoveSelect() {
 		// プレイヤーによる着手
 		isDecide = playerData.player[playerIndex]->SelectMove((*this), moveCache, board, move, turn);
 	}
+
 	if ((isSetSimulationMove) && (!isDecide)) {
 		// シミュレーションによる着手
 		move.Copy(simulationMove);
@@ -237,7 +248,10 @@ void reversi::Reversi::TaskMoveSelect() {
 	}
 	if (isDecide) {
 		// 正常な着手かチェック
-		reversi::Assert::AssertEquals(CheckEnableMove(move.GetMoveInfo().position), "Reversi::TaskMoveSelect invalid move");
+		if (checkEnableMove) {
+			reversi::Assert::AssertEquals(CheckEnableMove(move.GetMoveInfo().position), "Reversi::TaskMoveSelect invalid move");
+		}
+		
 		// 着手処理
 		bool isMove = board.Move(move);
 		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move task failure");
