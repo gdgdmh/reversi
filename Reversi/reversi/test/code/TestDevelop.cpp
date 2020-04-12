@@ -44,7 +44,6 @@ bool reversi::TestDevelop::Execute() {
 
 	// UnitTest
 	{
-		IOutputConsole* console = new OutputConsole();
 		// TestBoard
 		{
 			reversi::TestBoard t(console);

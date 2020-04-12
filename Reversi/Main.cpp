@@ -1,4 +1,6 @@
-﻿// Main.cpp
+﻿#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #include <iostream>
 #include <string>
@@ -7,8 +9,11 @@
 #include "reversi/util/OutputConsole.h"
 #include "reversi/game/ReversiGameLoop.h"
 
+
+
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	reversi::IOutputConsole* console = new reversi::OutputConsole();
 	console->PrintLine("--- main start -------------------");
@@ -16,7 +21,6 @@ int main(int argc, const char* argv[]) {
 	bool isTest = true;
 	if (isTest) {
 		// 実装テスト
-		reversi::IOutputConsole* console = new reversi::OutputConsole();
 		reversi::TestDevelop* testDevelop = new reversi::TestDevelop(console);
 		bool testResult = testDevelop->Execute();
 		if (testDevelop) {
@@ -34,9 +38,9 @@ int main(int argc, const char* argv[]) {
 	}
 
 	// リバーシゲーム
-	reversi::ReversiGameLoop gameLoop;
-	gameLoop.Initialize();
-	gameLoop.Task();
+	//reversi::ReversiGameLoop gameLoop;
+	//gameLoop.Initialize();
+	//gameLoop.Task();
 
 	/*
 	while (true)
@@ -71,5 +75,6 @@ int main(int argc, const char* argv[]) {
 		delete console;
 		console = NULL;
 	}
+	//_CrtDumpMemoryLeaks();
 	return 0;
 }
