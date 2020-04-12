@@ -1,8 +1,6 @@
 ﻿#include "TestReversiCpu.h"
 // test
 #include "../../logic/base/Reversi.h"
-//#include "../../logic/base/Board.h"
-//#include "../../logic/base/Move.h"
 #include "../../util/Assert.h"
 #include "../../util/StdStringFormatter.h"
 
@@ -26,13 +24,13 @@ bool reversi::TestReversiCpu::Execute() {
 
 	reversi::Reversi reversi;
 	reversi::Reversi::PLAYER_SETTING setting;
-	setting.playerType[reversi::Reversi::PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU3;
-	setting.playerType[reversi::Reversi::PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU2;
+	setting.playerType[reversi::Reversi::PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU4; // 黒
+	setting.playerType[reversi::Reversi::PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU3; // 白
 
 	reversi.Initialize();
 	reversi.InitializeGame(setting);
 
-	const int TEST_COUNT = 0;
+	const int TEST_COUNT = 0; // CPUが対戦を行う回数
 	int testCount = 0;
 	int blackWinCount = 0;
 	int whiteWinCount = 0;

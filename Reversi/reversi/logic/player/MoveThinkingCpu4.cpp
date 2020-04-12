@@ -9,14 +9,14 @@
 // 定数定義
 // 静的評価位置
 const int reversi::MoveThinkingCpu4::STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE] = {
-	60,  -30,  20,   5,   5,  20, -30,  60,
+	120,  -30,  20,   5,   5,  20, -30,  120,
 	-30,  -40,  -5,  -5,  -5,  -5, -40, -30,
 	20,   -5,  20,   3,   3,  20,  -5,  20,
 	5,   -5,   3,   3,   3,   3,  -5,   5,
 	5,   -5,   3,   3,   3,   3,  -5,   5,
 	20,   -5,  20,   3,   3,  20,  -5,  20,
 	-30,  -40,  -5,  -5,  -5,  -5, -40, -30,
-	60,  -30,  20,   5,  20,  20, -30,  60,
+	120,  -30,  20,   5,  20,  20, -30,  120,
 };
 
 /**
@@ -57,7 +57,6 @@ void reversi::MoveThinkingCpu4::InitializeMoveThinking(const reversi::Reversi& r
  */
 bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
 	reversi::PerformanceCounter c;
-	reversi::StdStringFormatter formatter;
 	// rootを作成
 	reversi::ThinkingNode root;
 	// root設定
@@ -74,7 +73,7 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	// rootの子ノードを作成(1手読み)
 	SetThinkingChildNode(&root, reversi, board, turn);
 	c.End();
-	console->PrintLine(formatter.Format("root child node %lf", c.GetDiff()));
+	PrintTimeDiff("root child node", c);
 
 	reversi::ThinkingNode* node = &root;
 	int size = node->GetChildSize();
@@ -143,7 +142,6 @@ reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(r
 
 void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn) {
 	reversi::PerformanceCounter c;
-	reversi::StdStringFormatter formatter;
 
 	reversi::ReversiConstant::POSITION moveEnablePositions[MOVE_ENABLE_DATA_SIZE];
 	int moveEnableCount = 0;
@@ -167,7 +165,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 	// 打てる位置を取得
 	GetMoveEnableData(moveEnablePositions, moveEnableCount, MOVE_ENABLE_DATA_SIZE, reverseInfos, reverseInfoCount, board, turn);
 	c.End();
-	console->PrintLine(formatter.Format("SetThinkingChildNode GetMoveEnableData %lf", c.GetDiff()));
+	PrintTimeDiff("SetThinkingChildNode GetMoveEnableData", c);
 
 	// どこにも打てない
 	if (moveEnableCount == 0) {
@@ -290,6 +288,6 @@ void reversi::MoveThinkingCpu4::GetMoveEnableData(reversi::ReversiConstant::POSI
 }
 
 void reversi::MoveThinkingCpu4::PrintTimeDiff(std::string prefix, const reversi::PerformanceCounter& counter) {
-	reversi::StdStringFormatter formatter;
-	console->PrintLine(prefix + formatter.Format(" %lf", counter.GetDiff()));
+	//reversi::StdStringFormatter formatter;
+	//console->PrintLine(prefix + formatter.Format(" %lf", counter.GetDiff()));
 }
