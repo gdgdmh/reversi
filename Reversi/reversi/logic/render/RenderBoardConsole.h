@@ -73,7 +73,6 @@ private:
 private:
 
 	IOutputConsole* outputConsole;
-	IOutputConsole* vsConsole;
 };
 
 }

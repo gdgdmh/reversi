@@ -36,7 +36,9 @@ reversi::KeyboardSelectYesNo::~KeyboardSelectYesNo() {
  * 初期化
  */
 void reversi::KeyboardSelectYesNo::Initialize() {
-	inputKeyboard = new ConsoleInputKeyboard();
+	if (inputKeyboard == NULL) {
+		inputKeyboard = new ConsoleInputKeyboard();
+	}
 	isSelected = false;
 	isYes = true;
 	isWrongInput = false;

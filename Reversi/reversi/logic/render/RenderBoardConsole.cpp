@@ -8,7 +8,6 @@
  */
 reversi::RenderBoardConsole::RenderBoardConsole() {
 	outputConsole = new reversi::OutputConsole();
-	vsConsole = new reversi::OutputVisualStudioConsole();
 }
 
 /**
@@ -19,10 +18,6 @@ reversi::RenderBoardConsole::~RenderBoardConsole() {
 		delete outputConsole;
 		outputConsole = NULL;
 	}
-	if (vsConsole) {
-		delete vsConsole;
-		vsConsole = NULL;
-	}
 }
 
 /**
@@ -31,7 +26,6 @@ reversi::RenderBoardConsole::~RenderBoardConsole() {
  */
 void reversi::RenderBoardConsole::Render(const Board& board) {
 	RenderConsole(board, outputConsole);
-	RenderConsole(board, vsConsole);
 }
 
 void reversi::RenderBoardConsole::RenderConsole(const Board& board, IOutputConsole* const output) {

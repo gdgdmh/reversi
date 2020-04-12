@@ -15,9 +15,21 @@ reversi::ReversiGameScene::ReversiGameScene() : console(NULL), scene(reversi::Re
  * デストラクタ
  */
 reversi::ReversiGameScene::~ReversiGameScene() {
+	if (selectYesNoWatching) {
+		delete selectYesNoWatching;
+		selectYesNoWatching = NULL;
+	}
+	if (selectCpuLevel) {
+		delete selectCpuLevel;
+		selectCpuLevel = NULL;
+	}
+	if (selectCpuLevel2) {
+		delete selectCpuLevel2;
+		selectCpuLevel2 = NULL;
+	}
 	if (selectYesNo) {
 		delete selectYesNo;
-		selectYesNo = NULL;
+		selectYesNo;
 	}
 	if (console) {
 		delete console;
