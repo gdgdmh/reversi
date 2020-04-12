@@ -12,38 +12,41 @@ namespace reversi {
 // リバーシクラス
 class Reversi {
 public:
-	static const int PLAYER_COUNT = 2;
-	static const int PLAYER_BLACK = 0;
-	static const int PLAYER_WHITE = 1;
+	static const int PLAYER_COUNT = 2; // プレイヤー数
+	static const int PLAYER_BLACK = 0; // 黒のプレイヤー
+	static const int PLAYER_WHITE = 1; // 白のプレイヤー
+	// シーン
 	enum class SCENE {
-		INITIALIZE,
-		MOVE_SELECT_START,
-		MOVE_SELECT,
-		PASS,
-		MOVE_AFTER,
-		RESULT,
-		END
+		INITIALIZE,         // 初期化
+		MOVE_SELECT_START,  // 着手選択開始
+		MOVE_SELECT,        // 着手選択
+		PASS,               // パス
+		MOVE_AFTER,         // 着手後
+		RESULT,             // 結果設定
+		END                 // 終了
 	};
+	// 結果
 	enum class RESULT {
 		NONE,   // 勝敗がついていない
 		BLACK,  // 黒の勝ち
 		WHITE,  // 白の勝ち
 		DRAW    // 引き分け
 	};
+	// プレイヤー
 	enum class PLAYER {
-		MAN,
-		CPU1,
-		CPU2,
-		CPU3,
-		CPU4
+		MAN,    // 人間
+		CPU1,   // CPU LEVEL1
+		CPU2,   // CPU LEVEL2(Lv1に勝率6割)
+		CPU3,   // CPU LEVEL3(Lv2に勝率7割)
+		CPU4    // CPU LEVEL4(Lv3に勝率9割)
 	};
 	typedef struct {
-		bool passBlack;
-		bool passWhite;
+		bool passBlack; // 黒がパスしたか
+		bool passWhite; // 白がパスしたか
 	} PASS_CHECK;
 	// 結果データ
 	typedef struct {
-		RESULT result;
+		RESULT result;          // 結果
 		int blackRawCount;      // 純粋な黒石の数
 		int whiteRawCount;      // 純粋な白石の数
 		int noneRawCount;       // 純粋な空白の数
@@ -53,12 +56,12 @@ public:
 	} RESULT_DATA;
 	// プレイヤーデータ
 	typedef struct {
-		PLAYER playerType[PLAYER_COUNT];
-		reversi::IPlayer* player[PLAYER_COUNT];
+		PLAYER playerType[PLAYER_COUNT];            // プレイヤーのタイプ
+		reversi::IPlayer* player[PLAYER_COUNT];     // プレイヤークラス
 	} PLAYER_DATA;
 	// プレイヤー設定
 	typedef struct {
-		PLAYER playerType[PLAYER_COUNT];
+		PLAYER playerType[PLAYER_COUNT];    // プレイヤーのタイプ
 	} PLAYER_SETTING;
 
 public:
@@ -137,6 +140,10 @@ public:
 		return resultData.result;
 	}
 
+	/**
+	 * 現在の手番を取得する
+	 * @return 手番
+	 */
 	reversi::ReversiConstant::TURN GetTurn() const {
 		return turn;
 	}
@@ -155,7 +162,10 @@ public:
 	 */
 	reversi::Reversi::PLAYER_SETTING GetPlayerSetting() const;
 
-
+	/**
+	 * 着手チェック処理を行うか
+	 * @param isCheckEnableMove trueならチェックする
+	 */
 	void SetCheckEnableMove(bool isCheckEnableMove);
 
 private:
@@ -200,11 +210,16 @@ private:
 	 */
 	void ResetPlayer();
 
-	// pureiya-sakusei
+	/**
+	 * プレイヤーを作成する
+	 * @param  playerIndex 作成対象のプレイヤーindex
+	 * @param  playerType  作成するプレイヤータイプ
+	 * @return             作成したプレイヤークラス
+	 */
 	reversi::IPlayer* CreatePlayer(int playerIndex, reversi::Reversi::PLAYER playerType);
 
 	/**
-	 * プレイヤーのインスタンスを作成する
+	 * プレイヤー達のインスタンスを作成する
 	 */
 	void CreatePlayers();
 
@@ -232,6 +247,11 @@ private:
 	 */
 	int TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTurn);
 
+	/**
+	 * 人間の手番か
+	 * @param  targetTurn 対象の手番
+	 * @return            trueなら人間の手番
+	 */
 	bool IsCurrentPlayerTurnMan(reversi::ReversiConstant::TURN targetTurn);
 
 	/**
@@ -253,10 +273,10 @@ private:
 	bool CheckEnableMove(const reversi::ReversiConstant::POSITION& position);
 
 	/**
-	 * 終局したか
+	 * 盤面が埋まっているか
 	 * @return trueなら終局している
 	 */
-	bool IsEnded();
+	bool IsBoardFull();
 
 	/**
 	 * 打つ場所がなくてパスかどうかチェック
@@ -327,7 +347,7 @@ private:
 	reversi::MoveInfo simulationMove;           // シミュレーション着手情報(思考用)
 	bool isSetSimulationMove;                   // シミュレーション着手情報が設定されているか
 	bool outputEnable;                          // 出力許可フラグ
-	bool checkEnableMove;						// 着手できるかチェック(思考のときは遅くなるのでフラグで管理)
+	bool checkEnableMove;                       // 着手できるかチェック(思考のときは遅くなるのでフラグで管理)
 };
 
 }

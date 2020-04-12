@@ -60,7 +60,6 @@ void reversi::Reversi::InitializeGame(const reversi::Reversi::PLAYER_SETTING& pl
 			playerData.player[i]->Initialize();
 		}
 	}
-
 	turn = reversi::ReversiConstant::TURN::TURN_BLACK;
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT_START);
 	ResetPassCheck();
@@ -95,6 +94,7 @@ void reversi::Reversi::Task() {
  * @param setMoveInfo シミュレーション着手情報
  */
 void reversi::Reversi::SetMoveSimulation(const reversi::MoveInfo& setMoveInfo) {
+	// シミュレーション着手フラグとデータを設定
 	isSetSimulationMove = true;
 	simulationMove.Copy(setMoveInfo);
 }
@@ -165,7 +165,10 @@ reversi::Reversi::PLAYER_SETTING reversi::Reversi::GetPlayerSetting() const {
 	return setting;
 }
 
-
+/**
+ * 着手チェック処理を行うか
+ * @param isCheckEnableMove trueならチェックする
+ */
 void reversi::Reversi::SetCheckEnableMove(bool isCheckEnableMove) {
 	checkEnableMove = isCheckEnableMove;
 }
@@ -214,6 +217,7 @@ void reversi::Reversi::TaskMoveSelectStart() {
 
 	int playerIndex = TurnToPlayerIndex(turn);
 	if (playerData.player[playerIndex]) {
+		// プレイヤーの手番開始イベント
 		playerData.player[playerIndex]->EventTurnStart((*this), moveCache, board, turn);
 	}
 	SetScene(reversi::Reversi::SCENE::MOVE_SELECT);
@@ -223,7 +227,7 @@ void reversi::Reversi::TaskMoveSelectStart() {
 		PrintLine("白のターン");
 	}
 	if (IsCurrentPlayerTurnMan(turn)) {
-		PrintLine("石を打つ場所を入力してください(入力例 D3)");
+		PrintLine("石を打つ場所を入力してください(入力例 d3)");
 	}
 }
 
@@ -235,6 +239,7 @@ void reversi::Reversi::TaskMoveSelect() {
 	reversi::MoveInfo move;
 
 	// プレイヤーの着手 または シミュレーションの着手があるか
+	// シミュレーションは思考のために使用
 	bool isDecide = false;
 	if (playerData.player[playerIndex]) {
 		// プレイヤーによる着手
@@ -251,13 +256,13 @@ void reversi::Reversi::TaskMoveSelect() {
 		if (checkEnableMove) {
 			reversi::Assert::AssertEquals(CheckEnableMove(move.GetMoveInfo().position), "Reversi::TaskMoveSelect invalid move");
 		}
-		
+
 		// 着手処理
 		bool isMove = board.Move(move);
 		reversi::Assert::AssertEquals(isMove, "Reversi::TaskMoveSelect move task failure");
 
 		if (isSetSimulationMove) {
-			// 着手キャッシュを使用している場合は情報をクリア
+			// シミュレーション着手を使用した後は情報をクリア
 			simulationMove.Clear();
 			isSetSimulationMove = false;
 		}
@@ -271,9 +276,12 @@ void reversi::Reversi::TaskMoveSelect() {
 				}
 			}
 		}
+		// 着手後処理へ
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
 	} else {
+		// 人間が着手入力失敗したとき
 		if (IsCurrentPlayerTurnMan(turn)) {
+			// 盤面表示とメッセージ表示
 			RenderBoard();
 			PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
 		}
@@ -296,14 +304,16 @@ void reversi::Reversi::TaskMoveAfter() {
 
 	int playerIndex = TurnToPlayerIndex(turn);
 	if (playerData.player[playerIndex]) {
+		// 着手後プレイヤーイベント
 		playerData.player[playerIndex]->EventMoveAfter();
 	}
 
 	// ターン切り替え
 	ChangeTurn(turn);
 
-	if (IsEnded()) {
-		// 結果
+	if (IsBoardFull()) {
+		// 盤面が埋まったら終局
+		// 結果へ
 		SetScene(reversi::Reversi::SCENE::RESULT);
 		return;
 	}
@@ -342,6 +352,7 @@ void reversi::Reversi::TaskResult() {
 	resultData.noneResultCount = none;
 	SetResultStone(resultData.blackResultCount, resultData.whiteResultCount, resultData.noneResultCount, resultData.result);
 
+	// コンソール結果表示
 	PrintLine(reversi::StdStringFormatter::Format("黒石:%d 白石:%d 空白:%d", resultData.blackRawCount, resultData.whiteRawCount, resultData.noneRawCount));
 	if (resultData.result == reversi::Reversi::RESULT::DRAW) {
 		PrintLine("結果は引き分けです");
@@ -366,9 +377,9 @@ void reversi::Reversi::TaskEnd() {
  * プレイヤーをリセットする(NULLクリア)
  */
 void reversi::Reversi::ResetPlayer() {
+	// タイプは暫定
 	playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU1;
 	playerData.playerType[PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU1;
-
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
 		playerData.player[i] = NULL;
 	}
@@ -376,8 +387,12 @@ void reversi::Reversi::ResetPlayer() {
 
 /**
  * プレイヤーを作成する
+ * @param  playerIndex 作成対象のプレイヤーindex
+ * @param  playerType  作成するプレイヤータイプ
+ * @return             作成したプレイヤークラス
  */
 reversi::IPlayer* reversi::Reversi::CreatePlayer(int playerIndex, reversi::Reversi::PLAYER playerType) {
+	// ファクトリークラスを使用してプレイヤークラスを生成
 	reversi::PlayerFactory factory;
 	reversi::PlayerFactory::TYPE type = reversi::PlayerFactory::TYPE::PLAYER_MAN;
 	switch (playerType) {
@@ -403,9 +418,10 @@ reversi::IPlayer* reversi::Reversi::CreatePlayer(int playerIndex, reversi::Rever
 }
 
 /**
- * プレイヤーのインスタンスを作成する
+ * プレイヤー達のインスタンスを作成する
  */
 void reversi::Reversi::CreatePlayers() {
+	// 2人のプレイヤーを生成
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
 		reversi::Assert::AssertArrayRange(i, PLAYER_COUNT, "Reversi::CreatePlayers index over");
 		playerData.player[i] = CreatePlayer(i, playerData.playerType[i]);
@@ -456,6 +472,11 @@ int reversi::Reversi::TurnToPlayerIndex(reversi::ReversiConstant::TURN targetTur
 	}
 }
 
+/**
+ * 人間の手番か
+ * @param  targetTurn 対象の手番
+ * @return            trueなら人間の手番
+ */
 bool reversi::Reversi::IsCurrentPlayerTurnMan(reversi::ReversiConstant::TURN targetTurn) {
 	int playerIndex = TurnToPlayerIndex(targetTurn);
 	if (playerData.playerType[playerIndex] == reversi::Reversi::PLAYER::MAN) {
@@ -498,10 +519,10 @@ bool reversi::Reversi::CheckEnableMove(const reversi::ReversiConstant::POSITION&
 }
 
 /**
- * 終局したか
+ * 盤面が埋まっているか
  * @return trueなら終局している
  */
-bool reversi::Reversi::IsEnded() {
+bool reversi::Reversi::IsBoardFull() {
 	if (board.IsFull()) {
 		// 盤面が全て埋まっている
 		return true;
@@ -519,10 +540,9 @@ bool reversi::Reversi::CheckPass(reversi::ReversiConstant::TURN targetTurn) {
 	reversi::Move move;
 	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
 	move.FindEmptyPosition(board, emptyPosition);
-
 	// キャッシュを作成する
 	move.FindPutEnablePosition(board, emptyPosition, targetTurn);
-
+	// どこかにうてるか
 	return (!move.CheckSomewherePutEnableByCache());
 }
 
