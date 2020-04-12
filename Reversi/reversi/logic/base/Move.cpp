@@ -101,6 +101,20 @@ bool reversi::Move::CheckEnableMoveByCache(reversi::ReversiConstant::POSITION po
 }
 
 bool reversi::Move::CheckSomewherePutEnableByCache() {
+
+	size_t size = moveCacheEnableMove.reverseInfo.size();
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
+		if (moveCacheEnableMove.reverseInfo[i].IsEnableMove()) {
+			// どこかには打てる
+			return true;
+		}
+	}
+	// どこにも打てない
+	return false;
+
+	// 旧
+	/*
 	size_t size = moveCache.reverseInfo.size();
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
@@ -111,6 +125,7 @@ bool reversi::Move::CheckSomewherePutEnableByCache() {
 	}
 	// どこにも打てない
 	return false;
+	*/
 }
 
 /**
