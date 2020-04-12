@@ -350,8 +350,7 @@ void reversi::Reversi::TaskEnd() {
  * プレイヤーをリセットする(NULLクリア)
  */
 void reversi::Reversi::ResetPlayer() {
-	playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU2;
-	//playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::MAN;
+	playerData.playerType[PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU1;
 	playerData.playerType[PLAYER_WHITE] = reversi::Reversi::PLAYER::CPU1;
 
 	for (int i = 0; i < PLAYER_COUNT; ++i) {
@@ -377,6 +376,9 @@ reversi::IPlayer* reversi::Reversi::CreatePlayer(int playerIndex, reversi::Rever
 		break;
 	case reversi::Reversi::PLAYER::CPU3:
 		type = reversi::PlayerFactory::TYPE::PLAYER_CPU3;
+		break;
+	case reversi::Reversi::PLAYER::CPU4:
+		type = reversi::PlayerFactory::TYPE::PLAYER_CPU4;
 		break;
 	default:
 		break;

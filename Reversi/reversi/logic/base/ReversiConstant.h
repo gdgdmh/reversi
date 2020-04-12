@@ -163,6 +163,8 @@ public:
 	 */
 	static int GetPositionToIndex(const reversi::ReversiConstant::POSITION& position);
 
+	static reversi::ReversiConstant::TURN InvertTurn(const reversi::ReversiConstant::TURN& turn);
+
 };
 
 }

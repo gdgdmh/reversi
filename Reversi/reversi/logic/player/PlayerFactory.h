@@ -12,7 +12,8 @@ public:
 		PLAYER_MAN,
 		PLAYER_CPU1,
 		PLAYER_CPU2,
-		PLAYER_CPU3
+		PLAYER_CPU3,
+		PLAYER_CPU4
 	};
 public:
 

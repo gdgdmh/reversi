@@ -90,3 +90,10 @@ int reversi::ReversiConstant::GetPositionToIndex(const reversi::ReversiConstant:
 	// 見つからなかった
 	return -1;
 }
+
+reversi::ReversiConstant::TURN reversi::ReversiConstant::InvertTurn(const reversi::ReversiConstant::TURN& turn) {
+	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+		return reversi::ReversiConstant::TURN::TURN_WHITE;
+	}
+	return reversi::ReversiConstant::TURN::TURN_BLACK;
+}

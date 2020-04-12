@@ -9,7 +9,7 @@ namespace reversi {
 // キーボードによるCPUレベル選択クラス
 class KeyboardSelectCpuLevel : public ISelectCpuLevel {
 private:
-	static const int LEVEL_PATTERN_COUNT = 3; // CPULEVELのパターン
+	static const int LEVEL_PATTERN_COUNT = 4; // CPULEVELのパターン
 	static const std::string LEVEL_STRINGS[LEVEL_PATTERN_COUNT]; // CPULEVELとみなす文字列パターン
 	static const int DEFAULT_CPU_LEVEL = 1; // デフォルトのCPULEVEL
 public:

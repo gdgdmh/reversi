@@ -34,7 +34,8 @@ public:
 		MAN,
 		CPU1,
 		CPU2,
-		CPU3
+		CPU3,
+		CPU4
 	};
 	typedef struct {
 		bool passBlack;
@@ -134,6 +135,10 @@ public:
 	 */
 	reversi::Reversi::RESULT GetResult() const {
 		return resultData.result;
+	}
+
+	reversi::ReversiConstant::TURN GetTurn() const {
+		return turn;
 	}
 
 	/**

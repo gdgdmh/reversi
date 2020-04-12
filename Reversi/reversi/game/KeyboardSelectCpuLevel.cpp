@@ -11,6 +11,7 @@ const std::string reversi::KeyboardSelectCpuLevel::LEVEL_STRINGS[LEVEL_PATTERN_C
 	"1",
 	"2",
 	"3",
+	"4"
 };
 
 /**

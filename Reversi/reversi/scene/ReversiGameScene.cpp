@@ -94,7 +94,7 @@ void reversi::ReversiGameScene::TaskAskPlayerSetting() {
 		console->PrintLine("入力が間違っています、もう一度入力してください");
 	}
 	if (selectYesNoWatching->IsSelected()) {
-		console->PrintLine("CPUの強さを数字で選択してください、数値が高いほど強いです 1 or 2 or 3");
+		console->PrintLine("CPUの強さを数字で選択してください、数値が高いほど強いです 1 or 2 or 3 or 4");
 		SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_CPU_SETTING);
 	}
 }
@@ -254,6 +254,8 @@ reversi::Reversi::PLAYER reversi::ReversiGameScene::NumberToCpuLevel(int cpuLeve
 		return reversi::Reversi::PLAYER::CPU2;
 	case 3:
 		return reversi::Reversi::PLAYER::CPU3;
+	case 4:
+		return reversi::Reversi::PLAYER::CPU4;
 	default:
 		return reversi::Reversi::PLAYER::CPU1;
 	}
