@@ -70,13 +70,72 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	int size = node->GetChildSize();
 	for (int i = 0; i < size; ++i) {
 		reversi::ThinkingNode* child = node->GetChild(i);
+		// 1手読み
 		SetThinkingChildNode(child, child->GetReversi(), child->GetReversi().GetBoard(), turn);
+		//for (int j = 0; j < child->GetChildSize(); ++j) {
+		//	reversi::ThinkingNode* child2 = child->GetChild(j);
+		//	// 2手読み
+		//	SetThinkingChildNode(child2, child2->GetReversi(), child2->GetReversi().GetBoard(), turn);
+			//for (int k = 0; k < child2->GetChildSize(); ++k) {
+			//	reversi::ThinkingNode* child3 = child2->GetChild(k);
+			//	// 3手読み
+			//	SetThinkingChildNode(child3, child3->GetReversi(), child3->GetReversi().GetBoard(), turn);
+			//}
+		//}
 	}
 
+	reversi::ReversiConstant::POSITION topHighPosition = reversi::ReversiConstant::POSITION::A1;
+	{
+		const reversi::ThinkingNode* topHighNode = NULL;
+		int topHighNodeIndex = -1;
+		for (int i = 0; i < root.GetChildSize(); ++i) {
+			reversi::ThinkingNode* child = node->GetChild(i);
+			const reversi::ThinkingNode* highNode = child->FindHighEvaluationPointNode();
+			if ((topHighNode == NULL) && (highNode != NULL)) {
+				// 初回更新
+				topHighNode = highNode;
+				topHighNodeIndex = i;
+			}
+			else if (highNode != NULL) {
+				if (topHighNode->GetEvaluationPoint() < highNode->GetEvaluationPoint()) {
+					// 更新
+					topHighNode = highNode;
+					topHighNodeIndex = i;
+				}
+			}
+		}
+		reversi::Assert::AssertEquals(topHighNodeIndex != -1, "MoveThinkingCpu4::MoveThinking topHighNodeIndex -1");
+		topHighPosition = root.GetChild(topHighNodeIndex)->GetMovePosition();
+	}
 	// 子ノードを削除(動的に作成しているので使い終わったら開放する必要がある)
 	root.ReleaseChild();
 
-	return false;
+	const reversi::ReverseInfo& reverseInfo = moveCache.GetReverseInfo(topHighPosition);
+	// 着手情報を確定
+	reversi::MoveInfo::MOVE_INFO moveInfoData;
+	moveInfoData.position = reverseInfo.GetPosition();
+	moveInfoData.info = GetTurnToStone(turn);
+	moveInfoData.turn = turn;
+	reversi::MoveInfo moveInfo(moveInfoData, reverseInfo);
+	// 着手情報を入力
+	move.Copy(moveInfo);
+	return true;
+
+	/*
+	const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(useIndex);
+	// 着手情報を確定
+	reversi::MoveInfo::MOVE_INFO moveInfoData;
+	moveInfoData.position = reverseInfo.GetPosition();
+	moveInfoData.info = GetTurnToStone(turn);
+	moveInfoData.turn = turn;
+	reversi::MoveInfo moveInfo(moveInfoData, reverseInfo);
+	// 着手情報を入力
+	move.Copy(moveInfo);
+	*/
+
+
+
+	//return false;
 }
 
 reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(reversi::ReversiConstant::TURN turn) {
