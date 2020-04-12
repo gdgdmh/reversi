@@ -21,7 +21,6 @@ private:
 	// 静的評価位置
 	// 石が置いてある場所によって評価をつける(ここの位置はいい、悪いなど)
 	static const int STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE];
-	//static const int DEFAULT_POINTS = -99999;
 	static const int MOVE_ENABLE_DATA_SIZE = 32; // 移動可能位置の配列サイズ
 public:
 	/**
@@ -59,10 +58,10 @@ private:
 
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
 
-	void SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+	void SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn);
 
-	// 着手可能位置を取得する
-	void GetMoveEnablePosition(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, const reversi::Board& board, reversi::ReversiConstant::TURN turn);
+	// 着手可能情報を取得する
+	void GetMoveEnableData(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, reversi::ReverseInfo* reverseInfos, int& reverseInfoCount, const reversi::Board& board, reversi::ReversiConstant::TURN turn);
 
 private:
 	//reversi::Move reversiMove;

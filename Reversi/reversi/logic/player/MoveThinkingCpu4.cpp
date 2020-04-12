@@ -2,6 +2,8 @@
 #include "MoveThinkingCpu4.h"
 #include "../../util/IOutputConsole.h"
 #include "../../util/Assert.h"
+#include "ICalcBoardEvaluationPoint.h"
+#include "CalcBoardEvaluationPointByPosition.h"
 
 // 定数定義
 // 静的評価位置
@@ -61,91 +63,19 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 		root.SetThinkingDepth(0); // rootなので0
 	}
 
+	// rootの子ノードを作成
 	SetThinkingChildNode(&root, reversi, board, turn);
 
-	//void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
-
-	/*
-	int size = reversiMove.GetReverseInfoSize();
-	bool isUpdate = false;
+	reversi::ThinkingNode* node = &root;
+	int size = node->GetChildSize();
 	for (int i = 0; i < size; ++i) {
-		const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(i);
-		int total = reverseInfo.GetReversePositionCountTotal();
-		// 取れる数が少ない + 打てる
-		if ((total < minCount) && (reversiMove.CheckEnableMoveByCache(reverseInfo.GetPosition()))) {
-			minPosition = reverseInfo.GetPosition();
-			minCount = total;
-			minIndex = i;
-			isUpdate = true;
-		}
+		reversi::ThinkingNode* child = node->GetChild(i);
+		SetThinkingChildNode(child, child->GetReversi(), child->GetReversi().GetBoard(), turn);
 	}
 
-	*/
+	// 子ノードを削除(動的に作成しているので使い終わったら開放する必要がある)
+	root.ReleaseChild();
 
-
-	/*
-	// root set
-	reversi::ThinkingNode root;
-	{
-		reversi::ThinkingNode* parent = NULL;
-		reversi::ReversiConstant::POSITION position = reversi::ReversiConstant::POSITION::A2;
-		reversi::ReversiConstant::TURN turn = reversi::ReversiConstant::TURN::TURN_WHITE;
-		int evalPoint = 10;
-		int thinkDepth = 0;
-		bool visited = true;
-
-		root.CopyReversi(reversi);
-		//root.SetParent(parent);
-		root.SetMovePosition(position);
-		root.SetTurn(turn);
-		root.SetEvaluationPoint(evalPoint);
-		root.SetThinkingDepth(thinkDepth);
-		root.SetVisited(visited);
-
-	*/
-
-	// ある一定の階層まで
-
-	/*
-	reversi::ReversiConstant::POSITION maxPosition = reversi::ReversiConstant::POSITION::A1; // 仮
-	int currentPoint = DEFAULT_POINTS; // 現在の最高評価値
-	int reverseInfoIndex = 0;
-	bool isUpdate = false; // 更新したか(バグチェック用)
-
-	int size = reversiMove.GetReverseInfoSize();
-	for (int i = 0; i < size; ++i) {
-		const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(i);
-		reversi::Assert::AssertArrayRange(i, size, "MoveThinkingCpu4::MoveThinking index over reverseInfo");
-		reversi::ReversiConstant::POSITION position = reverseInfo.GetPosition();
-		if (!reversiMove.CheckEnableMoveByCache(position)) {
-			// うてないならスキップ
-			continue;
-		}
-
-		int positionIndex = reversi::ReversiConstant::GetPositionToIndex(position);
-		reversi::Assert::AssertArrayRange(positionIndex, reversi::ReversiConstant::POSITION_SIZE, "MoveThinkingCpu4::MoveThinking index over position index");
-		if (currentPoint < STATIC_EVALUATION_POINTS[positionIndex]) {
-			// 現在の評価値より高いなら更新
-			maxPosition = position;
-			reverseInfoIndex = i;
-			currentPoint = STATIC_EVALUATION_POINTS[positionIndex];
-			isUpdate = true;
-		}
-	}
-	// 最低でも1度は更新されるはず
-	reversi::Assert::AssertEquals(isUpdate, "MoveThinkingCpu4::MoveThinking not update");
-
-	// 着手情報を作成
-	const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(reverseInfoIndex);
-	reversi::MoveInfo::MOVE_INFO moveInfoData;
-	moveInfoData.position = reverseInfo.GetPosition();
-	moveInfoData.info = GetTurnToStone(turn);
-	moveInfoData.turn = turn;
-	reversi::MoveInfo moveInfo(moveInfoData, reverseInfo);
-	// 着手情報を入力
-	move.Copy(moveInfo);
-	return true;
-	*/
 	return false;
 }
 
@@ -157,25 +87,128 @@ reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(r
 	}
 }
 
-void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
-
+void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn) {
 
 	reversi::ReversiConstant::POSITION moveEnablePositions[MOVE_ENABLE_DATA_SIZE];
 	int moveEnableCount = 0;
-	// A1で初期化
+	reversi::ReverseInfo reverseInfos[MOVE_ENABLE_DATA_SIZE];
+	int reverseInfoCount = 0;
+	// 初期化(reverseInfoは不要)
 	for (int i = 0; i < MOVE_ENABLE_DATA_SIZE; ++i) {
-		reversi::Assert::AssertArrayRange(i, MOVE_ENABLE_DATA_SIZE, "MoveThinkingCpu4::SetThinkingChildNode index over");
+		reversi::Assert::AssertArrayRange(i, MOVE_ENABLE_DATA_SIZE, "MoveThinkingCpu4::SetThinkingChildNode moveEnablePositions index over(initialize)");
 		moveEnablePositions[i] = reversi::ReversiConstant::POSITION::A1;
 	}
 
+	// 終局している
+	if ((reversi.GetScene() == reversi::Reversi::SCENE::END) || (reversi.GetScene() == reversi::Reversi::SCENE::RESULT)) {
+		return;
+	}
+
+	// 今の手番
+	reversi::ReversiConstant::TURN turn = reversi.GetTurn();
+
 	// 打てる位置を取得
-	GetMoveEnablePosition(moveEnablePositions, moveEnableCount, MOVE_ENABLE_DATA_SIZE, board, turn);
+	GetMoveEnableData(moveEnablePositions, moveEnableCount, MOVE_ENABLE_DATA_SIZE, reverseInfos, reverseInfoCount, board, turn);
+
+	// どこにも打てない
+	if (moveEnableCount == 0) {
+		return;
+	}
+
+	// 打てる場所分childを作成
+	int size = moveEnableCount;
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, size, "MoveThinkingCpu4::SetThinkingChildNode moveEnablePositions index over");
+		reversi::ThinkingNode* child = new reversi::ThinkingNode();
+		// リバーシをコピー
+		reversi::Reversi childReversi;
+		childReversi.CopyWithoutDynamicInstance(reversi);
+		childReversi.SetOutputEnable(false); // 出力はoffにする
+
+		/*
+		// リバーシを着手シーンまで進める
+		bool taskLoop = true;
+		bool isEnded = false; // 対局が終わっている
+		while (taskLoop) {
+			childReversi.Task();
+			// 終局してないかチェック
+			if ((childReversi.GetScene() == reversi::Reversi::SCENE::RESULT)
+				|| (childReversi.GetScene() == reversi::Reversi::SCENE::END)) {
+				isEnded = true;
+				taskLoop = false;
+			}
+			if (childReversi.GetScene() == reversi::Reversi::SCENE::MOVE_SELECT_START) {
+				// 着手シーンに進んでいるのでタスク進行終了
+				taskLoop = false;
+			}
+		}
+		if (isEnded) {
+			// 終局していたらNodeを作成しても意味がないので作らない
+			continue;
+		}
+		*/
+
+		// 着手を作成
+		reversi::MoveInfo::MOVE_INFO moveInfoData;
+		moveInfoData.position = moveEnablePositions[i];
+		moveInfoData.info = GetTurnToStone(turn);
+		moveInfoData.turn = childReversi.GetTurn(); // ゲーム上の手番
+		reversi::MoveInfo moveInfo(moveInfoData, reverseInfos[i]);		
+
+		// 着手
+		childReversi.SetMoveSimulation(moveInfo);
+		childReversi.Task();
+
+		// リバーシを次の着手シーンまで進める
+		bool taskLoop = true;
+		bool isEnded = false; // 対局が終わっている
+		while (taskLoop) {
+			childReversi.Task();
+			// 終局してないかチェック
+			if ((childReversi.GetScene() == reversi::Reversi::SCENE::RESULT)
+				|| (childReversi.GetScene() == reversi::Reversi::SCENE::END)) {
+				isEnded = true;
+				taskLoop = false;
+			}
+			if (childReversi.GetScene() == reversi::Reversi::SCENE::MOVE_SELECT_START) {
+				// 着手シーンに進んでいるのでタスク進行終了
+				taskLoop = false;
+			}
+		}
+
+		child->CopyReversi(childReversi);
+		child->SetMovePosition(moveInfoData.position);
+		child->SetTurn(moveInfoData.turn);
+		child->SetThinkingDepth(node->GetThinkingDepth() + 1);
+
+		// 評価値計算
+		ICalcBoardEvaluationPoint* calcEval = new CalcBoardEvaluationPointByPosition();
+		int blackEval = 0, whiteEval = 0;
+		calcEval->CalcBoardEvaluationPoint(board, blackEval, whiteEval, turn);
+		if (calcEval) {
+			delete calcEval;
+			calcEval = NULL;
+		}
+		// selfTurnの人の評価値を取る
+		int eval = 0;
+		if (selfTurn == reversi::ReversiConstant::TURN::TURN_BLACK) {
+			eval = blackEval;
+		} else {
+			eval = whiteEval;
+		}
+		child->SetEvaluationPoint(eval);
+
+		// 親のノードにつなげる
+		node->AddChild(child);
+	}
+
 
 }
 
-// 着手可能位置を取得する
-void reversi::MoveThinkingCpu4::GetMoveEnablePosition(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
+// 着手可能情報を取得する
+void reversi::MoveThinkingCpu4::GetMoveEnableData(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, reversi::ReverseInfo* reverseInfos, int& reverseInfoCount, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	moveEnablePositionCount = 0;
+	reverseInfoCount = 0;
 	// 着手キャッシュを作成
 	reversi::Move moveCache;
 	{
@@ -196,6 +229,9 @@ void reversi::MoveThinkingCpu4::GetMoveEnablePosition(reversi::ReversiConstant::
 			// 打てる位置を保存
 			moveEnablePositions[moveEnablePositionCount] = reverseInfo.GetPosition();
 			++moveEnablePositionCount;
+			// 裏返し情報も取得
+			reverseInfos[reverseInfoCount] = reverseInfo;
+			++reverseInfoCount;
 		}
 	}
 }

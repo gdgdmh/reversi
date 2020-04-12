@@ -14,6 +14,10 @@ reversi::ReverseInfo::ReverseInfo(reversi::ReversiConstant::POSITION position, r
 	info.turn = turn;
 }
 
+reversi::ReverseInfo::ReverseInfo() {
+	Clear();
+}
+
 /**
  * デストラクタ
  */

@@ -32,6 +32,10 @@ public:
 	 */
 	void CopyReversi(const reversi::Reversi& source);
 
+	const reversi::Reversi& GetReversi() const {
+		return reversi;
+	}
+
 	/**
 	 * 親ノードの設定
 	 * @param parentNode 親ノード

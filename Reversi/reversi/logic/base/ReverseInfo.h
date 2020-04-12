@@ -39,6 +39,8 @@ public:
 	 */
 	ReverseInfo(reversi::ReversiConstant::POSITION position, reversi::ReversiConstant::TURN turn);
 
+	ReverseInfo();
+
 	/**
 	 * デストラクタ
 	 */

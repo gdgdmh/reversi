@@ -176,6 +176,7 @@ void reversi::ThinkingNode::ReleaseChild() {
 		delete children[i];
 		children[i] = NULL;
 	}
+	childrenCount = 0;
 }
 
 /**
