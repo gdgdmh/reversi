@@ -177,6 +177,12 @@
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu4.cpp">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
     </ClCompile>
+    <ClCompile Include="reversi\util\PerformanceCounter.cpp">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClCompile>
+    <ClCompile Include="reversi\test\code\TestPerformanceCounter.cpp">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="reversi\util\OutputConsole.h">
@@ -352,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu4.h">
       <Filter>ソース ファイル\reversi\logic\player</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\util\PerformanceCounter.h">
+      <Filter>ソース ファイル\reversi\util</Filter>
+    </ClInclude>
+    <ClInclude Include="reversi\test\code\TestPerformanceCounter.h">
+      <Filter>ソース ファイル\reversi\test\code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

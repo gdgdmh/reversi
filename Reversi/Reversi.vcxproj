@@ -178,6 +178,7 @@
     <ClCompile Include="reversi\test\code\TestCalcBoardEvaluationPointByPosition.cpp" />
     <ClCompile Include="reversi\test\code\TestDevelop.cpp" />
     <ClCompile Include="reversi\test\code\TestMove.cpp" />
+    <ClCompile Include="reversi\test\code\TestPerformanceCounter.cpp" />
     <ClCompile Include="reversi\test\code\TestReverseInfo.cpp" />
     <ClCompile Include="reversi\test\code\TestReversi.cpp" />
     <ClCompile Include="reversi\test\code\TestReversiCpu.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="reversi\util\ConsoleInputKeyboard.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
     <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp" />
+    <ClCompile Include="reversi\util\PerformanceCounter.cpp" />
     <ClCompile Include="reversi\util\StdRandomInt.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +233,7 @@
     <ClInclude Include="reversi\test\code\TestCalcBoardEvaluationPointByPosition.h" />
     <ClInclude Include="reversi\test\code\TestDevelop.h" />
     <ClInclude Include="reversi\test\code\TestMove.h" />
+    <ClInclude Include="reversi\test\code\TestPerformanceCounter.h" />
     <ClInclude Include="reversi\test\code\TestReverseInfo.h" />
     <ClInclude Include="reversi\test\code\TestReversi.h" />
     <ClInclude Include="reversi\test\code\TestReversiCpu.h" />
@@ -246,6 +249,7 @@
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
     <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
+    <ClInclude Include="reversi\util\PerformanceCounter.h" />
     <ClInclude Include="reversi\util\SimpleStack.h" />
     <ClInclude Include="reversi\util\SimpleArray.h" />
     <ClInclude Include="reversi\util\StdRandomInt.h" />

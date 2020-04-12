@@ -17,6 +17,7 @@
 #include "../code/TestThinkingNode.h"
 #include "../code/TestSimpleStack.h"
 #include "../code/TestSimpleArray.h"
+#include "../code/TestPerformanceCounter.h"
 
 /**
  * コンストラクタ
@@ -111,6 +112,13 @@ bool reversi::TestDevelop::Execute() {
 		{
 			reversi::TestSimpleArray s(console);
 			if (!s.Execute()) {
+				return false;
+			}
+		}
+		// TestPerformanceCounter
+		{
+			reversi::TestPerformanceCounter c(console);
+			if (!c.Execute()) {
 				return false;
 			}
 		}
