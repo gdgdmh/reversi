@@ -72,6 +72,7 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 		reversi::ThinkingNode* child = node->GetChild(i);
 		// 1手読み
 		SetThinkingChildNode(child, child->GetReversi(), child->GetReversi().GetBoard(), turn);
+		// 2手読み以上は全幅検索の都合上非常に重たくなるので現段階では使わない
 		//for (int j = 0; j < child->GetChildSize(); ++j) {
 		//	reversi::ThinkingNode* child2 = child->GetChild(j);
 		//	// 2手読み

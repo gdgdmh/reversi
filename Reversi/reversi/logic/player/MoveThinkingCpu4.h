@@ -15,7 +15,7 @@ class Board;
 namespace reversi {
 
 // プレイヤー(CPU)思考クラス LEVEL4
-// 静的評価関数と全幅検索を使用する
+// 静的位置評価と全幅検索(Bonanzaを参考)を使用する
 class MoveThinkingCpu4 : public IMoveThinking {
 private:
 	// 静的評価位置
