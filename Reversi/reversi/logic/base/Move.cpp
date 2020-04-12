@@ -51,6 +51,7 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const rev
 
 	// キャッシュをクリアする
 	moveCache.reverseInfo.clear();
+	moveCacheEnableMove.reverseInfo.clear();
 
 	// 空いている場所からその場所に打てるかチェック
 	size_t size = emptyPosition.position.size();
@@ -61,6 +62,10 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const rev
 		reversi::ReverseInfo reverseInfo = GetEnableMoveInfo(board, (int)position, turn);
 		// キャッシュに登録
 		moveCache.reverseInfo.push_back(reverseInfo);
+
+		if (reverseInfo.IsEnableMove()) {
+			moveCacheEnableMove.reverseInfo.push_back(reverseInfo);
+		}
 	}
 }
 
@@ -71,6 +76,18 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const rev
  * @return          trueならその位置に打つことができる
  */
 bool reversi::Move::CheckEnableMoveByCache(reversi::ReversiConstant::POSITION position) const {
+	size_t size = moveCacheEnableMove.reverseInfo.size();
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
+		if (position == moveCacheEnableMove.reverseInfo[i].GetPosition()) {
+			return true;
+		}
+	}
+	// 空いてない位置などを指定した
+	return false;
+
+	// 旧
+	/*
 	size_t size = moveCache.reverseInfo.size();
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
@@ -80,6 +97,7 @@ bool reversi::Move::CheckEnableMoveByCache(reversi::ReversiConstant::POSITION po
 	}
 	// 空いてない位置などを指定した
 	return false;
+	*/
 }
 
 bool reversi::Move::CheckSomewherePutEnableByCache() {

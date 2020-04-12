@@ -155,6 +155,7 @@ private:
 
 private:
 	MOVE_CACHE moveCache; // 着手のキャッシュデータ
+	MOVE_CACHE moveCacheEnableMove; // 着手のキャッシュデータ(打てる場所だけ)
 };
 
 }
