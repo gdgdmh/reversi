@@ -1,7 +1,7 @@
 ﻿// メモリリーク検出用
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
 
 #include <iostream>
 #include <string>
@@ -13,7 +13,7 @@
 // エントリーポイント;
 int main(int argc, const char* argv[]) {
 	// メモリリーク検出用
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	reversi::IOutputConsole* console = new reversi::OutputConsole();
 	console->PrintLine("--- main start -------------------");

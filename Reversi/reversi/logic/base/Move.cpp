@@ -50,7 +50,7 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, reversi::Reve
 void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const reversi::ReversiConstant::EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn) {
 
 	// キャッシュをクリアする
-	moveCache.reverseInfo.clear();
+	//moveCache.reverseInfo.clear();
 	moveCacheEnableMove.reverseInfo.clear();
 
 	// 空いている場所からその場所に打てるかチェック
@@ -61,7 +61,7 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const rev
 		// その場所に打てるかチェック
 		reversi::ReverseInfo reverseInfo = GetEnableMoveInfo(board, (int)position, turn);
 		// キャッシュに登録
-		moveCache.reverseInfo.push_back(reverseInfo);
+		//moveCache.reverseInfo.push_back(reverseInfo);
 
 		if (reverseInfo.IsEnableMove()) {
 			moveCacheEnableMove.reverseInfo.push_back(reverseInfo);
@@ -135,6 +135,20 @@ bool reversi::Move::CheckSomewherePutEnableByCache() {
  * @return          裏返し情報
  */
 const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstant::POSITION position) const {
+	size_t size = moveCacheEnableMove.reverseInfo.size();
+	for (int i = 0; i < size; ++i) {
+		reversi::Assert::AssertArrayRange(i, (int)size, "Move::GetReverseInfo index over");
+		if (position == moveCacheEnableMove.reverseInfo[i].GetPosition()) {
+			return moveCacheEnableMove.reverseInfo[i];
+		}
+	}
+	// 見つからなかった(CheckEnableMoveByCacheでチェックしておけば起こらないはず)
+	reversi::Assert::AssertEquals(0, "Move::GetReverseInfo not found");
+	reversi::ReverseInfo info(reversi::ReversiConstant::POSITION::A1, reversi::ReversiConstant::TURN::TURN_BLACK);
+	return info;
+
+	// 旧
+	/*
 	size_t size = moveCache.reverseInfo.size();
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, (int)size, "Move::GetReverseInfo index over");
@@ -146,6 +160,7 @@ const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstan
 	reversi::Assert::AssertEquals(0, "Move::GetReverseInfo not found");
 	reversi::ReverseInfo info(reversi::ReversiConstant::POSITION::A1, reversi::ReversiConstant::TURN::TURN_BLACK);
 	return info;
+	*/
 }
 
 /**
@@ -155,8 +170,13 @@ const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstan
  * @return       [description]
  */
 const reversi::ReverseInfo& reversi::Move::GetReverseInfoByIndex(int index) const {
+	reversi::Assert::AssertArrayRange(index, (int)moveCacheEnableMove.reverseInfo.size(), "Move::GetReverseInfoByIndex index over");
+	return moveCacheEnableMove.reverseInfo[index];
+	// 旧
+	/*
 	reversi::Assert::AssertArrayRange(index, (int)moveCache.reverseInfo.size(), "Move::GetReverseInfoByIndex index over");
 	return moveCache.reverseInfo[index];
+	*/
 }
 
 /**
@@ -164,7 +184,11 @@ const reversi::ReverseInfo& reversi::Move::GetReverseInfoByIndex(int index) cons
  * @return 裏返し情報データ数
  */
 int reversi::Move::GetReverseInfoSize() const {
+	return (int)moveCacheEnableMove.reverseInfo.size();
+	// 旧
+	/*
 	return (int)moveCache.reverseInfo.size();
+	*/
 }
 
 /**
