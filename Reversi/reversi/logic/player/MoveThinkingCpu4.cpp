@@ -1,7 +1,9 @@
 ﻿#include <iostream>
 #include "MoveThinkingCpu4.h"
-#include "../../util/IOutputConsole.h"
+#include "../../util/OutputConsole.h"
 #include "../../util/Assert.h"
+#include "../../util/PerformanceCounter.h"
+#include "../../util/StdStringFormatter.h"
 #include "ICalcBoardEvaluationPoint.h"
 #include "CalcBoardEvaluationPointByPosition.h"
 
@@ -21,13 +23,18 @@ const int reversi::MoveThinkingCpu4::STATIC_EVALUATION_POINTS[reversi::ReversiCo
 /**
  * コンストラクタ
  */
-reversi::MoveThinkingCpu4::MoveThinkingCpu4() {
+reversi::MoveThinkingCpu4::MoveThinkingCpu4() : console(NULL) {
+	console = new OutputConsole();
 }
 
 /**
  * デストラクタ
  */
 reversi::MoveThinkingCpu4::~MoveThinkingCpu4() {
+	if (console) {
+		delete console;
+		console = NULL;
+	}
 }
 
 /**
@@ -50,7 +57,8 @@ void reversi::MoveThinkingCpu4::InitializeMoveThinking(const reversi::Reversi& r
  * @return          trueなら思考が完了
  */
 bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-
+	reversi::PerformanceCounter c;
+	reversi::StdStringFormatter formatter;
 	// rootを作成
 	reversi::ThinkingNode root;
 	// root設定
@@ -63,8 +71,11 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 		root.SetThinkingDepth(0); // rootなので0
 	}
 
+	c.Start();
 	// rootの子ノードを作成
 	SetThinkingChildNode(&root, reversi, board, turn);
+	c.End();
+	console->PrintLine(formatter.Format("root child node %lf", c.GetDiff()));
 
 	reversi::ThinkingNode* node = &root;
 	int size = node->GetChildSize();
@@ -121,22 +132,6 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	// 着手情報を入力
 	move.Copy(moveInfo);
 	return true;
-
-	/*
-	const reversi::ReverseInfo& reverseInfo = reversiMove.GetReverseInfoByIndex(useIndex);
-	// 着手情報を確定
-	reversi::MoveInfo::MOVE_INFO moveInfoData;
-	moveInfoData.position = reverseInfo.GetPosition();
-	moveInfoData.info = GetTurnToStone(turn);
-	moveInfoData.turn = turn;
-	reversi::MoveInfo moveInfo(moveInfoData, reverseInfo);
-	// 着手情報を入力
-	move.Copy(moveInfo);
-	*/
-
-
-
-	//return false;
 }
 
 reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(reversi::ReversiConstant::TURN turn) {
@@ -148,6 +143,8 @@ reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(r
 }
 
 void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn) {
+	reversi::PerformanceCounter c;
+	reversi::StdStringFormatter formatter;
 
 	reversi::ReversiConstant::POSITION moveEnablePositions[MOVE_ENABLE_DATA_SIZE];
 	int moveEnableCount = 0;
@@ -167,8 +164,11 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 	// 今の手番
 	reversi::ReversiConstant::TURN turn = reversi.GetTurn();
 
+	c.Start();
 	// 打てる位置を取得
 	GetMoveEnableData(moveEnablePositions, moveEnableCount, MOVE_ENABLE_DATA_SIZE, reverseInfos, reverseInfoCount, board, turn);
+	c.End();
+	console->PrintLine(formatter.Format("SetThinkingChildNode GetMoveEnableData %lf", c.GetDiff()));
 
 	// どこにも打てない
 	if (moveEnableCount == 0) {
@@ -178,35 +178,15 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 	// 打てる場所分childを作成
 	int size = moveEnableCount;
 	for (int i = 0; i < size; ++i) {
+		c.Start();
 		reversi::Assert::AssertArrayRange(i, size, "MoveThinkingCpu4::SetThinkingChildNode moveEnablePositions index over");
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		// リバーシをコピー
 		reversi::Reversi childReversi;
 		childReversi.CopyWithoutDynamicInstance(reversi);
 		childReversi.SetOutputEnable(false); // 出力はoffにする
-
-		/*
-		// リバーシを着手シーンまで進める
-		bool taskLoop = true;
-		bool isEnded = false; // 対局が終わっている
-		while (taskLoop) {
-			childReversi.Task();
-			// 終局してないかチェック
-			if ((childReversi.GetScene() == reversi::Reversi::SCENE::RESULT)
-				|| (childReversi.GetScene() == reversi::Reversi::SCENE::END)) {
-				isEnded = true;
-				taskLoop = false;
-			}
-			if (childReversi.GetScene() == reversi::Reversi::SCENE::MOVE_SELECT_START) {
-				// 着手シーンに進んでいるのでタスク進行終了
-				taskLoop = false;
-			}
-		}
-		if (isEnded) {
-			// 終局していたらNodeを作成しても意味がないので作らない
-			continue;
-		}
-		*/
+		c.End();
+		console->PrintLine(formatter.Format("SetThinkingChildNode CopyReversi %lf", c.GetDiff()));
 
 		// 着手を作成
 		reversi::MoveInfo::MOVE_INFO moveInfoData;
@@ -215,10 +195,14 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		moveInfoData.turn = childReversi.GetTurn(); // ゲーム上の手番
 		reversi::MoveInfo moveInfo(moveInfoData, reverseInfos[i]);		
 
+		c.Start();
 		// 着手
 		childReversi.SetMoveSimulation(moveInfo);
 		childReversi.Task();
+		c.End();
+		console->PrintLine(formatter.Format("SetThinkingChildNode Move %lf", c.GetDiff()));
 
+		c.Start();
 		// リバーシを次の着手シーンまで進める
 		bool taskLoop = true;
 		bool isEnded = false; // 対局が終わっている
@@ -235,12 +219,19 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 				taskLoop = false;
 			}
 		}
+		c.End();
+		console->PrintLine(formatter.Format("SetThinkingChildNode Scene %lf", c.GetDiff()));
 
+		c.Start();
 		child->CopyReversi(childReversi);
 		child->SetMovePosition(moveInfoData.position);
 		child->SetTurn(moveInfoData.turn);
 		child->SetThinkingDepth(node->GetThinkingDepth() + 1);
+		c.End();
+		console->PrintLine(formatter.Format("SetThinkingChildNode Set %lf", c.GetDiff()));
 
+
+		c.Start();
 		// 評価値計算
 		ICalcBoardEvaluationPoint* calcEval = new CalcBoardEvaluationPointByPosition();
 		int blackEval = 0, whiteEval = 0;
@@ -257,6 +248,8 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 			eval = whiteEval;
 		}
 		child->SetEvaluationPoint(eval);
+		c.End();
+		console->PrintLine(formatter.Format("SetThinkingChildNode CalcEval %lf", c.GetDiff()));
 
 		// 親のノードにつなげる
 		node->AddChild(child);

@@ -6,6 +6,7 @@
 #include "../base/MoveInfo.h"
 #include "../base/Move.h"
 #include "../base/ThinkingNode.h"
+#include "../../util/IOutputConsole.h"
 
 // 前方宣言
 namespace reversi {
@@ -64,7 +65,7 @@ private:
 	void GetMoveEnableData(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, reversi::ReverseInfo* reverseInfos, int& reverseInfoCount, const reversi::Board& board, reversi::ReversiConstant::TURN turn);
 
 private:
-	//reversi::Move reversiMove;
+	reversi::IOutputConsole* console;
 
 };
 

@@ -248,11 +248,13 @@ void reversi::Reversi::TaskMoveSelect() {
 			isSetSimulationMove = false;
 		}
 
-		if (!IsCurrentPlayerTurnMan(turn)) {
-			// CPUなら着手を出力する
-			std::string positionString;
-			if (reversi::ReversiConstant::GetPositionToString(move.GetMoveInfo().position, positionString)) {
-				PrintLine(positionString);
+		if (outputEnable) {
+			if (!IsCurrentPlayerTurnMan(turn)) {
+				// CPUなら着手を出力する
+				std::string positionString;
+				if (reversi::ReversiConstant::GetPositionToString(move.GetMoveInfo().position, positionString)) {
+					PrintLine(positionString);
+				}
 			}
 		}
 		SetScene(reversi::Reversi::SCENE::MOVE_AFTER);
