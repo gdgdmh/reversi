@@ -9,11 +9,10 @@ namespace reversi {
 // 着手情報クラス
 class MoveInfo {
 public:
-
 	// 着手情報
 	typedef struct {
 		reversi::ReversiConstant::POSITION position;    // 位置
-		reversi::ReversiConstant::BOARD_INFO info;  // 着手する石
+		reversi::ReversiConstant::BOARD_INFO info;      // 着手する石
 		reversi::ReversiConstant::TURN turn;            // 手番
 	} MOVE_INFO;
 
@@ -64,8 +63,8 @@ public:
 	}
 
 private:
-	MOVE_INFO moveInfo;
-	reversi::ReverseInfo reverseInfo;
+	MOVE_INFO moveInfo;                 // 着手情報
+	reversi::ReverseInfo reverseInfo;   // 裏返し情報
 };
 
 }
