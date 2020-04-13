@@ -40,7 +40,7 @@ public:
 	int Get(int min, int max);
 
 private:
-	std::mt19937 mt;
+	std::mt19937 mt; // メルセンヌツイスタ
 };
 
 }

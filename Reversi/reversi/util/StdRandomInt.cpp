@@ -1,7 +1,5 @@
-﻿#include "StdRandomInt.h"
-#include <time.h>
-//#include "OutputConsole.h"
-//#include "OutputVisualStudioConsole.h"
+﻿#include <time.h>
+#include "StdRandomInt.h"
 
 /**
  * コンストラクタ
