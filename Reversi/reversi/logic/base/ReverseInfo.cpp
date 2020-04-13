@@ -14,6 +14,9 @@ reversi::ReverseInfo::ReverseInfo(reversi::ReversiConstant::POSITION position, r
 	info.turn = turn;
 }
 
+/**
+ * デフォルトコンストラクタ
+ */
 reversi::ReverseInfo::ReverseInfo() {
 	Clear();
 }
@@ -33,10 +36,10 @@ void reversi::ReverseInfo::Clear() {
 		for (int j = 0; j < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++j) {
 			reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::Clear index over i");
 			reversi::Assert::AssertArrayRange(j, reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT, "ReverseInfo::Clear index over j");
+			// A1で初期化
 			info.reversePositions[i][j] = reversi::ReversiConstant::POSITION::A1;
 		}
 	}
-
 	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
 		reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::Clear index over count i");
 		info.reversePositionCount[i] = 0;
@@ -69,8 +72,6 @@ void reversi::ReverseInfo::AddReversePosition(reversi::ReverseInfo::DIRECTION di
 void reversi::ReverseInfo::ClearReversePosition(reversi::ReverseInfo::DIRECTION direction) {
 	int directionInt = (int)direction;
 	reversi::Assert::AssertArrayRange(directionInt, reversi::ReverseInfo::MAX_DIRECTION, "ReverseInfo::ClearReversePosition index over direction");
-
-
 	for (int i = 0; i < reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT; ++i) {
 		info.reversePositions[directionInt][i] = reversi::ReversiConstant::POSITION::A1;
 	}
@@ -94,7 +95,6 @@ reversi::ReversiConstant::POSITION reversi::ReverseInfo::GetReversePosition(reve
  */
 std::vector<reversi::ReversiConstant::POSITION> reversi::ReverseInfo::GetReversePositionAllDirection() const {
 	std::vector<reversi::ReversiConstant::POSITION> positions;
-
 	for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
 		int size = GetReversePositionCount((reversi::ReverseInfo::DIRECTION)i);
 		for (int j = 0; j < size; ++j) {

@@ -8,28 +8,26 @@ namespace reversi {
 // 裏返し情報
 class ReverseInfo {
 public:
-
 	// 方向
 	enum class DIRECTION {
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT,
-		UP_LEFT,
-		UP_RIGHT,
-		DOWN_LEFT,
-		DOWN_RIGHT
+		UP,         // 上
+		DOWN,       // 下
+		LEFT,       // 左
+		RIGHT,      // 右
+		UP_LEFT,    // 左上
+		UP_RIGHT,   // 右上
+		DOWN_LEFT,  // 左下
+		DOWN_RIGHT  // 右下
 	};
 	static const int MAX_DIRECTION = 8; // 方向最大数
 
 	// 裏返し情報
 	typedef struct {
-		reversi::ReversiConstant::POSITION position; // 打つ位置
-		reversi::ReversiConstant::POSITION reversePositions[ReverseInfo::MAX_DIRECTION][reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT]; // 打ったことで裏返る位置
-		int reversePositionCount[ReverseInfo::MAX_DIRECTION]; // 裏返る位置の数
-		reversi::ReversiConstant::TURN turn; // 手番情報
+		reversi::ReversiConstant::POSITION position;            // 打つ位置
+		reversi::ReversiConstant::POSITION reversePositions[ReverseInfo::MAX_DIRECTION][reversi::ReversiConstant::ONE_MOVE_MAX_REVERSE_COUNT];  // 打ったことで裏返る位置
+		int reversePositionCount[ReverseInfo::MAX_DIRECTION];   // 裏返る位置の数
+		reversi::ReversiConstant::TURN turn;                    // 手番情報
 	} REVERSE_INFO;
-
 public:
 
 	/**
@@ -39,6 +37,9 @@ public:
 	 */
 	ReverseInfo(reversi::ReversiConstant::POSITION position, reversi::ReversiConstant::TURN turn);
 
+	/**
+	 * デフォルトコンストラクタ
+	 */
 	ReverseInfo();
 
 	/**
@@ -85,7 +86,6 @@ public:
 	 */
 	std::vector<reversi::ReversiConstant::POSITION> GetReversePositionAllDirection() const;
 
-
 	/**
 	 * 裏返る位置の数の取得
 	 * @param  direction 方向
@@ -114,7 +114,7 @@ public:
 	bool IsEnableMove() const;
 
 private:
-	REVERSE_INFO info;
+	REVERSE_INFO info;  // 裏返し情報
 };
 
 }
