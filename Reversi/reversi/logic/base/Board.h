@@ -15,7 +15,7 @@ class IOutputConsole;
 
 namespace reversi {
 
-//  8x8の盤だが斜め判定を考慮して全体を無効マスで囲う用にしている(Xが無効マス)
+//  8x8の盤だが判定を考慮して全体を無効マスで囲う用にしている(Xが無効マス)
 // XXXXXXXXXX
 // X--------X
 // X--------X

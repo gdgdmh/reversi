@@ -95,8 +95,10 @@ bool reversi::KeyboardSelectCpuLevel::IsWrongInput() {
 bool reversi::KeyboardSelectCpuLevel::CheckInputStringLevel(const std::string& checkString, int& selectCpuLevel) {
 	for (int i = 0; i < LEVEL_PATTERN_COUNT; ++i) {
 		reversi::Assert::AssertArrayRange(i, LEVEL_PATTERN_COUNT, "KeyboardSelectCpuLevel::CheckInputStringLevel index over yes");
+		// 文字列一致をチェック
 		if (checkString == LEVEL_STRINGS[i]) {
 			isSelected = true;
+			// intへ変換
 			selectCpuLevel = std::stoi(checkString);
 			return true;
 		}

@@ -31,9 +31,7 @@ public:
 	void Task();
 
 private:
-	reversi::Reversi reversi;
-	reversi::ReversiGameScene reversiGameScene;
-
+	reversi::ReversiGameScene reversiGameScene; // リバーシゲーム
 };
 
 }

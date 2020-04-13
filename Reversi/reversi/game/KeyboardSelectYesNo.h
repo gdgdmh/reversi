@@ -9,10 +9,10 @@ namespace reversi {
 // キーボードによるYesNo選択クラス
 class KeyboardSelectYesNo : public ISelectYesNo {
 private:
-	static const int YES_UPPER_PATTERN_COUNT = 2;
-	static const std::string YES_UPPER_STRINGS[YES_UPPER_PATTERN_COUNT]; // Yesとみなす大文字文字列パターン
-	static const int NO_UPPER_PATTERN_COUNT = 2;
-	static const std::string NO_UPPER_STRINGS[NO_UPPER_PATTERN_COUNT]; // Noとみなす大文字文字列パターン
+	static const int YES_UPPER_PATTERN_COUNT = 2;                           // Yesのパターン
+	static const std::string YES_UPPER_STRINGS[YES_UPPER_PATTERN_COUNT];    // Yesとみなす大文字文字列パターン
+	static const int NO_UPPER_PATTERN_COUNT = 2;                            // Noのパターン
+	static const std::string NO_UPPER_STRINGS[NO_UPPER_PATTERN_COUNT];      // Noとみなす大文字文字列パターン
 public:
 
 	/**
@@ -56,7 +56,7 @@ public:
 private:
 
 	/**
-	 * YesかNoと解釈できる文字列が指定されたかチェックスル
+	 * YesかNoと解釈できる文字列が指定されたかチェックする
 	 * @param  checkString チェックする文字列
 	 * @return             trueなら正しい文字列が指定された
 	 */
@@ -77,9 +77,9 @@ private:
 
 private:
 	reversi::IInputKeyboard* inputKeyboard; // キーボード入力クラス
-	bool isSelected;	// 入力が完了したか(isWrongInputの場合にはフラグが立たない)
-	bool isYes;			// Yesを入力したか
-	bool isWrongInput;	// 間違った入力をしたか
+	bool isSelected;                        // 入力が完了したか(isWrongInputの場合にはフラグが立たない)
+	bool isYes;                             // Yesを入力したか
+	bool isWrongInput;                      // 間違った入力をしたか
 
 };
 

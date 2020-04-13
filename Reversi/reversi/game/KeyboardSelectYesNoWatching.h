@@ -9,18 +9,18 @@ namespace reversi {
 // キーボードによるYes,No,Watching選択クラス
 class KeyboardSelectYesNoWatching : public ISelectYesNoWatching {
 private:
-	static const int YES_UPPER_PATTERN_COUNT = 2;
-	static const std::string YES_UPPER_STRINGS[YES_UPPER_PATTERN_COUNT]; // Yesとみなす大文字文字列パターン
-	static const int NO_UPPER_PATTERN_COUNT = 2;
-	static const std::string NO_UPPER_STRINGS[NO_UPPER_PATTERN_COUNT]; // Noとみなす大文字文字列パターン
-	static const int WATCHING_UPPER_PATTERN_COUNT = 2;
-	static const std::string WATCHING_UPPER_STRINGS[NO_UPPER_PATTERN_COUNT]; // Watchingとみなす大文字文字列パターン
-
+	static const int YES_UPPER_PATTERN_COUNT = 2;                           // Yesパターン
+	static const std::string YES_UPPER_STRINGS[YES_UPPER_PATTERN_COUNT];    // Yesとみなす大文字文字列パターン
+	static const int NO_UPPER_PATTERN_COUNT = 2;                            // Noパターン
+	static const std::string NO_UPPER_STRINGS[NO_UPPER_PATTERN_COUNT];      // Noとみなす大文字文字列パターン
+	static const int WATCHING_UPPER_PATTERN_COUNT = 2;                      // Watchパターン
+	static const std::string WATCHING_UPPER_STRINGS[NO_UPPER_PATTERN_COUNT];// Watchingとみなす大文字文字列パターン
+	// 選択
 	enum class SELECT_REPLY {
-		NONE,		// 未入力
-		YES,		// はい
-		NO,			// いいえ
-		WATCHING	// 観戦
+		NONE,       // 未入力
+		YES,        // はい
+		NO,         // いいえ
+		WATCHING    // 観戦
 	};
 public:
 
@@ -91,9 +91,9 @@ private:
 	void TransformStringUpper(std::string& targetString);
 
 private:
-	reversi::IInputKeyboard* inputKeyboard; // キーボード入力クラス
+	reversi::IInputKeyboard* inputKeyboard;                         // キーボード入力クラス
 	reversi::KeyboardSelectYesNoWatching::SELECT_REPLY selectReply; // 選択した返答
-	bool isWrongInput;  // 間違った入力をしたか
+	bool isWrongInput;                                              // 間違った入力をしたか
 
 };
 

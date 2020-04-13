@@ -135,6 +135,7 @@ bool reversi::KeyboardSelectYesNoWatching::CheckInputStringType(const std::strin
 	for (int i = 0; i < YES_UPPER_PATTERN_COUNT; ++i) {
 		reversi::Assert::AssertArrayRange(i, YES_UPPER_PATTERN_COUNT, "KeyboardSelectYesNoWatching::CheckInputStringType index over yes");
 		if (upperString == YES_UPPER_STRINGS[i]) {
+			// yesの入力があった
 			reply = reversi::KeyboardSelectYesNoWatching::SELECT_REPLY::YES;
 			return true;
 		}
@@ -142,6 +143,7 @@ bool reversi::KeyboardSelectYesNoWatching::CheckInputStringType(const std::strin
 	for (int i = 0; i < NO_UPPER_PATTERN_COUNT; ++i) {
 		reversi::Assert::AssertArrayRange(i, NO_UPPER_PATTERN_COUNT, "KeyboardSelectYesNoWatching::CheckInputStringType index over no");
 		if (upperString == NO_UPPER_STRINGS[i]) {
+			// noの入力があった
 			reply = reversi::KeyboardSelectYesNoWatching::SELECT_REPLY::NO;
 			return true;
 		}
@@ -149,13 +151,14 @@ bool reversi::KeyboardSelectYesNoWatching::CheckInputStringType(const std::strin
 	for (int i = 0; i < WATCHING_UPPER_PATTERN_COUNT; ++i) {
 		reversi::Assert::AssertArrayRange(i, WATCHING_UPPER_PATTERN_COUNT, "KeyboardSelectYesNoWatching::CheckInputStringType index over watching");
 		if (upperString == WATCHING_UPPER_STRINGS[i]) {
+			// watchingの入力があった
 			reply = reversi::KeyboardSelectYesNoWatching::SELECT_REPLY::WATCHING;
 			return true;
 		}
 	}
+	// 間違った入力
 	isWrongInput = true;
 	return false;
-
 }
 
 /**
