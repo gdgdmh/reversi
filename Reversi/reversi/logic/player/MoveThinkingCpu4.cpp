@@ -145,7 +145,8 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 
 	reversi::ReversiConstant::POSITION moveEnablePositions[MOVE_ENABLE_DATA_SIZE];
 	int moveEnableCount = 0;
-	reversi::ReverseInfo reverseInfos[MOVE_ENABLE_DATA_SIZE];
+	// かなりの大きさがあるのでヒープで確保する
+	reversi::ReverseInfo* reverseInfos = new reversi::ReverseInfo[MOVE_ENABLE_DATA_SIZE];
 	int reverseInfoCount = 0;
 	// 初期化(reverseInfoは不要)
 	for (int i = 0; i < MOVE_ENABLE_DATA_SIZE; ++i) {
@@ -155,6 +156,10 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 
 	// 終局している
 	if ((reversi.GetScene() == reversi::Reversi::SCENE::END) || (reversi.GetScene() == reversi::Reversi::SCENE::RESULT)) {
+		if (reverseInfos) {
+			delete[] reverseInfos;
+			reverseInfos = NULL;
+		}
 		return;
 	}
 
@@ -169,6 +174,10 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 
 	// どこにも打てない
 	if (moveEnableCount == 0) {
+		if (reverseInfos) {
+			delete[] reverseInfos;
+			reverseInfos = NULL;
+		}
 		return;
 	}
 
@@ -252,8 +261,10 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		// 親のノードにつなげる
 		node->AddChild(child);
 	}
-
-
+	if (reverseInfos) {
+		delete[] reverseInfos;
+		reverseInfos = NULL;
+	}
 }
 
 // 着手可能情報を取得する
