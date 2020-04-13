@@ -8,7 +8,6 @@ namespace reversi {
 // プレイヤー位置選択インターフェース
 class IPlayerSelectPosition {
 public:
-
 	/**
 	 * デストラクタ
 	 */

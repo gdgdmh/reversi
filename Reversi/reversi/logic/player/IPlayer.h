@@ -51,7 +51,6 @@ public:
 	 * 着手後に呼ばれる
 	 */
 	virtual void EventMoveAfter() = 0;
-
 };
 
 }
