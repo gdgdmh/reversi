@@ -30,6 +30,7 @@ protected:
 
 	/**
 	 * 条件のチェックの成否をチェックして失敗したときはメッセージを表示する
+	 * メソッド内ではプログラム停止をしないので注意
 	 * @param expected 条件チェックした値(0なら失敗とする)
 	 * @param message  失敗した際のメッセージ
 	 * @return          falseなら失敗
@@ -37,9 +38,7 @@ protected:
 	bool AssertEqual(int expected, std::string message);
 
 protected:
-
-	reversi::IOutputConsole* outputConsole;
-
+	reversi::IOutputConsole* outputConsole; // コンソール出力
 };
 
 }
