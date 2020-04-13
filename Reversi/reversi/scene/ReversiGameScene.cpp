@@ -177,7 +177,14 @@ void reversi::ReversiGameScene::TaskReversiTask() {
 	reversi.Task();
 	if (reversi.GetScene() == reversi::Reversi::SCENE::END) {
 		if (IsPlayerWin()) {
+			// プレイヤーの勝ち
 			OutputPlayerWinMessage();
+		} else if (IsPlayerLose()) {
+			// プレイヤーの負け
+			OutputPlayerLoseMessage();
+		} else if (IsPlayerDraw()) {
+			// プレイヤーの引き分け
+			OutputPlayerDrawMessage();
 		}
 		// 再対局確認
 		console->PrintLine("再対局しますか？(入力例 Yes または No)");
@@ -298,8 +305,64 @@ bool reversi::ReversiGameScene::IsPlayerWin() {
 }
 
 /**
+ * プレイヤーが負けたか
+ * @return trueならプレイヤーの勝ち
+ */
+bool reversi::ReversiGameScene::IsPlayerLose() {
+	// 終了していないときに呼び出してはいけない
+	reversi::Assert::AssertEquals(reversi.GetScene() == reversi::Reversi::SCENE::END, "ReversiGameScene::IsPlayerWin invalid scene called");
+	reversi::Reversi::RESULT result = reversi.GetResult();
+	reversi::Reversi::PLAYER_SETTING playerSetting = reversi.GetPlayerSetting();
+	if (playerSetting.playerType[reversi::Reversi::PLAYER_BLACK] == reversi::Reversi::PLAYER::MAN) {
+		if (result == reversi::Reversi::RESULT::WHITE) {
+			// プレイヤーが黒で白の勝ち
+			return true;
+		}
+	}
+	if (playerSetting.playerType[reversi::Reversi::PLAYER_WHITE] == reversi::Reversi::PLAYER::MAN) {
+		if (result == reversi::Reversi::RESULT::BLACK) {
+			// プレイヤーが白で黒の勝ち
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * プレイヤーが引き分けだったか
+ * @return trueならプレイヤーが引き分けだった
+ */
+bool reversi::ReversiGameScene::IsPlayerDraw() {
+	// 終了していないときに呼び出してはいけない
+	reversi::Assert::AssertEquals(reversi.GetScene() == reversi::Reversi::SCENE::END, "ReversiGameScene::IsPlayerWin invalid scene called");
+	reversi::Reversi::RESULT result = reversi.GetResult();
+	reversi::Reversi::PLAYER_SETTING playerSetting = reversi.GetPlayerSetting();
+	if ((playerSetting.playerType[reversi::Reversi::PLAYER_BLACK] == reversi::Reversi::PLAYER::MAN)
+	    || (playerSetting.playerType[reversi::Reversi::PLAYER_WHITE] == reversi::Reversi::PLAYER::MAN)) {
+		if (result == reversi::Reversi::RESULT::DRAW) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * プレイヤーの勝利メッセージを表示
  */
 void reversi::ReversiGameScene::OutputPlayerWinMessage() {
 	console->PrintLine("あなたの勝ちです!おめでとうございます!");
+}
+
+/**
+ * プレイヤーの敗北メッセージを表示
+ */
+void reversi::ReversiGameScene::OutputPlayerLoseMessage() {
+	console->PrintLine("あなたは負けてしまいました、また挑戦してみましょう!");
+}
+
+/**
+ * プレイヤーの引き分けメッセージを表示
+ */
+void reversi::ReversiGameScene::OutputPlayerDrawMessage() {
+	console->PrintLine("今回は引き分けでした、次は勝ちましょう!");
 }

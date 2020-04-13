@@ -112,9 +112,31 @@ private:
 	bool IsPlayerWin();
 
 	/**
+	 * プレイヤーが負けたか
+	 * @return trueならプレイヤーの勝ち
+	 */
+	bool IsPlayerLose();
+
+	/**
+	 * プレイヤーが引き分けだったか
+	 * @return trueならプレイヤーが引き分けだった
+	 */
+	bool IsPlayerDraw();
+
+	/**
 	 * プレイヤーの勝利メッセージを表示
 	 */
 	void OutputPlayerWinMessage();
+
+	/**
+	 * プレイヤーの敗北メッセージを表示
+	 */
+	void OutputPlayerLoseMessage();
+
+	/**
+	 * プレイヤーの引き分けメッセージを表示
+	 */
+	void OutputPlayerDrawMessage();
 
 private:
 	reversi::IOutputConsole* console;                   // コンソール出力
