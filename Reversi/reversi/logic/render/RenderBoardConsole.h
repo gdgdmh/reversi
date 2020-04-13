@@ -28,6 +28,11 @@ public:
 
 private:
 
+	/**
+	 * 盤コンソール描画
+	 * @param board  盤
+	 * @param output コンソール出力クラス
+	 */
 	void RenderConsole(const Board& board, IOutputConsole* const output);
 
 	/**
@@ -71,8 +76,7 @@ private:
 
 
 private:
-
-	IOutputConsole* outputConsole;
+	IOutputConsole* outputConsole; // コンソール出力
 };
 
 }
