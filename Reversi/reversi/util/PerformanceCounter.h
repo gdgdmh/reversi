@@ -6,6 +6,7 @@
 namespace reversi {
 
 // パフォーマンスカウンタクラス
+// Windows環境に依存しているので他環境では外すことを検討
 class PerformanceCounter {
 public:
 	/**
@@ -33,7 +34,6 @@ public:
 	 * @return StartとEndの時間差分
 	 */
 	double GetDiff() const;
-
 private:
 	LARGE_INTEGER frequency;    // 周波数
 	LARGE_INTEGER start;        // 開始時間

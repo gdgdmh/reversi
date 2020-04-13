@@ -1,5 +1,4 @@
 ﻿#include "PerformanceCounter.h"
-#include <windows.h>
 
 /**
  * コンストラクタ
