@@ -22,6 +22,7 @@ reversi::TestReversiCpu::~TestReversiCpu() {
  */
 bool reversi::TestReversiCpu::Execute() {
 
+	// 基本的にはAssertEqualでチェックはせず、連続対局させる
 	reversi::Reversi reversi;
 	reversi::Reversi::PLAYER_SETTING setting;
 	setting.playerType[reversi::Reversi::PLAYER_BLACK] = reversi::Reversi::PLAYER::CPU4; // 黒
@@ -62,4 +63,3 @@ bool reversi::TestReversiCpu::Execute() {
 
 	return true;
 }
-

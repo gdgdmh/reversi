@@ -5,7 +5,7 @@
 
 namespace reversi {
 
-// リバーシCPUテストクラス
+// リバーシCPU連続対局テストクラス
 class TestReversiCpu : public UnitTestBase {
 public:
 	/**
