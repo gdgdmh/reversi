@@ -20,9 +20,7 @@ private:
 	// 静的評価位置
 	// 石が置いてある場所によって評価をつける(ここの位置はいい、悪いなど)
 	static const int STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE];
-	// 参考元
-	static const int DEFAULT_STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE];
-	static const int DEFAULT_POINTS = -99999;
+	static const int DEFAULT_POINTS = -99999;   // 評価値チェックするときのデフォルト値
 public:
 	/**
 	 * コンストラクタ
@@ -57,11 +55,15 @@ public:
 
 private:
 
+	/**
+	 * 手番から石を取得
+	 * @param  turn 手番
+	 * @return      盤情報(石)
+	 */
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
 
 private:
-	reversi::Move reversiMove;
-
+	reversi::Move reversiMove; // 着手キャッシュ
 };
 
 }

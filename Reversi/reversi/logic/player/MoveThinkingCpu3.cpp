@@ -17,17 +17,6 @@ const int reversi::MoveThinkingCpu3::STATIC_EVALUATION_POINTS[reversi::ReversiCo
 	-30,  -40,  -5,  -5,  -5,  -5, -40, -30,
 	60,  -30,  20,   5,  20,  20, -30,  60,
 };
-// 参考元
-const int reversi::MoveThinkingCpu3::DEFAULT_STATIC_EVALUATION_POINTS[reversi::ReversiConstant::POSITION_SIZE] = {
-	120,  -20,  20,   5,   5,  20, -20, 120,
-	-20,  -40,  -5,  -5,  -5,  -5, -40, -20,
-	20,   -5,  15,   3,   3,  15,  -5,  20,
-	5,   -5,   3,   3,   3,   3,  -5,   5,
-	5,   -5,   3,   3,   3,   3,  -5,   5,
-	20,   -5,  15,   3,   3,  15,  -5,  20,
-	-20,  -40,  -5,  -5,  -5,  -5, -40, -20,
-	120,  -20,  20,   5,  20,  20, -20, 120,
-};
 
 /**
  * コンストラクタ
@@ -61,7 +50,6 @@ void reversi::MoveThinkingCpu3::InitializeMoveThinking(const reversi::Reversi& r
  * @return          trueなら思考が完了
  */
 bool reversi::MoveThinkingCpu3::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-
 	reversi::ReversiConstant::POSITION maxPosition = reversi::ReversiConstant::POSITION::A1; // 仮
 	int currentPoint = DEFAULT_POINTS; // 現在の最高評価値
 	int reverseInfoIndex = 0;
@@ -102,6 +90,11 @@ bool reversi::MoveThinkingCpu3::MoveThinking(const reversi::Reversi& reversi, co
 	return true;
 }
 
+/**
+ * 手番から石を取得
+ * @param  turn 手番
+ * @return      盤情報(石)
+ */
 reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu3::GetTurnToStone(reversi::ReversiConstant::TURN turn) {
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		return reversi::ReversiConstant::BOARD_INFO::BLACK;
