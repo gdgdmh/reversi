@@ -25,9 +25,9 @@ bool reversi::TestMove::Execute() {
 	board.InitializeGame();
 
 	// 初期化した盤に対して空の位置を取得する(初期位置の石には置けない)
-    reversi::Move move;
+	reversi::Move move;
 	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
-    move.FindEmptyPosition(board, emptyPosition);
+	move.FindEmptyPosition(board, emptyPosition);
 
 	{
 		size_t size = emptyPosition.position.size();
@@ -47,23 +47,27 @@ bool reversi::TestMove::Execute() {
 		for (int i = 0; i < size; ++i) {
 			reversi::ReversiConstant::POSITION position = emptyPosition.position[i];
 			switch (position) {
-				// 黒はこの座標に打つことができる
+			// 黒はこの座標に打つことができる
 			case reversi::ReversiConstant::POSITION::D3:
 			case reversi::ReversiConstant::POSITION::C4:
 			case reversi::ReversiConstant::POSITION::F5:
 			case reversi::ReversiConstant::POSITION::E6:
-				{
-					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_BLACK);
-					AssertEqual(reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove black enable");
+			{
+				reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_BLACK);
+				if (!AssertEqual(reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove black enable")) {
+					return false;
 				}
-				break;
+			}
+			break;
 			default:
-				{
-					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_BLACK);
-					// 打てない
-					AssertEqual(!reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove black disable");
+			{
+				reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_BLACK);
+				// 打てない
+				if (!AssertEqual(!reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove black disable")) {
+					return false;
 				}
-				break;
+			}
+			break;
 			}
 		}
 	}
@@ -74,23 +78,27 @@ bool reversi::TestMove::Execute() {
 		for (int i = 0; i < size; ++i) {
 			reversi::ReversiConstant::POSITION position = emptyPosition.position[i];
 			switch (position) {
-				// 白はこの座標に打つことができる
+			// 白はこの座標に打つことができる
 			case reversi::ReversiConstant::POSITION::E3:
 			case reversi::ReversiConstant::POSITION::F4:
 			case reversi::ReversiConstant::POSITION::C5:
 			case reversi::ReversiConstant::POSITION::D6:
-				{
-					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_WHITE);
-					AssertEqual(reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove white enable");
+			{
+				reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_WHITE);
+				if (!AssertEqual(reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove white enable")) {
+					return false;
 				}
-				break;
+			}
+			break;
 			default:
-				{
-					reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_WHITE);
-					// 打てない
-					AssertEqual(!reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove white disable");
+			{
+				reversi::ReverseInfo reverseInfo = move.GetEnableMoveInfo(board, (int)position, reversi::ReversiConstant::TURN::TURN_WHITE);
+				// 打てない
+				if (!AssertEqual(!reverseInfo.IsEnableMove(), "TestMove::Execute invalid CheckEnableMove white disable")) {
+					return false;
 				}
-				break;
+			}
+			break;
 			}
 		}
 	}
@@ -114,16 +122,20 @@ bool reversi::TestMove::Execute() {
 			for (int i = 0; i < size; ++i) {
 				reversi::ReversiConstant::POSITION position = emptyPosition.position[i];
 				switch (position) {
-					// 黒はこの座標に打つことができる
+				// 黒はこの座標に打つことができる
 				case reversi::ReversiConstant::POSITION::D3:
 				case reversi::ReversiConstant::POSITION::C4:
 				case reversi::ReversiConstant::POSITION::F5:
 				case reversi::ReversiConstant::POSITION::E6:
-					AssertEqual(move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache black enable");
+					if (!AssertEqual(move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache black enable")) {
+						return false;
+					}
 					break;
 				default:
 					// 打てない
-					AssertEqual(!move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache black disable");
+					if (!AssertEqual(!move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache black disable")) {
+						return false;
+					}
 					break;
 				}
 			}
@@ -138,25 +150,24 @@ bool reversi::TestMove::Execute() {
 			for (int i = 0; i < size; ++i) {
 				reversi::ReversiConstant::POSITION position = emptyPosition.position[i];
 				switch (position) {
-					// 白はこの座標に打つことができる
+				// 白はこの座標に打つことができる
 				case reversi::ReversiConstant::POSITION::E3:
 				case reversi::ReversiConstant::POSITION::F4:
 				case reversi::ReversiConstant::POSITION::C5:
 				case reversi::ReversiConstant::POSITION::D6:
-					AssertEqual(move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache white enable");
+					if (!AssertEqual(move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache white enable")) {
+						return false;
+					}
 					break;
 				default:
 					// 打てない
-					AssertEqual(!move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache white disable");
+					if (!AssertEqual(!move.CheckEnableMoveByCache(position), "TestMove::Execute invalid CheckEnableMoveByCache white disable")) {
+						return false;
+					}
 					break;
 				}
 			}
 		}
-
 	}
-
-
-
 	return true;
 }
-
