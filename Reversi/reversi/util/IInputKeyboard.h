@@ -21,6 +21,7 @@ public:
 	 */
 	virtual std::string GetStringLine() = 0;
 };
+
 }
 
 #endif  // REVERSI_UTIL_IINPUTKEYBOARD_H_
