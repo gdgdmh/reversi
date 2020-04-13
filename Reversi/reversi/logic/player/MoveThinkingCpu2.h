@@ -52,6 +52,11 @@ public:
 
 private:
 
+	/**
+	 * 手番から石を取得
+	 * @param  turn 手番
+	 * @return      盤情報(石)
+	 */
 	reversi::ReversiConstant::BOARD_INFO GetTurnToStone(reversi::ReversiConstant::TURN turn);
 
 	/**
@@ -70,8 +75,7 @@ private:
 	bool CheckPutEnableCornerIndex(int& cornerIndex, const reversi::Move& move);
 
 private:
-	reversi::Move reversiMove;
-
+	reversi::Move reversiMove;  // 着手キャッシュ
 };
 
 }

@@ -73,10 +73,14 @@ bool reversi::MoveThinkingCpu2::MoveThinking(const reversi::Reversi& reversi, co
 	reversi::MoveInfo moveInfo(moveInfoData, reverseInfo);
 	// 着手情報を入力
 	move.Copy(moveInfo);
-
 	return true;
 }
 
+/**
+ * 手番から石を取得
+ * @param  turn 手番
+ * @return      盤情報(石)
+ */
 reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu2::GetTurnToStone(reversi::ReversiConstant::TURN turn) {
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		return reversi::ReversiConstant::BOARD_INFO::BLACK;
