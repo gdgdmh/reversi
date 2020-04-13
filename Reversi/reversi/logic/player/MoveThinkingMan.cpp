@@ -41,6 +41,7 @@ void reversi::MoveThinkingMan::InitializeMoveThinking(const reversi::Reversi& re
 	reversiMove = moveCache;
 
 	if (!useHint) {
+		// ヒントを使わないので何もしない
 		return;
 	}
 	// ヒント
@@ -63,9 +64,8 @@ void reversi::MoveThinkingMan::InitializeMoveThinking(const reversi::Reversi& re
  * @return          trueなら思考が完了
  */
 bool reversi::MoveThinkingMan::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-
-	// 入力
 	reversi::ReversiConstant::POSITION position = reversi::ReversiConstant::POSITION::A1;
+	// 位置入力取得
 	if (GetPositionByInput(position)) {
 		// 入力した
 		if (reversiMove.CheckEnableMoveByCache(position)) {
@@ -112,7 +112,6 @@ reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingMan::GetTurnToStone(re
  * @return      trueなら置くことができる
  */
 bool reversi::MoveThinkingMan::CheckPutEnableCorner(const reversi::Move& move) {
-
 	const int CORNER_COUNT = 4;
 	// 角の位置
 	reversi::ReversiConstant::POSITION cornerPositions[CORNER_COUNT] = {
@@ -157,7 +156,6 @@ void reversi::MoveThinkingMan::OutputHintMessageCorner() {
  * @return            trueなら多くの石の獲得チャンスがある
  */
 bool reversi::MoveThinkingMan::CheckGetManyStoneChance(const reversi::Move& move, int stoneCount) {
-
 	// stoneCount以上に取れる箇所を探す
 	int size = move.GetReverseInfoSize();
 	for (int i = 0; i < size; ++i) {

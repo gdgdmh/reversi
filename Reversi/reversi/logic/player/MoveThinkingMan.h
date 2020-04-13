@@ -16,6 +16,8 @@ class Board;
 namespace reversi {
 
 // プレイヤー(MAN)思考クラス
+// キーボードから着手位置の入力を取って着手を設定する
+// また、ヒント機能も搭載(角を取れるか、大量獲得できるか)
 class MoveThinkingMan : public IMoveThinking {
 public:
 	static const int HINT_GET_STONE_COUNT = 5; // ヒントが表示される石獲得数
@@ -92,7 +94,6 @@ private:
 	 * 多くの石が置けるヒントメッセージ表示
 	 */
 	void OutputHintMessageManyStoneChance();
-
 
 private:
 	reversi::Move reversiMove;                              // 着手情報
