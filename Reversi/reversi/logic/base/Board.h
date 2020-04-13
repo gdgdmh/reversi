@@ -30,12 +30,9 @@ namespace reversi {
 class Board {
 public:
 	typedef struct {
-		// 盤
-		int boardData[ReversiConstant::BOARD_SIZE];
-		// 盤のXサイズ
-		int boardSizeX;
-		// 盤のYサイズ
-		int boardSizeY;
+		int boardData[ReversiConstant::BOARD_SIZE]; // 盤
+		int boardSizeX;                             // 盤のXサイズ
+		int boardSizeY;                             // 盤のYサイズ
 	} BOARD;
 public:
 	/**
@@ -56,7 +53,6 @@ public:
 	/**
 	 * 着手処理
 	 * @param  moveInfo    着手情報
-	 * @param  reverseInfo 裏返し情報
 	 * @return             trueなら正常 falseなら何かしらの理由で失敗
 	 */
 	bool Move(reversi::MoveInfo moveInfo);
@@ -89,7 +85,7 @@ public:
 	const BOARD& GetRawData() const;
 
 	/**
-	 * DeepCopy
+	 * クローンを作成
 	 * @return 複製データ
 	 */
 	Board Clone() const;
@@ -165,8 +161,8 @@ private:
 	void ReverseStone(reversi::ReversiConstant::POSITION position);
 
 private:
-	BOARD board; // 盤情報
-	IRenderBoard* renderBoard; // 盤表示インターフェース
+	BOARD board;                // 盤情報
+	IRenderBoard* renderBoard;  // 盤表示インターフェース
 };
 
 }

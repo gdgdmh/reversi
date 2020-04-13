@@ -35,7 +35,6 @@ void reversi::Board::InitializeGame() {
 /**
  * 着手処理
  * @param  moveInfo    着手情報
- * @param  reverseInfo 裏返し情報
  * @return             trueなら正常 falseなら何かしらの理由で失敗
  */
 bool reversi::Board::Move(reversi::MoveInfo moveInfo) {
@@ -64,40 +63,8 @@ bool reversi::Board::Move(reversi::MoveInfo moveInfo) {
 			ReverseStone(position);
 		}
 	}
-
 	return true;
-
 }
-/*
-   bool reversi::Board::Move(ReversiConstant::MOVE_INFO moveInfo, const reversi::ReverseInfo reverseInfo) {
-
-    reversi::Assert::AssertEquals(moveInfo.position == reverseInfo.GetPosition(), "Board::Move position not same");
-
-    // 着手位置のマスをチェック
-    if (!CheckEmpty(moveInfo.position)) {
-        // 空マスではない
-        return false;
-    }
-
-    // 着手位置に石を置く
-    reversi::ReversiConstant::BOARD_INFO info = GetTurnToStone(moveInfo.turn);
-    SetBoardInfo(info, moveInfo.position);
-
-    // 裏返し情報キャッシュから裏返す位置を取得
-    for (int i = 0; i < reversi::ReverseInfo::MAX_DIRECTION; ++i) {
-        reversi::Assert::AssertArrayRange(i, reversi::ReverseInfo::MAX_DIRECTION, "Board::Move index over i");
-        int reverseCount = reverseInfo.GetReversePositionCount((reversi::ReverseInfo::DIRECTION)i); //reverseInfo.reversePositionCount[i];
-        for (int j = 0; j < reverseCount; ++j) {
-            reversi::Assert::AssertArrayRange(j, reverseCount, "Board::Move index over j");
-            // 裏返す
-            reversi::ReversiConstant::POSITION position = reverseInfo.GetReversePosition((reversi::ReverseInfo::DIRECTION)i, j);
-            ReverseStone(position);
-        }
-    }
-
-    return true;
-   }
- */
 
 /**
  * 盤の情報を取得する
@@ -116,7 +83,6 @@ reversi::ReversiConstant::BOARD_INFO reversi::Board::GetBoardInfo(int position) 
  * @param noneCount  現在の盤の空白数
  */
 void reversi::Board::GetCount(int& blackCount, int& whiteCount, int& noneCount) {
-
 	blackCount = 0;
 	whiteCount = 0;
 	noneCount = 0;
@@ -128,6 +94,7 @@ void reversi::Board::GetCount(int& blackCount, int& whiteCount, int& noneCount) 
 		// 位置から盤情報を取得
 		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::GetCount() board index over");
 		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
+		// それぞれの情報をカウント
 		if (info == reversi::ReversiConstant::BOARD_INFO::BLACK) {
 			++blackCount;
 		} else if (info == reversi::ReversiConstant::BOARD_INFO::WHITE) {
@@ -158,7 +125,7 @@ const reversi::Board::BOARD& reversi::Board::GetRawData() const {
 }
 
 /**
- * DeepCopy
+ * クローンを作成
  * @return 複製データ
  */
 reversi::Board reversi::Board::Clone() const {
@@ -203,9 +170,7 @@ bool reversi::Board::IsFull() const {
 		reversi::Assert::AssertArrayRange(i, size, "Board::IsFull() position index over");
 		// 位置を取得
 		reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
-
 		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::IsFull() board index over");
-
 		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
 		if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
 			// 空マスが1つでもあったら埋まってない
@@ -220,7 +185,6 @@ bool reversi::Board::IsFull() const {
  * @param setInfo 埋めるために使う黒石か白石を指定
  */
 void reversi::Board::ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo) {
-
 	// 黒か白しか指定してはいけない
 	reversi::Assert::AssertEquals((setInfo == reversi::ReversiConstant::BOARD_INFO::BLACK) || (setInfo == reversi::ReversiConstant::BOARD_INFO::WHITE), "Board::ExecuteFull() info not black or white");
 
@@ -229,9 +193,7 @@ void reversi::Board::ExecuteFull(reversi::ReversiConstant::BOARD_INFO setInfo) {
 		reversi::Assert::AssertArrayRange(i, size, "Board::ExecuteFull() position index over");
 		// 位置を取得
 		reversi::ReversiConstant::POSITION position = (reversi::ReversiConstant::POSITION)reversi::ReversiConstant::POSITIONS[i];
-
 		reversi::Assert::AssertArrayRange((int)position, reversi::ReversiConstant::BOARD_SIZE, "Board::ExecuteFull() board index over");
-
 		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)board.boardData[(int)position];
 		if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
 			// 空マスを埋める
