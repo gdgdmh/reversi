@@ -4,16 +4,14 @@
 #include "ReversiConstant.h"
 #include "Reversi.h"
 
-//#include "ReverseInfo.h"
-
 namespace reversi {
 
 // 思考ノードクラス
 class ThinkingNode {
 public:
-	static const int CHILDREN_SIZE = 32;
-	static const int FIND_DEFAULT_EVALUATION_POINT = -9999999; // 評価値検索のときのデフォルト値
-	static const int STACK_SIZE = 256;							// 再帰処理に使用するスタックサイズ
+	static const int CHILDREN_SIZE = 32;                        // 子ノードの最大数
+	static const int FIND_DEFAULT_EVALUATION_POINT = -9999999;  // 評価値検索のときのデフォルト値
+	static const int STACK_SIZE = 256;                          // 再帰処理に使用するスタックサイズ
 public:
 
 	/**
@@ -32,15 +30,13 @@ public:
 	 */
 	void CopyReversi(const reversi::Reversi& source);
 
+	/**
+	 * リバーシクラスの取得
+	 * @return リバーシクラス
+	 */
 	const reversi::Reversi& GetReversi() const {
 		return reversi;
 	}
-
-	/**
-	 * 親ノードの設定
-	 * @param parentNode 親ノード
-	 */
-	//void SetParent(ThinkingNode* parentNode);
 
 	/**
 	 * 親ノードを取得する

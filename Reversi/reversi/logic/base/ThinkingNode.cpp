@@ -29,14 +29,6 @@ void reversi::ThinkingNode::CopyReversi(const reversi::Reversi& source) {
 }
 
 /**
- * 親ノードの設定
- * @param parentNode 親ノード
- */
-//void reversi::ThinkingNode::SetParent(ThinkingNode* parentNode) {
-//	parent = parentNode;
-//}
-
-/**
  * 親ノードを取得する
  * @return 親ノード
  */
@@ -196,14 +188,14 @@ reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointNode(
 	while (nodeList.GetSize() != 0) {
 		reversi::ThinkingNode* node = nodeList.Back();
 		if (!node->GetVisited()) {
-				// まだ訪れたことがない
+			// まだ訪れたことがない
 			// 訪れたフラグを立てる
 			node->SetVisited(true);
 			if (node->GetChildSize() == 0) {
 				// ノードのツリーの中で一番端のノード
 				if (highNode == NULL) {
 					// 初回
-					highNode = node; 
+					highNode = node;
 				} else {
 					if (node->GetEvaluationPoint() > highNode->GetEvaluationPoint()) {
 						// より評価関数が大きいのでこのノードに更新
@@ -235,6 +227,7 @@ reversi::ThinkingNode* const reversi::ThinkingNode::FindHighEvaluationPointOneUn
 	for (int i = 0; i < childrenCount; ++i) {
 		reversi::Assert::AssertArrayRange(i, CHILDREN_SIZE, "ThinkingNode::FindHighEvaluationPointOneUnderNode index over");
 		if (children[i] == NULL) {
+			// 子が居ないのでスキップ
 			continue;
 		}
 		if (children[i]->GetEvaluationPoint() > currentHighPoint) {
