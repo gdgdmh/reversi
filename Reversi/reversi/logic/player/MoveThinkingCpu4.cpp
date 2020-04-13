@@ -44,8 +44,6 @@ reversi::MoveThinkingCpu4::~MoveThinkingCpu4() {
  * @return          trueなら思考が完了
  */
 void reversi::MoveThinkingCpu4::InitializeMoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
-	// 計算済みのキャッシュをコピー
-	//reversiMove = moveCache;
 }
 
 /**
@@ -56,8 +54,8 @@ void reversi::MoveThinkingCpu4::InitializeMoveThinking(const reversi::Reversi& r
  * @return          trueなら思考が完了
  */
 bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
-	reversi::PerformanceCounter c;
-	// rootを作成
+	reversi::PerformanceCounter c; // パフォーマンス計測カウンタ
+	// rootノードを作成
 	reversi::ThinkingNode root;
 	// root設定
 	{
@@ -75,6 +73,8 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	c.End();
 	PrintTimeDiff("root child node", c);
 
+	// rootノードの下に更に思考ノードを追加する
+	// ただ現在は2手読みが現実的(思考時間、使用メモリ的に)
 	reversi::ThinkingNode* node = &root;
 	int size = node->GetChildSize();
 	for (int i = 0; i < size; ++i) {
@@ -94,8 +94,10 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 		//}
 	}
 
+	// 一番評価値が高い着手位置を取得する
 	reversi::ReversiConstant::POSITION topHighPosition = reversi::ReversiConstant::POSITION::A1;
 	{
+		// rootの1つ下のノード達に自分の子ノードの中で一番評価値が高いノードを取得してもらう
 		const reversi::ThinkingNode* topHighNode = NULL;
 		int topHighNodeIndex = -1;
 		for (int i = 0; i < root.GetChildSize(); ++i) {
@@ -132,6 +134,11 @@ bool reversi::MoveThinkingCpu4::MoveThinking(const reversi::Reversi& reversi, co
 	return true;
 }
 
+/**
+ * 手番から石を取得
+ * @param  turn 手番
+ * @return      盤情報(石)
+ */
 reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(reversi::ReversiConstant::TURN turn) {
 	if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
 		return reversi::ReversiConstant::BOARD_INFO::BLACK;
@@ -140,8 +147,15 @@ reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu4::GetTurnToStone(r
 	}
 }
 
+/**
+ * 指定されたノードに子の思考ノードを追加する
+ * @param node     追加対象ノード
+ * @param reversi  リバーシクラス
+ * @param board    盤情報
+ * @param selfTurn 評価関数設定対象の手番
+ */
 void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn) {
-	reversi::PerformanceCounter c;
+	reversi::PerformanceCounter c; // パフォーマンス計測カウンタ
 
 	reversi::ReversiConstant::POSITION moveEnablePositions[MOVE_ENABLE_DATA_SIZE];
 	int moveEnableCount = 0;
@@ -181,7 +195,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		return;
 	}
 
-	// 打てる場所分childを作成
+	// 打てる場所分childを作成(全幅検索)
 	int size = moveEnableCount;
 	for (int i = 0; i < size; ++i) {
 		c.Start();
@@ -189,7 +203,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		reversi::ThinkingNode* child = new reversi::ThinkingNode();
 		// リバーシをコピー
 		reversi::Reversi childReversi;
-		childReversi.CopyWithoutDynamicInstance(reversi);
+		childReversi.CopyWithoutDynamicInstance(reversi); // コピー
 		childReversi.SetOutputEnable(false); // 出力はoffにする
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode CopyReversi", c);
@@ -199,7 +213,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		moveInfoData.position = moveEnablePositions[i];
 		moveInfoData.info = GetTurnToStone(turn);
 		moveInfoData.turn = childReversi.GetTurn(); // ゲーム上の手番
-		reversi::MoveInfo moveInfo(moveInfoData, reverseInfos[i]);		
+		reversi::MoveInfo moveInfo(moveInfoData, reverseInfos[i]);
 
 		c.Start();
 		// 着手
@@ -208,7 +222,6 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode Move", c);
 
-		// 深読み用にシーン設定していたが、ここでやたらパフォーマンスを落としてしまう
 		c.Start();
 		// リバーシを次の着手シーンまで進める
 		bool taskLoop = true;
@@ -217,7 +230,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 			childReversi.Task();
 			// 終局してないかチェック
 			if ((childReversi.GetScene() == reversi::Reversi::SCENE::RESULT)
-				|| (childReversi.GetScene() == reversi::Reversi::SCENE::END)) {
+			    || (childReversi.GetScene() == reversi::Reversi::SCENE::END)) {
 				isEnded = true;
 				taskLoop = false;
 			}
@@ -228,7 +241,7 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		}
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode Scene", c);
-
+		// childの情報を設定
 		c.Start();
 		child->CopyReversi(childReversi);
 		child->SetMovePosition(moveInfoData.position);
@@ -236,7 +249,6 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 		child->SetThinkingDepth(node->GetThinkingDepth() + 1);
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode Set", c);
-
 
 		c.Start();
 		// 評価値計算
@@ -267,7 +279,16 @@ void reversi::MoveThinkingCpu4::SetThinkingChildNode(reversi::ThinkingNode* node
 	}
 }
 
-// 着手可能情報を取得する
+/**
+ * 着手可能情報を取得する
+ * @param moveEnablePositions     着手可能位置配列
+ * @param moveEnablePositionCount 着手可能位置数
+ * @param moveEnablePositionSize  着手可能位置配列最大数
+ * @param reverseInfos            裏返し情報配列
+ * @param reverseInfoCount        裏返し情報数
+ * @param board                   盤情報
+ * @param turn                    手番
+ */
 void reversi::MoveThinkingCpu4::GetMoveEnableData(reversi::ReversiConstant::POSITION* moveEnablePositions, int& moveEnablePositionCount, int moveEnablePositionSize, reversi::ReverseInfo* reverseInfos, int& reverseInfoCount, const reversi::Board& board, reversi::ReversiConstant::TURN turn) {
 	moveEnablePositionCount = 0;
 	reverseInfoCount = 0;
@@ -298,6 +319,11 @@ void reversi::MoveThinkingCpu4::GetMoveEnableData(reversi::ReversiConstant::POSI
 	}
 }
 
+/**
+ * 処理時関出力
+ * @param prefix  処理時間の前に出す出力文字列
+ * @param counter 処理時間計測カウンタ
+ */
 void reversi::MoveThinkingCpu4::PrintTimeDiff(std::string prefix, const reversi::PerformanceCounter& counter) {
 	//reversi::StdStringFormatter formatter;
 	//console->PrintLine(prefix + formatter.Format(" %lf", counter.GetDiff()));
