@@ -10,20 +10,21 @@
  * コンストラクタ
  */
 reversi::PlayerCpu::PlayerCpu(reversi::PlayerCpu::LEVEL level) : moveThinking(NULL) {
+	// 思考レベル指定に応じて思考クラスを生成
 	switch (level) {
 	case reversi::PlayerCpu::LEVEL::LEVEL1:
 		moveThinking = new MoveThinkingCpu1();
 		break;
-    case reversi::PlayerCpu::LEVEL::LEVEL2:
-        moveThinking = new MoveThinkingCpu2();
-        break;
-    case reversi::PlayerCpu::LEVEL::LEVEL3:
-        moveThinking = new MoveThinkingCpu3();
-        break;
-    case reversi::PlayerCpu::LEVEL::LEVEL4:
-        moveThinking = new MoveThinkingCpu4();
-        break;
-    default:
+	case reversi::PlayerCpu::LEVEL::LEVEL2:
+		moveThinking = new MoveThinkingCpu2();
+		break;
+	case reversi::PlayerCpu::LEVEL::LEVEL3:
+		moveThinking = new MoveThinkingCpu3();
+		break;
+	case reversi::PlayerCpu::LEVEL::LEVEL4:
+		moveThinking = new MoveThinkingCpu4();
+		break;
+	default:
 		break;
 	}
 }

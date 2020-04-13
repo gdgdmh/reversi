@@ -16,11 +16,12 @@ namespace reversi {
 // プレイヤー(CPU)クラス
 class PlayerCpu : public IPlayer {
 public:
+	// CPUレベル
 	enum class LEVEL {
-		LEVEL1,
-		LEVEL2,
-		LEVEL3,
-		LEVEL4
+		LEVEL1, // CPU LEVEL1
+		LEVEL2, // CPU LEVEL2(Lv1に勝率6割)
+		LEVEL3, // CPU LEVEL3(Lv2に勝率7割)
+		LEVEL4  // CPU LEVEL4(Lv3に勝率9割)
 	};
 public:
 	/**
@@ -64,7 +65,7 @@ public:
 	void EventMoveAfter();
 
 private:
-	IMoveThinking* moveThinking;
+	IMoveThinking* moveThinking; // 思考インターフェース
 };
 
 }
