@@ -93,7 +93,7 @@ void reversi::ReversiGameScene::TaskInitialize() {
 	selectCpuLevel->Initialize();
 	selectCpuLevel2->Initialize();
 	selectYesNo->Initialize();
-	console->PrintLine("黒石でプレイする場合はYes 白石でプレイする場合はNo CPU対局観戦する場合はWatching を入力してください");
+	console->PrintLine("黒石でプレイする場合はYes 白石でプレイする場合はNo CPU対局観戦する場合はWatching を入力してEnterを押してください");
 	SetScene(reversi::ReversiGameScene::SCENE::REVERSI_ASK_PLAYER_SETTING);
 }
 

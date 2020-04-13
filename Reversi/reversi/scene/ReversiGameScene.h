@@ -13,14 +13,14 @@ namespace reversi {
 class ReversiGameScene {
 public:
 	enum class SCENE {
-		INITIALIZE,
-		REVERSI_ASK_PLAYER_SETTING,
-		REVERSI_ASK_CPU_SETTING,
-		REVERSI_ASK_CPU2_SETTING,
-		REVERSI_START,
-		REVERSI_TASK,
-		REVERSI_ASK_CONTINUE,
-		END
+		INITIALIZE,                 // 初期化
+		REVERSI_ASK_PLAYER_SETTING, // 黒、白、観戦の選択
+		REVERSI_ASK_CPU_SETTING,    // CPUレベル設定
+		REVERSI_ASK_CPU2_SETTING,   // CPU2人目のレベル設定
+		REVERSI_START,              // リバーシ開始
+		REVERSI_TASK,               // リバーシ処理
+		REVERSI_ASK_CONTINUE,       // 再戦するかの選択
+		END                         // 終了
 	};
 public:
 
@@ -117,13 +117,13 @@ private:
 	void OutputPlayerWinMessage();
 
 private:
-	reversi::IOutputConsole* console;
-	SCENE scene;
-	reversi::Reversi reversi;
-	reversi::ISelectYesNoWatching* selectYesNoWatching;
-	reversi::ISelectCpuLevel* selectCpuLevel;
-	reversi::ISelectCpuLevel* selectCpuLevel2;
-	reversi::ISelectYesNo* selectYesNo;
+	reversi::IOutputConsole* console;                   // コンソール出力
+	SCENE scene;                                        // シーン変数
+	reversi::Reversi reversi;                           // リバーシクラス
+	reversi::ISelectYesNoWatching* selectYesNoWatching; // 黒、白、観戦の選択インターフェース
+	reversi::ISelectCpuLevel* selectCpuLevel;           // CPUレベル設定インターフェース
+	reversi::ISelectCpuLevel* selectCpuLevel2;          // CPU2人目のレベル設定インターフェース
+	reversi::ISelectYesNo* selectYesNo;                 // 再戦するかの選択インターフェース
 };
 
 }
