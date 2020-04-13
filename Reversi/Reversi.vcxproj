@@ -171,7 +171,6 @@
     <ClCompile Include="reversi\logic\player\PlayerMan.cpp" />
     <ClCompile Include="reversi\logic\render\RenderBoardConsole.cpp" />
     <ClCompile Include="reversi\scene\ReversiGameScene.cpp" />
-    <ClCompile Include="reversi\test\base\UnitTest.cpp" />
     <ClCompile Include="reversi\test\base\UnitTestBase.cpp" />
     <ClCompile Include="reversi\test\code\TestBoard.cpp" />
     <ClCompile Include="reversi\test\code\TestCalcBoardEvaluationPointByPosition.cpp" />
@@ -224,7 +223,6 @@
     <ClInclude Include="reversi\logic\render\IRenderBoard.h" />
     <ClInclude Include="reversi\logic\render\RenderBoardConsole.h" />
     <ClInclude Include="reversi\scene\ReversiGameScene.h" />
-    <ClInclude Include="reversi\test\base\UnitTest.h" />
     <ClInclude Include="reversi\test\base\UnitTestBase.h" />
     <ClInclude Include="reversi\test\code\TestBoard.h" />
     <ClInclude Include="reversi\test\code\TestCalcBoardEvaluationPointByPosition.h" />

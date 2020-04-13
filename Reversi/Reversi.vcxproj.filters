@@ -72,9 +72,6 @@
     <ClCompile Include="reversi\logic\base\Move.cpp">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
     </ClCompile>
-    <ClCompile Include="reversi\test\base\UnitTest.cpp">
-      <Filter>ソース ファイル\reversi\test\base</Filter>
-    </ClCompile>
     <ClCompile Include="reversi\test\base\UnitTestBase.cpp">
       <Filter>ソース ファイル\reversi\test\base</Filter>
     </ClCompile>
@@ -211,9 +208,6 @@
     </ClInclude>
     <ClInclude Include="reversi\logic\base\Move.h">
       <Filter>ソース ファイル\reversi\logic\base</Filter>
-    </ClInclude>
-    <ClInclude Include="reversi\test\base\UnitTest.h">
-      <Filter>ソース ファイル\reversi\test\base</Filter>
     </ClInclude>
     <ClInclude Include="reversi\test\base\UnitTestBase.h">
       <Filter>ソース ファイル\reversi\test\base</Filter>

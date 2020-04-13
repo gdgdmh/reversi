@@ -3,7 +3,6 @@
 #include "../../util/IOutputConsole.h"
 #include "../../util/OutputConsole.h"
 #include "../../util/OutputVisualStudioConsole.h"
-#include "../../test/base/UnitTest.h"
 #include "../../logic/base/Board.h"
 #include "../../logic/base/Move.h"
 
