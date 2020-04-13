@@ -79,9 +79,7 @@ private:
 	bool MoveThinkingMinRandom(const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn);
 
 private:
-	reversi::Move reversiMove;
-	reversi::ReversiConstant::EMPTY_POSITION emptyPosition;
-
+	reversi::Move reversiMove;  // 着手キャッシュ
 };
 
 }
