@@ -9,7 +9,6 @@ namespace reversi {
 template <class T>
 class SimpleArray {
 public:
-
 	/**
 	 * コンストラクタ
 	 * @param size スタックの最大サイズ
@@ -58,7 +57,6 @@ public:
 	int GetSize() const {
 		return index;
 	}
-
 private:
 	T* datas;       // データ配列
 	int index;      // データのインデックス
