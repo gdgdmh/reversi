@@ -182,9 +182,6 @@
     <ClInclude Include="reversi\util\IOutputConsole.h">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
-    <ClInclude Include="reversi\util\MethodTransition.h">
-      <Filter>ソース ファイル\reversi\util</Filter>
-    </ClInclude>
     <ClInclude Include="reversi\util\Assert.h">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClInclude>
