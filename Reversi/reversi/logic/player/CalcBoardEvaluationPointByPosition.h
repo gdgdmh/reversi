@@ -45,7 +45,6 @@ private:
 		reversi::Assert::AssertArrayRange(positionIndex, reversi::ReversiConstant::POSITION_SIZE, "CalcBoardEvaluationPointByPosition::PositionToPoint index over");
 		return STATIC_EVALUATION_POINTS[positionIndex];
 	}
-
 };
 
 }

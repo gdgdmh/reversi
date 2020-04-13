@@ -38,6 +38,7 @@ void reversi::CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint(const
 	whitePoint = 0;
 	reversi::Board::BOARD rawBoard = board.GetRawData();
 	int size = reversi::ReversiConstant::BOARD_SIZE;
+	// 盤面全体
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, size, "CalcBoardEvaluationPointByPosition::CalcBoardEvaluationPoint() index over");
 		// 石の置いてある位置に対して評価値を加算
