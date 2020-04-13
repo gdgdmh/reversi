@@ -58,9 +58,8 @@ public:
 	void EventMoveAfter();
 
 private:
-	IMoveThinking* moveThinking;
-	reversi::IOutputConsole* console;
-
+	IMoveThinking* moveThinking;        // 思考インターフェース
+	reversi::IOutputConsole* console;   // コンソール出力
 };
 
 }
