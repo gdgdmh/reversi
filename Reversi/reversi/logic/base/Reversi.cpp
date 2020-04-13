@@ -283,7 +283,7 @@ void reversi::Reversi::TaskMoveSelect() {
 		if (IsCurrentPlayerTurnMan(turn)) {
 			// 盤面表示とメッセージ表示
 			RenderBoard();
-			PrintLine("うまく場所を読み取れなかったのでもう一度入力してください");
+			PrintLine("その位置には打てないのでもう一度入力してください");
 		}
 	}
 }
