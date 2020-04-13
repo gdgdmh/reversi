@@ -24,7 +24,6 @@ public:
 	 * @return 取得した文字列
 	 */
 	std::string GetStringLine();
-
 };
 
 }

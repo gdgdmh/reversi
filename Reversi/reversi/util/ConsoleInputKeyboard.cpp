@@ -23,4 +23,3 @@ std::string reversi::ConsoleInputKeyboard::GetStringLine() {
 	std::getline(std::cin, inputString);
 	return inputString;
 }
-
