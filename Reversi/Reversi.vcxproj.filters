@@ -54,9 +54,6 @@
     <ClCompile Include="reversi\util\OutputConsole.cpp">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClCompile>
-    <ClCompile Include="reversi\scene\TestScene.cpp">
-      <Filter>ソース ファイル\reversi\scene</Filter>
-    </ClCompile>
     <ClCompile Include="reversi\util\Assert.cpp">
       <Filter>ソース ファイル\reversi\util</Filter>
     </ClCompile>
@@ -193,12 +190,6 @@
     </ClInclude>
     <ClInclude Include="reversi\util\MethodTransition.h">
       <Filter>ソース ファイル\reversi\util</Filter>
-    </ClInclude>
-    <ClInclude Include="reversi\scene\TestScene.h">
-      <Filter>ソース ファイル\reversi\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="reversi\scene\SceneBase.h">
-      <Filter>ソース ファイル\reversi\scene</Filter>
     </ClInclude>
     <ClInclude Include="reversi\util\Assert.h">
       <Filter>ソース ファイル\reversi\util</Filter>
