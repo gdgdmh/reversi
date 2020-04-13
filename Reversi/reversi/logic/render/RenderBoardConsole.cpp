@@ -1,6 +1,5 @@
 ﻿#include "RenderBoardConsole.h"
 #include "../../util/OutputConsole.h"
-#include "../../util/OutputVisualStudioConsole.h"
 #include "../../util/Assert.h"
 
 /**

@@ -187,7 +187,6 @@
     <ClCompile Include="reversi\util\Assert.cpp" />
     <ClCompile Include="reversi\util\ConsoleInputKeyboard.cpp" />
     <ClCompile Include="reversi\util\OutputConsole.cpp" />
-    <ClCompile Include="reversi\util\OutputVisualStudioConsole.cpp" />
     <ClCompile Include="reversi\util\PerformanceCounter.cpp" />
     <ClCompile Include="reversi\util\StdRandomInt.cpp" />
   </ItemGroup>
@@ -243,7 +242,6 @@
     <ClInclude Include="reversi\util\IRandomInt.h" />
     <ClInclude Include="reversi\util\OutputConsole.h" />
     <ClInclude Include="reversi\util\MethodTransition.h" />
-    <ClInclude Include="reversi\util\OutputVisualStudioConsole.h" />
     <ClInclude Include="reversi\util\PerformanceCounter.h" />
     <ClInclude Include="reversi\util\SimpleStack.h" />
     <ClInclude Include="reversi\util\SimpleArray.h" />

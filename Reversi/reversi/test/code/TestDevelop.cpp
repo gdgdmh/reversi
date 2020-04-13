@@ -2,7 +2,6 @@
 // test include(テストするものはここに追加する)
 #include "../../util/IOutputConsole.h"
 #include "../../util/OutputConsole.h"
-#include "../../util/OutputVisualStudioConsole.h"
 #include "../../logic/base/Board.h"
 #include "../../logic/base/Move.h"
 

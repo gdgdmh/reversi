@@ -44,12 +44,6 @@ private:
 	 * @param message 出力するメッセージ
 	 */
 	static void OutputConsole(std::string message);
-
-	/**
-	 * VisualStudioのコンソールに出力する
-	 * @param message 出力するメッセージ
-	 */
-	static void OutputVisualStudioConsole(std::string message);
 };
 
 }
