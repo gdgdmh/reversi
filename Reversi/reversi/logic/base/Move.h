@@ -12,35 +12,29 @@ class Board;
 
 namespace reversi {
 
-// 石が置かれていない場所データ
-//typedef struct {
-//	std::vector<reversi::ReversiConstant::POSITION> position;
-//} EMPTY_POSITION;
-
 // 着手クラス
 class Move {
 public:
 	// 方向
 	enum class DIRECTION {
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT,
-		UP_LEFT,
-		UP_RIGHT,
-		DOWN_LEFT,
-		DOWN_RIGHT
+		UP,         // 上
+		DOWN,       // 下
+		LEFT,       // 左
+		RIGHT,      // 右
+		UP_LEFT,    // 左上
+		UP_RIGHT,   // 右上
+		DOWN_LEFT,  // 左下
+		DOWN_RIGHT  // 右下
 	};
 	// 挟まれチェックの状態
 	enum class SANDWICH_STATUS {
-		SANDWICH_OK,        // 挟み状態になっている
+		SANDWICH_OK,            // 挟み状態になっている
 		SANDWICH_CONTINUE,      // まだ挟み状態になっているかわからない
-		SANDWICH_NG_INVALID,   // 無効マスで挟みにならない
-		SANDWICH_NG_EMPTY,     // 空マスで挟みにならない
-		SANDWICH_NG_SELF,      // 自分の石で挟みにならない
-		SANDWICH_NG_UNKNOWN
+		SANDWICH_NG_INVALID,    // 無効マスで挟みにならない
+		SANDWICH_NG_EMPTY,      // 空マスで挟みにならない
+		SANDWICH_NG_SELF,       // 自分の石で挟みにならない
+		SANDWICH_NG_UNKNOWN     // それ以外
 	};
-
 	// キャッシュデータ
 	typedef struct {
 		std::vector<reversi::ReverseInfo> reverseInfo; // 裏返し情報
@@ -81,6 +75,11 @@ public:
 	 */
 	bool CheckEnableMoveByCache(reversi::ReversiConstant::POSITION position) const;
 
+	/**
+	 * どこかに打てるか
+	 * 予めキャッシュを作成しておくこと
+	 * @return trueならどこかに打てる
+	 */
 	bool CheckSomewherePutEnableByCache();
 
 	/**
@@ -154,7 +153,6 @@ private:
 	reversi::ReverseInfo::DIRECTION ToReverseInfoDirection(reversi::Move::DIRECTION direction);
 
 private:
-	//MOVE_CACHE moveCache; // 着手のキャッシュデータ
 	MOVE_CACHE moveCacheEnableMove; // 着手のキャッシュデータ(打てる場所だけ)
 };
 

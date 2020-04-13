@@ -35,6 +35,7 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, reversi::Reve
 
 		reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[(int)position];
 		if (info == reversi::ReversiConstant::BOARD_INFO::NONE) {
+			// 石が置かれていない場所を保持する
 			emptyPosition.position.push_back(position);
 		}
 	}
@@ -50,7 +51,6 @@ void reversi::Move::FindEmptyPosition(const reversi::Board& board, reversi::Reve
 void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const reversi::ReversiConstant::EMPTY_POSITION& emptyPosition, reversi::ReversiConstant::TURN turn) {
 
 	// キャッシュをクリアする
-	//moveCache.reverseInfo.clear();
 	moveCacheEnableMove.reverseInfo.clear();
 
 	// 空いている場所からその場所に打てるかチェック
@@ -60,10 +60,8 @@ void reversi::Move::FindPutEnablePosition(const reversi::Board& board, const rev
 		reversi::ReversiConstant::POSITION position = emptyPosition.position[i];
 		// その場所に打てるかチェック
 		reversi::ReverseInfo reverseInfo = GetEnableMoveInfo(board, (int)position, turn);
-		// キャッシュに登録
-		//moveCache.reverseInfo.push_back(reverseInfo);
-
 		if (reverseInfo.IsEnableMove()) {
+			// キャッシュする
 			moveCacheEnableMove.reverseInfo.push_back(reverseInfo);
 		}
 	}
@@ -85,23 +83,14 @@ bool reversi::Move::CheckEnableMoveByCache(reversi::ReversiConstant::POSITION po
 	}
 	// 空いてない位置などを指定した
 	return false;
-
-	// 旧
-	/*
-	size_t size = moveCache.reverseInfo.size();
-	for (int i = 0; i < size; ++i) {
-		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
-		if (position == moveCache.reverseInfo[i].GetPosition()) {
-			return moveCache.reverseInfo[i].IsEnableMove();
-		}
-	}
-	// 空いてない位置などを指定した
-	return false;
-	*/
 }
 
+/**
+ * どこかに打てるか
+ * 予めキャッシュを作成しておくこと
+ * @return trueならどこかに打てる
+ */
 bool reversi::Move::CheckSomewherePutEnableByCache() {
-
 	size_t size = moveCacheEnableMove.reverseInfo.size();
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
@@ -112,20 +101,6 @@ bool reversi::Move::CheckSomewherePutEnableByCache() {
 	}
 	// どこにも打てない
 	return false;
-
-	// 旧
-	/*
-	size_t size = moveCache.reverseInfo.size();
-	for (int i = 0; i < size; ++i) {
-		reversi::Assert::AssertArrayRange(i, (int)size, "Move::CheckEnableMoveByCache index over");
-		if (moveCache.reverseInfo[i].IsEnableMove()) {
-			// どこかには打てる
-			return true;
-		}
-	}
-	// どこにも打てない
-	return false;
-	*/
 }
 
 /**
@@ -139,6 +114,7 @@ const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstan
 	for (int i = 0; i < size; ++i) {
 		reversi::Assert::AssertArrayRange(i, (int)size, "Move::GetReverseInfo index over");
 		if (position == moveCacheEnableMove.reverseInfo[i].GetPosition()) {
+			// 位置が一致した裏返し情報を返す
 			return moveCacheEnableMove.reverseInfo[i];
 		}
 	}
@@ -146,21 +122,6 @@ const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstan
 	reversi::Assert::AssertEquals(0, "Move::GetReverseInfo not found");
 	reversi::ReverseInfo info(reversi::ReversiConstant::POSITION::A1, reversi::ReversiConstant::TURN::TURN_BLACK);
 	return info;
-
-	// 旧
-	/*
-	size_t size = moveCache.reverseInfo.size();
-	for (int i = 0; i < size; ++i) {
-		reversi::Assert::AssertArrayRange(i, (int)size, "Move::GetReverseInfo index over");
-		if (position == moveCache.reverseInfo[i].GetPosition()) {
-			return moveCache.reverseInfo[i];
-		}
-	}
-	// 見つからなかった(CheckEnableMoveByCacheでチェックしておけば起こらないはず)
-	reversi::Assert::AssertEquals(0, "Move::GetReverseInfo not found");
-	reversi::ReverseInfo info(reversi::ReversiConstant::POSITION::A1, reversi::ReversiConstant::TURN::TURN_BLACK);
-	return info;
-	*/
 }
 
 /**
@@ -172,11 +133,6 @@ const reversi::ReverseInfo reversi::Move::GetReverseInfo(reversi::ReversiConstan
 const reversi::ReverseInfo& reversi::Move::GetReverseInfoByIndex(int index) const {
 	reversi::Assert::AssertArrayRange(index, (int)moveCacheEnableMove.reverseInfo.size(), "Move::GetReverseInfoByIndex index over");
 	return moveCacheEnableMove.reverseInfo[index];
-	// 旧
-	/*
-	reversi::Assert::AssertArrayRange(index, (int)moveCache.reverseInfo.size(), "Move::GetReverseInfoByIndex index over");
-	return moveCache.reverseInfo[index];
-	*/
 }
 
 /**
@@ -185,10 +141,6 @@ const reversi::ReverseInfo& reversi::Move::GetReverseInfoByIndex(int index) cons
  */
 int reversi::Move::GetReverseInfoSize() const {
 	return (int)moveCacheEnableMove.reverseInfo.size();
-	// 旧
-	/*
-	return (int)moveCache.reverseInfo.size();
-	*/
 }
 
 /**
@@ -199,7 +151,6 @@ int reversi::Move::GetReverseInfoSize() const {
  * @return          trueならその位置に打つことができる
  */
 reversi::ReverseInfo reversi::Move::GetEnableMoveInfo(const reversi::Board& board, int position, reversi::ReversiConstant::TURN turn) {
-
 	reversi::ReverseInfo info((reversi::ReversiConstant::POSITION)position, turn);
 	bool isEnable = false;
 
@@ -214,7 +165,6 @@ reversi::ReverseInfo reversi::Move::GetEnableMoveInfo(const reversi::Board& boar
 		reversi::Move::DIRECTION::DOWN_LEFT,
 		reversi::Move::DIRECTION::DOWN_RIGHT,
 	};
-
 	// それぞれの方向に対して打てるかチェック
 	// 将来的にはpositionの位置に対してチェックする方向を減らすなど(一番左のマスは左側に対するチェックをしないなど)
 	// 負荷軽減案はあるがいったん確実性を取る
@@ -237,7 +187,6 @@ reversi::ReverseInfo reversi::Move::GetEnableMoveInfo(const reversi::Board& boar
  * @return             trueならその方向に打つことができる
  */
 bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi::ReverseInfo& reverseInfo, int position, reversi::Move::DIRECTION direction, reversi::ReversiConstant::TURN turn) {
-
 	const reversi::Board::BOARD boardData = board.GetRawData();
 
 	// 盤のオフセットを取得
@@ -247,7 +196,7 @@ bool reversi::Move::CheckMoveInfoDirection(const reversi::Board& board, reversi:
 	reversi::Assert::AssertArrayRange(currentPosition, reversi::ReversiConstant::BOARD_SIZE, "Move::CheckEnableMoveDirection() board index over");
 	reversi::ReversiConstant::BOARD_INFO info = (reversi::ReversiConstant::BOARD_INFO)boardData.boardData[currentPosition];
 	if (info != reversi::ReversiConstant::BOARD_INFO::NONE) {
-		// 初期指定位置は空でなければそもそも打てない
+		// 指定位置は空でなければそもそも打てない
 		return false;
 	}
 	// 次の方向の位置
@@ -325,7 +274,6 @@ int reversi::Move::ToDirectionOffset(reversi::Move::DIRECTION direction) {
  * @return                   状態
  */
 reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichStarted, int& sandwichCount, reversi::ReversiConstant::TURN turn, reversi::ReversiConstant::BOARD_INFO info) {
-
 	if (info == reversi::ReversiConstant::BOARD_INFO::INVALID) {
 		// 無効マスがあったので挟まれていない
 		return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_INVALID;
@@ -334,7 +282,6 @@ reversi::Move::SANDWICH_STATUS reversi::Move::GetSandwichInfo(bool& isSandwichSt
 		// 空マスがあったので挟まれていない
 		return reversi::Move::SANDWICH_STATUS::SANDWICH_NG_EMPTY;
 	}
-
 
 	if (info == reversi::ReversiConstant::BOARD_INFO::BLACK) {
 		if (turn == reversi::ReversiConstant::TURN::TURN_BLACK) {
