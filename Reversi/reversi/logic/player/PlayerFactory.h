@@ -5,15 +5,15 @@
 
 namespace reversi {
 
-// 
+// プレイヤー生成クラス
 class PlayerFactory {
 public:
 	enum class TYPE {
-		PLAYER_MAN,
-		PLAYER_CPU1,
-		PLAYER_CPU2,
-		PLAYER_CPU3,
-		PLAYER_CPU4
+		PLAYER_MAN, // 人間プレイヤー
+		PLAYER_CPU1,// CPU LEVEL1
+		PLAYER_CPU2,// CPU LEVEL2
+		PLAYER_CPU3,// CPU LEVEL3
+		PLAYER_CPU4 // CPU LEVEL4
 	};
 public:
 
@@ -27,11 +27,12 @@ public:
 	 */
 	virtual ~PlayerFactory();
 
-	// seisei
+	/**
+	 * プレイヤーの生成
+	 * @param  type プレイヤーのタイプ
+	 * @return      生成されたプレイヤー
+	 */
 	reversi::IPlayer* Create(reversi::PlayerFactory::TYPE type);
-
-
-private:
 };
 
 }

@@ -16,9 +16,12 @@ reversi::PlayerFactory::PlayerFactory() {
 reversi::PlayerFactory::~PlayerFactory() {
 }
 
-// seisei
+/**
+ * プレイヤーの生成
+ * @param  type プレイヤーのタイプ
+ * @return      生成されたプレイヤー
+ */
 reversi::IPlayer* reversi::PlayerFactory::Create(reversi::PlayerFactory::TYPE type) {
-	reversi::IPlayer* player = NULL;
 	switch (type) {
 	case reversi::PlayerFactory::TYPE::PLAYER_MAN:
 		return new PlayerMan();
@@ -34,4 +37,3 @@ reversi::IPlayer* reversi::PlayerFactory::Create(reversi::PlayerFactory::TYPE ty
 		return NULL;
 	}
 }
-
