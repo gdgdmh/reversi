@@ -1,3 +1,4 @@
 ・ThinkingNodeにReversiは不要(盤と手番のみでいい)
 ・Reversiからルールの分離をする
 ・軽量化
+・盤のBitboard(ハイコストハイリターン)
