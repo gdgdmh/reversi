@@ -18,7 +18,7 @@ int main(int argc, const char* argv[]) {
 	reversi::IOutputConsole* console = new reversi::OutputConsole();
 	console->PrintLine("--- main start -------------------");
 
-	bool isTest = false;
+	bool isTest = true;
 	if (isTest) {
 		// 実装テスト
 		reversi::TestDevelop* testDevelop = new reversi::TestDevelop(console);
