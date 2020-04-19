@@ -275,6 +275,8 @@ reversi::Reversi::PLAYER reversi::ReversiGameScene::NumberToCpuLevel(int cpuLeve
 		return reversi::Reversi::PLAYER::CPU3;
 	case 4:
 		return reversi::Reversi::PLAYER::CPU4;
+	case 5:
+		return reversi::Reversi::PLAYER::CPU5;
 	default:
 		return reversi::Reversi::PLAYER::CPU1;
 	}

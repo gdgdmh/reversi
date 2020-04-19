@@ -411,6 +411,9 @@ reversi::IPlayer* reversi::Reversi::CreatePlayer(int playerIndex, reversi::Rever
 	case reversi::Reversi::PLAYER::CPU4:
 		type = reversi::PlayerFactory::TYPE::PLAYER_CPU4;
 		break;
+	case reversi::Reversi::PLAYER::CPU5:
+		type = reversi::PlayerFactory::TYPE::PLAYER_CPU5;
+		break;
 	default:
 		break;
 	}

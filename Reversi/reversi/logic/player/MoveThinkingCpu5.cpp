@@ -61,16 +61,17 @@ bool reversi::MoveThinkingCpu5::MoveThinking(const reversi::Reversi& reversi, co
 	{
 		reversi::ReversiConstant::POSITION dummyPosition = reversi::ReversiConstant::POSITION::A1;
 		root.SetMovePosition(dummyPosition); // rootにはMovePosition設定は不要
-		root.SetTurn(reversi.GetTurn());
+		root.SetTurn(turn);
 		root.SetEvaluationPoint(0); // 設定不要
 		root.SetThinkingDepth(0); // rootなので0
 	}
 
 	c.Start();
 	// rootの子ノードを作成(1手読み)
-	SetThinkingChildNode(&root, board, turn, turn);
+	reversi::ReversiConstant::TURN currentTurn = turn;//reversi::ReversiConstant::InvertTurn(turn);
+	SetThinkingChildNode(&root, board, turn, currentTurn);
 	// 手番反転
-	reversi::ReversiConstant::TURN currentTurn = reversi::ReversiConstant::InvertTurn(turn);
+	currentTurn = reversi::ReversiConstant::InvertTurn(currentTurn);
 	c.End();
 	PrintTimeDiff("root child node", c);
 
@@ -81,7 +82,7 @@ bool reversi::MoveThinkingCpu5::MoveThinking(const reversi::Reversi& reversi, co
 	for (int i = 0; i < size; ++i) {
 		reversi::ThinkingNode2* child = node->GetChild(i);
 		// 2手読み
-		SetThinkingChildNode(child, board, turn, currentTurn);
+		SetThinkingChildNode(child, board, turn, reversi::ReversiConstant::InvertTurn(child->GetTurn()));
 		//currentTurn = reversi::ReversiConstant::InvertTurn(currentTurn);
 		// 3手読み以上は全幅検索の都合上非常に重たくなるので現段階では使わない
 		//for (int j = 0; j < child->GetChildSize(); ++j) {
@@ -199,6 +200,8 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode2* nod
 		//reversi::Reversi childReversi;
 		//childReversi.CopyWithoutDynamicInstance(reversi); // コピー
 		//childReversi.SetOutputEnable(false); // 出力はoffにする
+		reversi::Board b;
+		b.Copy(board);
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode CopyReversi", c);
 
@@ -211,6 +214,7 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode2* nod
 
 		c.Start();
 		// 着手
+		b.Move(moveInfo);
 		//childReversi.SetMoveSimulation(moveInfo);
 		//childReversi.Task();
 		c.End();
@@ -240,6 +244,7 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode2* nod
 		// childの情報を設定
 		c.Start();
 		//child->CopyReversi(childReversi);
+		child->SetBoard(b);
 		child->SetMovePosition(moveInfoData.position);
 		child->SetTurn(moveInfoData.turn);
 		child->SetThinkingDepth(node->GetThinkingDepth() + 1);

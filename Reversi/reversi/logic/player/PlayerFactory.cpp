@@ -33,6 +33,8 @@ reversi::IPlayer* reversi::PlayerFactory::Create(reversi::PlayerFactory::TYPE ty
 		return new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL3);
 	case reversi::PlayerFactory::TYPE::PLAYER_CPU4:
 		return new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL4);
+	case reversi::PlayerFactory::TYPE::PLAYER_CPU5:
+		return new PlayerCpu(reversi::PlayerCpu::LEVEL::LEVEL5);
 	default:
 		return NULL;
 	}

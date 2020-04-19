@@ -21,7 +21,8 @@ public:
 		LEVEL1, // CPU LEVEL1
 		LEVEL2, // CPU LEVEL2(Lv1に勝率6割)
 		LEVEL3, // CPU LEVEL3(Lv2に勝率7割)
-		LEVEL4  // CPU LEVEL4(Lv3に勝率9割)
+		LEVEL4, // CPU LEVEL4(Lv3に勝率9割)
+		LEVEL5
 	};
 public:
 	/**

@@ -18,6 +18,11 @@ reversi::ThinkingNode2::ThinkingNode2() : parent(NULL), turn(reversi::ReversiCon
 reversi::ThinkingNode2::~ThinkingNode2() {
 }
 
+void reversi::ThinkingNode2::SetBoard(const reversi::Board& source) {
+	board.Copy(source);
+}
+
+
 /**
  * 親ノードを取得する
  * @return 親ノード

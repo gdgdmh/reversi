@@ -38,7 +38,8 @@ public:
 		CPU1,   // CPU LEVEL1
 		CPU2,   // CPU LEVEL2(Lv1に勝率6割)
 		CPU3,   // CPU LEVEL3(Lv2に勝率7割)
-		CPU4    // CPU LEVEL4(Lv3に勝率9割)
+		CPU4,   // CPU LEVEL4(Lv3に勝率9割)
+		CPU5
 	};
 	typedef struct {
 		bool passBlack; // 黒がパスしたか

@@ -24,6 +24,8 @@ public:
 	 */
 	virtual ~ThinkingNode2();
 
+	void SetBoard(const reversi::Board& source);
+
 	/**
 	 * 親ノードを取得する
 	 * @return 親ノード
@@ -128,11 +130,13 @@ public:
 
 private:
 
+	reversi::Board board;								// 盤
 	ThinkingNode2* parent;                               // 親(自分より上層のノード)
 	ThinkingNode2* children[CHILDREN_SIZE];              // 子(下層のノード)
 	int childrenCount;                                  // 子のノード数
 	reversi::ReversiConstant::POSITION movePosition;    // 着手位置
 	reversi::ReversiConstant::TURN turn;                // 手番
+	//reversi::ReversiConstant::TURN 
 	int evaluationPoint;                                // 評価値
 	int thinkingDepth;                                  // 読みの深さ
 	bool isVisited;                                     // 訪れたか(再帰処理用)
