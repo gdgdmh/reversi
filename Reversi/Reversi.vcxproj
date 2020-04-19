@@ -159,11 +159,13 @@
     <ClCompile Include="reversi\logic\base\Reversi.cpp" />
     <ClCompile Include="reversi\logic\base\ReversiConstant.cpp" />
     <ClCompile Include="reversi\logic\base\ThinkingNode.cpp" />
+    <ClCompile Include="reversi\logic\base\ThinkingNode2.cpp" />
     <ClCompile Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu1.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu2.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu3.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingCpu4.cpp" />
+    <ClCompile Include="reversi\logic\player\MoveThinkingCpu5.cpp" />
     <ClCompile Include="reversi\logic\player\MoveThinkingMan.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerCpu.cpp" />
     <ClCompile Include="reversi\logic\player\PlayerFactory.cpp" />
@@ -205,6 +207,7 @@
     <ClInclude Include="reversi\logic\base\Reversi.h" />
     <ClInclude Include="reversi\logic\base\ReversiConstant.h" />
     <ClInclude Include="reversi\logic\base\ThinkingNode.h" />
+    <ClInclude Include="reversi\logic\base\ThinkingNode2.h" />
     <ClInclude Include="reversi\logic\player\CalcBoardEvaluationPointByPosition.h" />
     <ClInclude Include="reversi\logic\player\ICalcBoardEvaluationPoint.h" />
     <ClInclude Include="reversi\logic\player\IPlayer.h" />
@@ -214,6 +217,7 @@
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu2.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu3.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingCpu4.h" />
+    <ClInclude Include="reversi\logic\player\MoveThinkingCpu5.h" />
     <ClInclude Include="reversi\logic\player\MoveThinkingMan.h" />
     <ClInclude Include="reversi\logic\player\PlayerCpu.h" />
     <ClInclude Include="reversi\logic\player\PlayerFactory.h" />
