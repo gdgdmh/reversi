@@ -82,8 +82,7 @@ bool reversi::MoveThinkingCpu5::MoveThinking(const reversi::Reversi& reversi, co
 	for (int i = 0; i < size; ++i) {
 		reversi::ThinkingNode2* child = node->GetChild(i);
 		// 2手読み
-		SetThinkingChildNode(child, board, turn, reversi::ReversiConstant::InvertTurn(child->GetTurn()));
-		//currentTurn = reversi::ReversiConstant::InvertTurn(currentTurn);
+		SetThinkingChildNode(child, child->GetBoard(), turn, reversi::ReversiConstant::InvertTurn(child->GetTurn()));
 		// 3手読み以上は全幅検索の都合上非常に重たくなるので現段階では使わない
 		//for (int j = 0; j < child->GetChildSize(); ++j) {
 		//	reversi::ThinkingNode2* child2 = child->GetChild(j);

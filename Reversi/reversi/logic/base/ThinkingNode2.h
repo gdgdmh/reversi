@@ -26,6 +26,10 @@ public:
 
 	void SetBoard(const reversi::Board& source);
 
+	const reversi::Board& GetBoard() const {
+		return board;
+	}
+
 	/**
 	 * 親ノードを取得する
 	 * @return 親ノード
