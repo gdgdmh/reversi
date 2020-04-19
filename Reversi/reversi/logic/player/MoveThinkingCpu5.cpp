@@ -56,11 +56,10 @@ void reversi::MoveThinkingCpu5::InitializeMoveThinking(const reversi::Reversi& r
 bool reversi::MoveThinkingCpu5::MoveThinking(const reversi::Reversi& reversi, const reversi::Move& moveCache, const reversi::Board& board, reversi::MoveInfo& move, reversi::ReversiConstant::TURN turn) {
 	reversi::PerformanceCounter c; // パフォーマンス計測カウンタ
 	// rootノードを作成
-	reversi::ThinkingNode root;
+	reversi::ThinkingNode2 root;
 	// root設定
 	{
 		reversi::ReversiConstant::POSITION dummyPosition = reversi::ReversiConstant::POSITION::A1;
-		root.CopyReversi(reversi);
 		root.SetMovePosition(dummyPosition); // rootにはMovePosition設定は不要
 		root.SetTurn(reversi.GetTurn());
 		root.SetEvaluationPoint(0); // 設定不要
@@ -69,25 +68,28 @@ bool reversi::MoveThinkingCpu5::MoveThinking(const reversi::Reversi& reversi, co
 
 	c.Start();
 	// rootの子ノードを作成(1手読み)
-	SetThinkingChildNode(&root, reversi, board, turn);
+	SetThinkingChildNode(&root, board, turn, turn);
+	// 手番反転
+	reversi::ReversiConstant::TURN currentTurn = reversi::ReversiConstant::InvertTurn(turn);
 	c.End();
 	PrintTimeDiff("root child node", c);
 
 	// rootノードの下に更に思考ノードを追加する
 	// ただ現在は2手読みが現実的(思考時間、使用メモリ的に)
-	reversi::ThinkingNode* node = &root;
+	reversi::ThinkingNode2* node = &root;
 	int size = node->GetChildSize();
 	for (int i = 0; i < size; ++i) {
-		reversi::ThinkingNode* child = node->GetChild(i);
+		reversi::ThinkingNode2* child = node->GetChild(i);
 		// 2手読み
-		SetThinkingChildNode(child, child->GetReversi(), child->GetReversi().GetBoard(), turn);
+		SetThinkingChildNode(child, board, turn, currentTurn);
+		//currentTurn = reversi::ReversiConstant::InvertTurn(currentTurn);
 		// 3手読み以上は全幅検索の都合上非常に重たくなるので現段階では使わない
 		//for (int j = 0; j < child->GetChildSize(); ++j) {
-		//	reversi::ThinkingNode* child2 = child->GetChild(j);
+		//	reversi::ThinkingNode2* child2 = child->GetChild(j);
 		//	// 3手読み
 		//	SetThinkingChildNode(child2, child2->GetReversi(), child2->GetReversi().GetBoard(), turn);
 		//	for (int k = 0; k < child2->GetChildSize(); ++k) {
-		//		reversi::ThinkingNode* child3 = child2->GetChild(k);
+		//		reversi::ThinkingNode2* child3 = child2->GetChild(k);
 		//		// 4手読み
 		//		SetThinkingChildNode(child3, child3->GetReversi(), child3->GetReversi().GetBoard(), turn);
 		//	}
@@ -98,11 +100,11 @@ bool reversi::MoveThinkingCpu5::MoveThinking(const reversi::Reversi& reversi, co
 	reversi::ReversiConstant::POSITION topHighPosition = reversi::ReversiConstant::POSITION::A1;
 	{
 		// rootの1つ下のノード達に自分の子ノードの中で一番評価値が高いノードを取得してもらう
-		const reversi::ThinkingNode* topHighNode = NULL;
+		const reversi::ThinkingNode2* topHighNode = NULL;
 		int topHighNodeIndex = -1;
 		for (int i = 0; i < root.GetChildSize(); ++i) {
-			reversi::ThinkingNode* child = node->GetChild(i);
-			const reversi::ThinkingNode* highNode = child->FindHighEvaluationPointNode();
+			reversi::ThinkingNode2* child = node->GetChild(i);
+			const reversi::ThinkingNode2* highNode = child->FindHighEvaluationPointNode();
 			if ((topHighNode == NULL) && (highNode != NULL)) {
 				// 初回更新
 				topHighNode = highNode;
@@ -149,12 +151,12 @@ reversi::ReversiConstant::BOARD_INFO reversi::MoveThinkingCpu5::GetTurnToStone(r
 
 /**
  * 指定されたノードに子の思考ノードを追加する
- * @param node     追加対象ノード
- * @param reversi  リバーシクラス
- * @param board    盤情報
- * @param selfTurn 評価関数設定対象の手番
+ * @param node        追加対象ノード
+ * @param board       盤情報
+ * @param selfTurn    評価関数設定対象の手番
+ * @param currentTurn 現在の手番
  */
-void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn) {
+void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode2* node, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn, reversi::ReversiConstant::TURN currentTurn) {
 	reversi::PerformanceCounter c; // パフォーマンス計測カウンタ
 
 	reversi::ReversiConstant::POSITION moveEnablePositions[MOVE_ENABLE_DATA_SIZE];
@@ -168,17 +170,9 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode* node
 		moveEnablePositions[i] = reversi::ReversiConstant::POSITION::A1;
 	}
 
-	// 終局している
-	if ((reversi.GetScene() == reversi::Reversi::SCENE::END) || (reversi.GetScene() == reversi::Reversi::SCENE::RESULT)) {
-		if (reverseInfos) {
-			delete[] reverseInfos;
-			reverseInfos = NULL;
-		}
-		return;
-	}
-
 	// 今の手番
-	reversi::ReversiConstant::TURN turn = reversi.GetTurn();
+	reversi::ReversiConstant::TURN turn = currentTurn;
+	//reversi.GetTurn();
 
 	c.Start();
 	// 打てる位置を取得
@@ -200,11 +194,11 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode* node
 	for (int i = 0; i < size; ++i) {
 		c.Start();
 		reversi::Assert::AssertArrayRange(i, size, "MoveThinkingCpu5::SetThinkingChildNode moveEnablePositions index over");
-		reversi::ThinkingNode* child = new reversi::ThinkingNode();
+		reversi::ThinkingNode2* child = new reversi::ThinkingNode2();
 		// リバーシをコピー
-		reversi::Reversi childReversi;
-		childReversi.CopyWithoutDynamicInstance(reversi); // コピー
-		childReversi.SetOutputEnable(false); // 出力はoffにする
+		//reversi::Reversi childReversi;
+		//childReversi.CopyWithoutDynamicInstance(reversi); // コピー
+		//childReversi.SetOutputEnable(false); // 出力はoffにする
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode CopyReversi", c);
 
@@ -212,17 +206,18 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode* node
 		reversi::MoveInfo::MOVE_INFO moveInfoData;
 		moveInfoData.position = moveEnablePositions[i];
 		moveInfoData.info = GetTurnToStone(turn);
-		moveInfoData.turn = childReversi.GetTurn(); // ゲーム上の手番
+		moveInfoData.turn = turn; // ゲーム上の手番
 		reversi::MoveInfo moveInfo(moveInfoData, reverseInfos[i]);
 
 		c.Start();
 		// 着手
-		childReversi.SetMoveSimulation(moveInfo);
-		childReversi.Task();
+		//childReversi.SetMoveSimulation(moveInfo);
+		//childReversi.Task();
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode Move", c);
 
 		c.Start();
+		/*
 		// リバーシを次の着手シーンまで進める
 		bool taskLoop = true;
 		bool isEnded = false; // 対局が終わっている
@@ -239,11 +234,12 @@ void reversi::MoveThinkingCpu5::SetThinkingChildNode(reversi::ThinkingNode* node
 				taskLoop = false;
 			}
 		}
+		*/
 		c.End();
 		PrintTimeDiff("SetThinkingChildNode Scene", c);
 		// childの情報を設定
 		c.Start();
-		child->CopyReversi(childReversi);
+		//child->CopyReversi(childReversi);
 		child->SetMovePosition(moveInfoData.position);
 		child->SetTurn(moveInfoData.turn);
 		child->SetThinkingDepth(node->GetThinkingDepth() + 1);

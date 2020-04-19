@@ -5,7 +5,7 @@
 #include "../base/ReversiConstant.h"
 #include "../base/MoveInfo.h"
 #include "../base/Move.h"
-#include "../base/ThinkingNode.h"
+#include "../base/ThinkingNode2.h"
 #include "../../util/IOutputConsole.h"
 #include "../../util/PerformanceCounter.h"
 
@@ -67,12 +67,12 @@ private:
 
 	/**
 	 * 指定されたノードに子の思考ノードを追加する
-	 * @param node     追加対象ノード
-	 * @param reversi  リバーシクラス
-	 * @param board    盤情報
-	 * @param selfTurn 評価関数設定対象の手番
+	 * @param node        追加対象ノード
+	 * @param board       盤情報
+	 * @param selfTurn    評価関数設定対象の手番
+	 * @param currentTurn 現在の手番
 	 */
-	void SetThinkingChildNode(reversi::ThinkingNode* node, const reversi::Reversi& reversi, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn);
+	void SetThinkingChildNode(reversi::ThinkingNode2* node, const reversi::Board& board, reversi::ReversiConstant::TURN selfTurn, reversi::ReversiConstant::TURN currentTurn);
 
 	/**
 	 * 着手可能情報を取得する
